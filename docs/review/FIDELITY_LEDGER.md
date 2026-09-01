@@ -31,6 +31,6 @@ All captures are from the local, built site served at `http://localhost:4322`; t
 | `Music for the moment your room becomes unforgettable.` | `Music for the moment your room becomes unforgettable.` | None. |
 | `DJ Phelix serves weddings, private events and nightlife across Cape Cod and surrounding areas.` | Same sentence | None. |
 | `Check availability` and `Explore services` | Same labels and destination intent | None. |
-| Illustrated navigation uses `Service` and `Media` in a small generated treatment. | `Services` and `Mixes` | Intentional content normalization to the requested routes; order is unchanged. |
+| `Services` and `Mixes` navigation labels. | Same labels, in the same order. | None. |
 
-The concept’s bespoke generated typography is intentionally translated to the local Manrope/IBM Plex Serif system so the final site has reliable, accessible, self-hosted rendering. No other above-the-fold copy, action, or sequence was added, renamed, or reordered.
+The concept’s bespoke generated typography is intentionally translated to the local Manrope/IBM Plex Serif system so the final site has reliable, accessible, self-hosted rendering. No above-the-fold copy, action, or sequence was added, renamed, or reordered.

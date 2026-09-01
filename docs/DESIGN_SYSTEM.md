@@ -47,4 +47,4 @@ The home hero is the primary fidelity reference. Its intended visible copy and a
 - `DJ Phelix serves weddings, private events and nightlife across Cape Cod and surrounding areas.`
 - `Explore services`
 
-The small generated concept uses non-authoritative singular `Service`/`Media` labels in its illustration. The implemented plural `Services` and `Mixes` labels follow the approved route brief and keep the navigation order intact. This is recorded explicitly in the fidelity ledger rather than obscuring the change.
+The generated concept uses the same `Services` and `Mixes` labels as the implemented navigation, in the same order. The fidelity ledger records that direct match alongside the typography translation.
