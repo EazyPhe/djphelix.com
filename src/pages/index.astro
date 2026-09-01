@@ -1,0 +1,151 @@
+---
+import ArrowIcon from '../components/ArrowIcon.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+
+const principles = [
+  {
+    title: 'Listen first',
+    text: 'Start with the people, the occasion, and the moments that matter most.'
+  },
+  {
+    title: 'Plan the arc',
+    text: 'Make room for the flow of the event without turning it into a template.'
+  },
+  {
+    title: 'Read the room',
+    text: 'Keep the energy responsive to the people who are actually there.'
+  }
+];
+
+const steps = [
+  {
+    title: 'Start a booking inquiry',
+    text: 'Share the date, type of event, and location you have in mind.'
+  },
+  {
+    title: 'Share the details',
+    text: 'Add the pacing, people, and moments you want the music to support.'
+  },
+  {
+    title: 'Shape the set',
+    text: 'Use the conversation to build a direction that fits the room.'
+  }
+];
+---
+
+<BaseLayout>
+  <section class="home-hero" aria-labelledby="hero-heading">
+    <div class="hero-media" aria-hidden="true">
+      <img src="/images/hero-dj-console.png" width="1536" height="1024" alt="" fetchpriority="high" />
+    </div>
+    <div class="site-shell hero-content">
+      <div class="hero-copy">
+        <p class="section-number">01</p>
+        <h1 id="hero-heading"><span>Music for the</span> <span>moment your room</span> <span>becomes unforgettable.</span></h1>
+        <p class="hero-lead">DJ Phelix serves weddings, private events and nightlife across Cape Cod and surrounding areas.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="/contact/">{site.primaryAction}<ArrowIcon /></a>
+          <a class="button button-secondary" href="/services/">Explore services<ArrowIcon /></a>
+        </div>
+      </div>
+      <div class="hero-scroll-cue" aria-hidden="true"><span></span><small>Scroll to explore</small></div>
+    </div>
+  </section>
+
+  <section class="section service-index-section" aria-labelledby="service-index-heading">
+    <div class="site-shell">
+      <div class="section-intro split-intro">
+        <div>
+          <p class="section-number">02</p>
+          <h2 id="service-index-heading">A set built around the people in the room.</h2>
+        </div>
+        <p>Thoughtful planning, flexible energy, and a soundtrack that follows the occasion.</p>
+      </div>
+      <div class="service-index">
+        {site.services.map((service) => (
+          <a href={service.href} class="service-index-item">
+            <span class="service-index-count">0{site.services.indexOf(service) + 1}</span>
+            <span class="service-index-title">{service.title}</span>
+            <ArrowIcon class="service-index-arrow" />
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="feature-band feature-band-image-left" aria-labelledby="wedding-preview-heading">
+    <div class="feature-band-media"><img src="/images/wedding-celebration.png" width="1536" height="1024" alt="A warmly lit wedding celebration viewed from behind the guests" loading="lazy" /></div>
+    <div class="feature-band-copy">
+      <p class="section-number">03</p>
+      <h2 id="wedding-preview-heading">A wedding set with room to feel like yours.</h2>
+      <p>From the first arrival to the last song, each transition can be shaped around the timeline and people in front of it.</p>
+      <a class="text-link" href="/weddings/">Explore weddings<ArrowIcon /></a>
+    </div>
+  </section>
+
+  <section class="feature-band feature-band-image-right" aria-labelledby="events-preview-heading">
+    <div class="feature-band-copy">
+      <p class="section-number">04</p>
+      <h2 id="events-preview-heading">For a packed dance floor or a perfectly paced gathering.</h2>
+      <p>Bring the right tone to private celebrations, company events, nightlife, and themed events without forcing every room into the same format.</p>
+      <a class="text-link" href="/events-nightlife/">Explore events &amp; nightlife<ArrowIcon /></a>
+    </div>
+    <div class="feature-band-media"><img src="/images/events-nightlife.png" width="1536" height="1024" alt="A contemporary event room with anonymous guests under controlled blue and warm lighting" loading="lazy" /></div>
+  </section>
+
+  <section class="section why-section" aria-labelledby="why-heading">
+    <div class="site-shell">
+      <div class="section-intro compact-intro">
+        <div>
+          <p class="section-number">05</p>
+          <h2 id="why-heading">Why DJ Phelix</h2>
+        </div>
+        <p>The right night is equal parts listening, preparation, and knowing when to let the room lead.</p>
+      </div>
+      <div class="principle-grid">
+        {principles.map((principle, index) => (
+          <article class="principle">
+            <span>0{index + 1}</span>
+            <h3>{principle.title}</h3>
+            <p>{principle.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="media-ready" aria-labelledby="media-ready-heading">
+    <div class="site-shell media-ready-inner">
+      <div class="media-ready-copy">
+        <p class="section-number">06</p>
+        <h2 id="media-ready-heading">Approved media, when it is ready to share.</h2>
+        <p>Photos, video and mixes will live here once Phelix supplies them.</p>
+        <a class="button button-secondary" href="/mixes/">Explore the media space<ArrowIcon /></a>
+      </div>
+      <div class="signal-art" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    </div>
+  </section>
+
+  <section class="section process-section" aria-labelledby="process-heading">
+    <div class="site-shell">
+      <div class="section-intro compact-intro">
+        <div>
+          <p class="section-number">07</p>
+          <h2 id="process-heading">A straightforward way to start.</h2>
+        </div>
+        <p>There is no claimed real-time calendar here—just a clear place to begin the inquiry.</p>
+      </div>
+      <ol class="process-list">
+        {steps.map((step, index) => (
+          <li>
+            <span>{index + 1}.</span>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </li>
+        ))}
+      </ol>
+      <a class="text-link process-link" href="/contact/">Start a booking inquiry<ArrowIcon /></a>
+    </div>
+  </section>
+</BaseLayout>

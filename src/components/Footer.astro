@@ -1,0 +1,61 @@
+---
+import { hasInquiryEmail, site } from '../data/site';
+---
+
+<footer class="site-footer">
+  <div class="site-shell">
+    <section class="footer-cta" aria-labelledby="footer-cta-heading">
+      <p class="section-number">07</p>
+      <div>
+        <h2 id="footer-cta-heading">Tell us what the room needs.</h2>
+        <p>Start with the event details. The delivery route can be added when Phelix is ready to receive inquiries.</p>
+      </div>
+      <a class="button button-primary" href="/contact/">Start a booking inquiry</a>
+    </section>
+
+    <div class="footer-grid">
+      <a class="wordmark" href="/" aria-label="DJ Phelix home">
+        <span class="wordmark-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>DJ Phelix</span>
+      </a>
+      <div>
+        <p class="footer-label">Explore</p>
+        <ul class="footer-links">
+          {site.navigation.slice(1).map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+          <li><a href="/privacy/">Privacy</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-label">Contact</p>
+        <ul class="footer-links">
+          <li>
+            {hasInquiryEmail ? (
+              <a href={`mailto:${site.contact.inquiryEmail}`}>{site.contact.inquiryEmail}</a>
+            ) : (
+              <span>Email to be added</span>
+            )}
+          </li>
+          <li>
+            {site.contact.phone ? (
+              <a href={`tel:${site.contact.phone}`}>{site.contact.phone}</a>
+            ) : (
+              <span>Phone to be added</span>
+            )}
+          </li>
+          <li>
+            {site.contact.socialLinks.length ? (
+              site.contact.socialLinks.map((link) => <a href={link.href} target="_blank" rel="noreferrer">{link.label}</a>)
+            ) : (
+              <span>Social links to be added</span>
+            )}
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-meta">
+      <span>© {new Date().getFullYear()} {site.name}</span>
+      <span>Based in {site.basedIn}</span>
+      <a href="/privacy/">Privacy placeholder</a>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,51 @@
+---
+import ArrowIcon from '../components/ArrowIcon.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+
+const approach = [
+  ['The people', 'Start with the guests, the hosts, and the mood they want to create.'],
+  ['The occasion', 'Match the music to the shape of the event instead of a generic script.'],
+  ['The next step', 'Use a clear inquiry to collect the details that have not yet been published.']
+];
+---
+
+<BaseLayout title="About DJ Phelix" description="DJ Phelix is a Cape Cod-based DJ for weddings, private events, nightlife, and themed events.">
+  <section class="page-hero page-hero-simple" aria-labelledby="about-heading">
+    <div class="site-shell page-hero-inner">
+      <div>
+        <p class="section-number">About</p>
+        <h1 id="about-heading">A Cape Cod DJ, built around the room in front of them.</h1>
+      </div>
+      <p>DJ Phelix is based in {site.basedIn} and works across weddings, private events, nightlife, themed events, and related live-event work.</p>
+    </div>
+  </section>
+
+  <section class="section about-section" aria-labelledby="about-approach-heading">
+    <div class="site-shell split-content">
+      <div>
+        <p class="section-number">The approach</p>
+        <h2 id="about-approach-heading">Personal without making up a backstory.</h2>
+      </div>
+      <div>
+        <p>This first version intentionally leaves biography, portrait, equipment, credentials, testimonials, and venue history for owner-approved updates. What is here reflects the service direction Phelix has supplied.</p>
+      </div>
+    </div>
+    <div class="site-shell principle-grid about-principles">
+      {approach.map(([title, text], index) => (
+        <article class="principle">
+          <span>0{index + 1}</span>
+          <h3>{title}</h3>
+          <p>{text}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section contrast-section" aria-labelledby="about-contact-heading">
+    <div class="site-shell split-content">
+      <div><h2 id="about-contact-heading">The useful details start with your event.</h2></div>
+      <div><p>Tell Phelix the date, type of room, location, and the atmosphere you want to create. The inquiry route is prepared for an owner-supplied inbox or static-form integration.</p><a class="text-link" href="/contact/">Start a booking inquiry<ArrowIcon /></a></div>
+    </div>
+  </section>
+</BaseLayout>

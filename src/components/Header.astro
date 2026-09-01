@@ -1,0 +1,86 @@
+---
+import { site } from '../data/site';
+
+interface Props {
+  currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+const isCurrent = (href: string) =>
+  href === '/' ? currentPath === '/' : currentPath.startsWith(href);
+---
+
+<header class="site-header">
+  <div class="site-shell header-inner">
+    <a class="wordmark" href="/" aria-label="DJ Phelix home">
+      <span class="wordmark-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span>DJ Phelix</span>
+    </a>
+
+    <button
+      class="menu-toggle"
+      type="button"
+      data-menu-toggle
+      aria-expanded="false"
+      aria-controls="site-navigation"
+    >
+      <span>Menu</span>
+      <span class="menu-bars" aria-hidden="true"><i></i><i></i></span>
+    </button>
+
+    <nav id="site-navigation" class="primary-nav" aria-label="Primary navigation" data-site-menu>
+      <div class="mobile-nav-head">
+        <span class="wordmark wordmark-small"><span>DJ Phelix</span></span>
+        <button class="menu-close" type="button" data-menu-close aria-label="Close navigation">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true" focusable="false">
+            <path d="M4 4l14 14M18 4 4 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" />
+          </svg>
+        </button>
+      </div>
+      <ul>
+        {site.navigation.map((item) => (
+          <li>
+            <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined} data-nav-link>
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+      <a class="button button-primary mobile-nav-cta" href="/contact/">{site.primaryAction}</a>
+    </nav>
+    <a class="button button-primary header-cta" href="/contact/">{site.primaryAction}</a>
+  </div>
+</header>
+
+<script>
+  const menuToggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const menuClose = document.querySelector<HTMLButtonElement>('[data-menu-close]');
+  const menu = document.querySelector<HTMLElement>('[data-site-menu]');
+  const navLinks = document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]');
+
+  const setMenuOpen = (open: boolean) => {
+    if (!menuToggle || !menu) return;
+    menuToggle.setAttribute('aria-expanded', String(open));
+    menu.dataset.open = String(open);
+    document.body.classList.toggle('menu-is-open', open);
+
+    if (open) {
+      menu.querySelector<HTMLAnchorElement>('a')?.focus();
+    } else {
+      menuToggle.focus();
+    }
+  };
+
+  menuToggle?.addEventListener('click', () => {
+    setMenuOpen(menuToggle.getAttribute('aria-expanded') !== 'true');
+  });
+
+  menuClose?.addEventListener('click', () => setMenuOpen(false));
+  navLinks.forEach((link) => link.addEventListener('click', () => setMenuOpen(false)));
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && menuToggle?.getAttribute('aria-expanded') === 'true') {
+      setMenuOpen(false);
+    }
+  });
+</script>

@@ -1,0 +1,99 @@
+---
+import { hasBookingEndpoint, hasInquiryEmail, site } from '../data/site';
+
+const endpoint = site.booking.formEndpoint;
+const formAction = hasBookingEndpoint ? endpoint : undefined;
+---
+
+<form
+  class="booking-form"
+  action={formAction}
+  method={site.booking.method}
+  data-booking-form
+  data-booking-endpoint={endpoint}
+>
+  <div class="form-grid">
+    <label>
+      <span>Name <em aria-hidden="true">*</em></span>
+      <input name="name" autocomplete="name" required />
+    </label>
+    <label>
+      <span>Email <em aria-hidden="true">*</em></span>
+      <input name="email" type="email" autocomplete="email" required />
+    </label>
+    <label>
+      <span>Phone <small>(optional)</small></span>
+      <input name="phone" type="tel" autocomplete="tel" />
+    </label>
+    <label>
+      <span>Event type <em aria-hidden="true">*</em></span>
+      <select name="eventType" required>
+        <option value="">Choose an event type</option>
+        {site.eventTypes.map((type) => <option value={type}>{type}</option>)}
+      </select>
+    </label>
+    <label>
+      <span>Event date <em aria-hidden="true">*</em></span>
+      <input name="eventDate" type="date" required />
+    </label>
+    <label>
+      <span>Venue or location <em aria-hidden="true">*</em></span>
+      <input name="location" autocomplete="address-level2" required />
+    </label>
+    <label>
+      <span>Guest count <small>(optional)</small></span>
+      <input name="guestCount" type="number" min="1" inputmode="numeric" />
+    </label>
+    <label class="form-message">
+      <span>Tell us about the event <em aria-hidden="true">*</em></span>
+      <textarea name="message" rows="5" required></textarea>
+    </label>
+  </div>
+
+  <div class="form-action-row">
+    <button class="button button-primary" type={hasBookingEndpoint ? 'submit' : 'button'} data-booking-submit>
+      Prepare inquiry
+    </button>
+    <div>
+      <p class="form-status" data-booking-status role="status" aria-live="polite">
+        {hasBookingEndpoint
+          ? 'This form is configured to send to the supplied inquiry endpoint.'
+          : 'No booking endpoint is connected yet. This form will not claim to send your message.'}
+      </p>
+      {hasInquiryEmail ? (
+        <p class="form-fallback">Prefer email? <a href={`mailto:${site.contact.inquiryEmail}`}>{site.contact.inquiryEmail}</a></p>
+      ) : (
+        <p class="form-fallback">An owner-supplied booking email can be added as the direct fallback before launch.</p>
+      )}
+    </div>
+  </div>
+  <p class="form-privacy">Please do not send sensitive information through this form. <a href="/privacy/">Read the privacy placeholder.</a></p>
+  {!hasBookingEndpoint && <noscript><p class="noscript-note">This form cannot send without a configured delivery route. Add a booking email or secure form endpoint before publishing it.</p></noscript>}
+</form>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-booking-form]');
+  const submit = document.querySelector<HTMLButtonElement>('[data-booking-submit]');
+  const status = document.querySelector<HTMLElement>('[data-booking-status]');
+
+  const updateStatus = (message: string, isError = false) => {
+    if (!status) return;
+    status.textContent = message;
+    status.dataset.error = String(isError);
+  };
+
+  if (form && submit && !form.dataset.bookingEndpoint) {
+    submit.addEventListener('click', () => {
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        updateStatus('Please complete the required fields before preparing your inquiry.', true);
+        return;
+      }
+
+      updateStatus(
+        'No inquiry delivery route is connected. Your details have not been sent. Add an owner-supplied booking email or secure form endpoint before launch.',
+        true
+      );
+    });
+  }
+</script>

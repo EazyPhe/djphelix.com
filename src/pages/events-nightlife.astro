@@ -1,0 +1,43 @@
+---
+import ArrowIcon from '../components/ArrowIcon.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout title="Private Events & Nightlife DJ | DJ Phelix" description="Private-event, nightlife, and themed-event DJ direction from DJ Phelix on Cape Cod.">
+  <section class="page-hero page-hero-media" aria-labelledby="events-heading">
+    <div class="site-shell page-hero-media-grid page-hero-media-grid-reverse">
+      <div class="page-hero-copy">
+        <p class="section-number">Events &amp; nightlife</p>
+        <h1 id="events-heading">The room sets the energy. The set meets it there.</h1>
+        <p>Private events, nightlife, and themed celebrations deserve a sound that feels considered—never copy-and-paste.</p>
+        <a class="button button-primary" href="/contact/">{site.primaryAction}<ArrowIcon /></a>
+      </div>
+      <figure class="page-hero-image"><img src="/images/events-nightlife.png" width="1536" height="1024" alt="A contemporary event room with anonymous guests under controlled blue and warm lighting" fetchpriority="high" /></figure>
+    </div>
+  </section>
+
+  <section class="section events-detail-section" aria-labelledby="themed-heading">
+    <div class="site-shell events-detail-grid">
+      <div class="themed-mark" aria-hidden="true"><span></span><span></span></div>
+      <div>
+        <p class="section-number">Themed events</p>
+        <h2 id="themed-heading">An 80s night is an editable offering, not a borrowed claim.</h2>
+        <p>Build the era, mood, and crowd energy into a night that feels specific to your event. No recurring-residency, venue, or event-history claim is made here.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section contrast-section" aria-labelledby="events-media-heading">
+    <div class="site-shell split-content">
+      <div>
+        <p class="section-number">Media</p>
+        <h2 id="events-media-heading">The booth is ready. The media library is next.</h2>
+      </div>
+      <div>
+        <p>Approved event photos, video, and mixes can be added once Phelix supplies them. This site does not invent published mix links, video thumbnails, platform profiles, or play counts.</p>
+        <a class="text-link" href="/mixes/">Visit the media space<ArrowIcon /></a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

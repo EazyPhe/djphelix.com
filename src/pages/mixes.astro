@@ -1,0 +1,31 @@
+---
+import ArrowIcon from '../components/ArrowIcon.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Mixes & Media | DJ Phelix" description="A media-ready space for DJ Phelix’s approved photos, video, and mixes.">
+  <section class="page-hero page-hero-simple" aria-labelledby="mixes-heading">
+    <div class="site-shell page-hero-inner">
+      <div>
+        <p class="section-number">Mixes &amp; media</p>
+        <h1 id="mixes-heading">Media, when it is ready to share.</h1>
+      </div>
+      <p>DJ Phelix’s approved event photos, video, and mixes will live here once they are supplied. No mix titles, event photos, video thumbnails, profiles, or play counts are fabricated in the meantime.</p>
+    </div>
+  </section>
+
+  <section class="media-ready media-ready-page" aria-labelledby="media-empty-heading">
+    <div class="site-shell media-ready-inner">
+      <div class="media-ready-copy">
+        <p class="section-number">Media ready</p>
+        <h2 id="media-empty-heading">The shape is in place. The approved work comes next.</h2>
+        <p>When Phelix provides approved source files or links, this section can hold photos, video, and mixes without changing the site’s design system.</p>
+        <a class="button button-secondary" href="/contact/">Ask about event media<ArrowIcon /></a>
+      </div>
+      <div class="signal-art" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    </div>
+    <div class="site-shell future-media-list" aria-label="Future media categories">
+      <span>Photos</span><span>Video</span><span>Mixes</span>
+    </div>
+  </section>
+</BaseLayout>

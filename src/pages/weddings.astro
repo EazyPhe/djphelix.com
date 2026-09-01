@@ -1,0 +1,53 @@
+---
+import ArrowIcon from '../components/ArrowIcon.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+
+const weddingSteps = [
+  ['Start with the timeline', 'Begin with the moments, pace, and people that will shape the day.'],
+  ['Set the mood', 'Use the conversation to establish the musical direction without guessing at inclusions.'],
+  ['Leave room for the room', 'Keep the plan flexible enough to respond to the celebration as it unfolds.']
+];
+---
+
+<BaseLayout title="Wedding DJ | DJ Phelix" description="A Cape Cod wedding DJ approach centered on your timeline, your guests, and a personal musical direction.">
+  <section class="page-hero page-hero-media" aria-labelledby="weddings-heading">
+    <div class="site-shell page-hero-media-grid">
+      <div class="page-hero-copy">
+        <p class="section-number">Weddings</p>
+        <h1 id="weddings-heading">A wedding set with room to feel like yours.</h1>
+        <p>From the first arrival to the last song, the music can follow the parts of the day that matter most to you and the people you invited.</p>
+        <a class="button button-primary" href="/contact/">{site.primaryAction}<ArrowIcon /></a>
+      </div>
+      <figure class="page-hero-image"><img src="/images/wedding-celebration.png" width="1536" height="1024" alt="A warmly lit wedding celebration viewed from behind the guests" fetchpriority="high" /></figure>
+    </div>
+  </section>
+
+  <section class="section process-section" aria-labelledby="wedding-process-heading">
+    <div class="site-shell">
+      <div class="section-intro compact-intro">
+        <div>
+          <p class="section-number">How it starts</p>
+          <h2 id="wedding-process-heading">A conversation before a set list.</h2>
+        </div>
+        <p>This page intentionally avoids unprovided package, equipment, insurance, travel, pricing, and cancellation details. They can be added once Phelix supplies them.</p>
+      </div>
+      <ol class="process-list">
+        {weddingSteps.map(([title, text], index) => (
+          <li>
+            <span>{index + 1}.</span>
+            <h3>{title}</h3>
+            <p>{text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section contrast-section" aria-labelledby="wedding-inquiry-heading">
+    <div class="site-shell split-content">
+      <div><h2 id="wedding-inquiry-heading">Bring the details that make the day yours.</h2></div>
+      <div><p>Dates and availability are not displayed in real time. Start an inquiry to share the basics and choose the next conversation.</p><a class="text-link" href="/contact/">Start a booking inquiry<ArrowIcon /></a></div>
+    </div>
+  </section>
+</BaseLayout>

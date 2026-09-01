@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BookingForm from '../components/BookingForm.astro';
+---
+
+<BaseLayout title="Contact & Booking Inquiry | DJ Phelix" description="Start a DJ Phelix booking inquiry for a Cape Cod wedding, private event, nightlife, or themed event.">
+  <section class="page-hero page-hero-simple contact-hero" aria-labelledby="contact-heading">
+    <div class="site-shell page-hero-inner">
+      <div>
+        <p class="section-number">Contact</p>
+        <h1 id="contact-heading">Start a booking inquiry.</h1>
+      </div>
+      <p>Share the shape of the event. A connected inbox or secure form endpoint will take it from there once Phelix supplies it.</p>
+    </div>
+  </section>
+
+  <section class="section booking-section" aria-labelledby="booking-form-heading">
+    <div class="site-shell booking-layout">
+      <div class="booking-intro">
+        <p class="section-number">What to share</p>
+        <h2 id="booking-form-heading">The details that help make the next conversation useful.</h2>
+        <p>Include your event type, date, venue or location, and any early sense of the atmosphere you want to create. The site will never pretend that a message has been sent when no delivery route is connected.</p>
+      </div>
+      <BookingForm />
+    </div>
+  </section>
+</BaseLayout>
