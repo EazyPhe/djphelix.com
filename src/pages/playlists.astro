@@ -1,0 +1,285 @@
+---
+import ArrowIcon from '../components/ArrowIcon.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/playlists.css';
+import { site } from '../data/site';
+
+const playlists = site.media.spotifyPlaylists;
+const featured = playlists.find((playlist) => playlist.featured) ?? playlists[0];
+
+const categoryLabels: Record<string, string> = {
+  genre: 'Genres',
+  mood: 'Moods',
+  era: 'Eras',
+  event: 'Event moments'
+};
+
+const categoryOrder = ['genre', 'mood', 'era', 'event'];
+const filters = categoryOrder
+  .map((value) => ({
+    value,
+    label: categoryLabels[value],
+    count: playlists.filter((playlist) => playlist.primaryCategory === value).length
+  }))
+  .filter((filter) => filter.count > 0);
+---
+
+<BaseLayout
+  title="Playlists | DJ Phelix"
+  description="Explore DJ Phelix Spotify playlists by genre, mood, era, and event setting."
+>
+  <section class="page-hero page-hero-simple playlist-hero" aria-labelledby="playlists-heading">
+    <div class="site-shell page-hero-inner">
+      <div>
+        <p class="section-number">Playlist library</p>
+        <h1 id="playlists-heading">Find the sound that fits the moment.</h1>
+      </div>
+      <p>
+        Explore DJ Phelix collections by genre, mood, era, and event setting.
+        Start with what is available now; the library will keep growing.
+      </p>
+    </div>
+  </section>
+
+  <section class="playlist-featured section" aria-labelledby="featured-playlist-heading" data-player-stage>
+    <div class="site-shell playlist-featured-grid">
+      <div class="playlist-featured-copy">
+        <p class="section-number">Featured collection</p>
+        <h2 id="featured-playlist-heading" data-featured-title>{featured.title}</h2>
+        <p data-featured-description>{featured.description}</p>
+        <div class="playlist-active-meta" data-featured-tags aria-label="Featured playlist tags">
+          {[...featured.genres, ...featured.moods].slice(0, 4).map((tag) => <span>{tag}</span>)}
+        </div>
+        <a
+          class="text-link"
+          href={featured.spotifyUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-featured-link
+        >
+          Open in Spotify<ArrowIcon />
+        </a>
+      </div>
+
+      <div class="spotify-embed-shell">
+        <div class="spotify-embed-label">
+          <span>Spotify player</span>
+          <span data-player-status>Now playing: {featured.title}</span>
+        </div>
+        <iframe
+          class="spotify-frame"
+          src={`https://open.spotify.com/embed/playlist/${featured.spotifyId}?utm_source=generator&theme=0`}
+          title={`Spotify playlist: ${featured.title}`}
+          width="100%"
+          height="352"
+          frameborder="0"
+          allowfullscreen
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy"
+          data-spotify-frame
+        ></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section class="playlist-library" aria-labelledby="playlist-library-heading">
+    <div class="site-shell">
+      <div class="playlist-library-heading">
+        <div>
+          <p class="section-number">Browse the library</p>
+          <h2 id="playlist-library-heading">Choose a collection.</h2>
+        </div>
+        <p data-filter-status aria-live="polite">Showing all {playlists.length} playlists.</p>
+      </div>
+
+      <div class="playlist-filter-bar" aria-label="Filter playlists">
+        <button class="playlist-filter" type="button" data-filter="all" aria-pressed="true">
+          <span>All</span><small>{playlists.length}</small>
+        </button>
+        {filters.map((filter) => (
+          <button
+            class="playlist-filter"
+            type="button"
+            data-filter={filter.value}
+            aria-pressed="false"
+          >
+            <span>{filter.label}</span><small>{filter.count}</small>
+          </button>
+        ))}
+      </div>
+
+      <div class="playlist-grid">
+        {playlists.map((playlist, index) => (
+          <article
+            class="playlist-card"
+            data-playlist-card
+            data-category={playlist.primaryCategory}
+            data-selected={playlist.slug === featured.slug ? 'true' : 'false'}
+          >
+            <div class="playlist-card-topline">
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <span>{categoryLabels[playlist.primaryCategory] ?? playlist.primaryCategory}</span>
+            </div>
+            <h3>{playlist.title}</h3>
+            <p>{playlist.description}</p>
+            <div class="playlist-tag-row" aria-label={`${playlist.title} tags`}>
+              {[...playlist.genres, ...playlist.moods, ...playlist.eras, ...playlist.eventMoments]
+                .slice(0, 5)
+                .map((tag) => <span>{tag}</span>)}
+            </div>
+            <div class="playlist-card-actions">
+              <button
+                class="playlist-select-button"
+                type="button"
+                aria-pressed={playlist.slug === featured.slug ? 'true' : 'false'}
+                data-playlist-select
+                data-slug={playlist.slug}
+                data-spotify-id={playlist.spotifyId}
+                data-title={playlist.title}
+                data-description={playlist.description}
+                data-spotify-url={playlist.spotifyUrl}
+                data-tags={JSON.stringify([...playlist.genres, ...playlist.moods].slice(0, 4))}
+              >
+                Listen here<ArrowIcon />
+              </button>
+              <a class="text-link" href={playlist.spotifyUrl} target="_blank" rel="noopener noreferrer">
+                Open Spotify<ArrowIcon />
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="playlist-positioning section" aria-labelledby="playlist-positioning-heading">
+    <div class="site-shell section-intro compact-intro">
+      <div>
+        <p class="section-number">Your event, your direction</p>
+        <h2 id="playlist-positioning-heading">A starting point, never a locked set list.</h2>
+      </div>
+      <div class="playlist-positioning-copy">
+        <p>
+          Use these playlists to identify genres, moods, and eras that feel right.
+          Event music can then be shaped around your preferences and the room.
+        </p>
+        <a class="button button-secondary" href="/contact/">
+          Plan the soundtrack<ArrowIcon />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const frame = document.querySelector<HTMLIFrameElement>('[data-spotify-frame]');
+    const playerStage = document.querySelector<HTMLElement>('[data-player-stage]');
+    const featuredTitle = document.querySelector<HTMLElement>('[data-featured-title]');
+    const featuredDescription = document.querySelector<HTMLElement>('[data-featured-description]');
+    const featuredTags = document.querySelector<HTMLElement>('[data-featured-tags]');
+    const featuredLink = document.querySelector<HTMLAnchorElement>('[data-featured-link]');
+    const playerStatus = document.querySelector<HTMLElement>('[data-player-status]');
+    const filterStatus = document.querySelector<HTMLElement>('[data-filter-status]');
+    const playlistButtons = Array.from(
+      document.querySelectorAll<HTMLButtonElement>('[data-playlist-select]')
+    );
+    const playlistCards = Array.from(
+      document.querySelectorAll<HTMLElement>('[data-playlist-card]')
+    );
+    const filterButtons = Array.from(
+      document.querySelectorAll<HTMLButtonElement>('[data-filter]')
+    );
+
+    const activatePlaylist = (
+      button: HTMLButtonElement,
+      options: { updateUrl?: boolean; scroll?: boolean } = {}
+    ) => {
+      const {
+        slug,
+        spotifyId,
+        title,
+        description,
+        spotifyUrl,
+        tags = '[]'
+      } = button.dataset;
+
+      if (!slug || !spotifyId || !title || !description || !spotifyUrl || !frame) return;
+
+      frame.src = `https://open.spotify.com/embed/playlist/${spotifyId}?utm_source=generator&theme=0`;
+      frame.title = `Spotify playlist: ${title}`;
+      if (featuredTitle) featuredTitle.textContent = title;
+      if (featuredDescription) featuredDescription.textContent = description;
+      if (featuredLink) featuredLink.href = spotifyUrl;
+      if (playerStatus) playerStatus.textContent = `Now playing: ${title}`;
+
+      if (featuredTags) {
+        let parsedTags: string[] = [];
+        try {
+          parsedTags = JSON.parse(tags) as string[];
+        } catch {
+          parsedTags = [];
+        }
+
+        featuredTags.replaceChildren(
+          ...parsedTags.map((tag) => {
+            const span = document.createElement('span');
+            span.textContent = tag;
+            return span;
+          })
+        );
+      }
+
+      playlistButtons.forEach((candidate) => {
+        candidate.setAttribute('aria-pressed', String(candidate === button));
+      });
+      playlistCards.forEach((card) => {
+        card.dataset.selected = String(
+          card.querySelector<HTMLButtonElement>('[data-playlist-select]') === button
+        );
+      });
+
+      if (options.updateUrl !== false) {
+        const url = new URL(window.location.href);
+        url.searchParams.set('playlist', slug);
+        window.history.replaceState({}, '', url);
+      }
+
+      if (options.scroll) {
+        playerStage?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    };
+
+    playlistButtons.forEach((button) => {
+      button.addEventListener('click', () => activatePlaylist(button, { scroll: true }));
+    });
+
+    filterButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const filter = button.dataset.filter ?? 'all';
+        let visibleCount = 0;
+
+        playlistCards.forEach((card) => {
+          const visible = filter === 'all' || card.dataset.category === filter;
+          card.hidden = !visible;
+          if (visible) visibleCount += 1;
+        });
+
+        filterButtons.forEach((candidate) => {
+          candidate.setAttribute('aria-pressed', String(candidate === button));
+        });
+
+        if (filterStatus) {
+          filterStatus.textContent =
+            filter === 'all'
+              ? `Showing all ${visibleCount} playlists.`
+              : `Showing ${visibleCount} ${button.querySelector('span')?.textContent?.toLowerCase() ?? 'playlists'}.`;
+        }
+      });
+    });
+
+    const requestedPlaylist = new URL(window.location.href).searchParams.get('playlist');
+    const requestedButton = playlistButtons.find(
+      (button) => button.dataset.slug === requestedPlaylist
+    );
+    if (requestedButton) activatePlaylist(requestedButton, { updateUrl: false });
+  </script>
+</BaseLayout>
