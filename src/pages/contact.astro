@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BookingForm from '../components/BookingForm.astro';
+import ContactCard from '../components/ContactCard.astro';
 import { site } from '../data/site';
 
 // Use only the owner-approved contact address. Never store completed tax,
@@ -46,24 +47,29 @@ const w9RequestHref = buildMailto('W-9 request | DJ Phelix', w9RequestBody);
 const vendorInquiryHref = buildMailto('Vendor onboarding or payment inquiry | DJ Phelix', vendorInquiryBody);
 ---
 
-<BaseLayout title="Contact & Booking Inquiry | DJ Phelix" description="Start a DJ Phelix booking inquiry or request venue and vendor documentation for a Cape Cod event.">
+<BaseLayout title="Contact & Booking Inquiry | DJ Phelix" description="Save the DJ Phelix contact card, start a booking inquiry, or request venue and vendor documentation for a Cape Cod event.">
   <section class="page-hero page-hero-simple contact-hero" aria-labelledby="contact-heading">
     <div class="site-shell page-hero-inner">
       <div>
         <p class="section-number">Contact</p>
         <h1 id="contact-heading">Start a booking inquiry.</h1>
-        <a class="button button-secondary" href="#vendor-resources">Venue resources</a>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#save-contact">Save contact</a>
+          <a class="button button-secondary" href="#vendor-resources">Venue resources</a>
+        </div>
       </div>
-      <p>Share the shape of the event. A connected inbox or secure form endpoint will take it from there once Phelix supplies it.</p>
+      <p>Save the contact card, text or email directly, and share the event date, location, and atmosphere you have in mind.</p>
     </div>
   </section>
+
+  <ContactCard />
 
   <section class="section booking-section" aria-labelledby="booking-form-heading">
     <div class="site-shell booking-layout">
       <div class="booking-intro">
         <p class="section-number">What to share</p>
         <h2 id="booking-form-heading">The details that help make the next conversation useful.</h2>
-        <p>Include your event type, date, venue or location, and any early sense of the atmosphere you want to create. The site will never pretend that a message has been sent when no delivery route is connected.</p>
+        <p>Include your event type, date, venue or location, and the atmosphere you want to create. The form below does not send an inquiry until a delivery endpoint is connected, so use the email fallback when needed.</p>
       </div>
       <BookingForm />
     </div>
