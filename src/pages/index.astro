@@ -1,6 +1,7 @@
 ---
 import ArrowIcon from '../components/ArrowIcon.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactCard from '../components/ContactCard.astro';
 import { site } from '../data/site';
 
 const principles = [
@@ -148,4 +149,6 @@ const steps = [
       <a class="text-link process-link" href="/contact/">Start a booking inquiry<ArrowIcon /></a>
     </div>
   </section>
+
+  <ContactCard variant="home" />
 </BaseLayout>
