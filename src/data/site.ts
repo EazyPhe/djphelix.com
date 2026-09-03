@@ -8,8 +8,57 @@ export const site = {
   primaryAction: 'Check availability',
   contact: {
     inquiryEmail: 'estinvilp3@gmail.com',
-    phone: '',
-    socialLinks: [] as Array<{ label: string; href: string }>
+    phone: '+17742681245',
+    phoneDisplay: '+1 774-268-1245',
+    socialLinks: [
+      {
+        label: 'Instagram',
+        href: 'https://www.instagram.com/eazy_phe/'
+      },
+      {
+        label: 'Facebook',
+        href: 'https://www.facebook.com/phelix.estinvil/'
+      },
+      {
+        label: 'Snapchat',
+        href: 'https://www.snapchat.com/@phelixthecat33'
+      }
+    ],
+    card: {
+      givenName: 'Phelix',
+      familyName: 'Estinvil',
+      formattedName: 'Phelix Estinvil (DJ)',
+      nickname: 'DJ Phelix',
+      organization: 'DJ Phelix',
+      title: 'Professional DJ, MC & Event Production Specialist',
+      uid: 'djphelix-contact@djphelix.com',
+      note: 'Services\nProfessional DJ and MC services\nWedding DJ\nKaraoke Hosting\nAudio & Visual (AV) Setup\nEvent Lighting\nLive Band Recording\nLive Event Audio Recording\n\nEvents Served\nWeddings, private events, and corporate events.\n\nService Area\nCape Cod, the South Shore, and anywhere between Cape Cod and Boston.\n\nContact Options\nMobile: +1 774-268-1245\nEmail: estinvilp3@gmail.com\nWebsite: https://djphelix.com\nDigital Contact Card: https://dot.cards/phe\nInstagram: https://www.instagram.com/eazy_phe/\nFacebook: https://www.facebook.com/phelix.estinvil/\nSnapchat: https://www.snapchat.com/@phelixthecat33\nPayments accepted: Venmo, Cash App, and PayPal.\n\nTexting preferred. If you do not hear back within one hour, please call.\nContact me for availability, pricing, and event bookings.',
+      otherLinks: [
+        {
+          label: 'Digital contact card',
+          href: 'https://dot.cards/phe'
+        },
+        {
+          label: 'Venmo',
+          href: 'https://venmo.com/u/PhelixE'
+        },
+        {
+          label: 'Cash App',
+          href: 'https://cash.app/$PhelixE'
+        },
+        {
+          label: 'PayPal',
+          href: 'https://paypal.me/PhelixE'
+        }
+      ],
+      photoDownload: '/contact/DJ_Phelix.vcf',
+      logoDownload: '/contact/DJ_Phelix_Logo.vcf',
+      photoImage: '/images/contact/dj-phelix-photo.jpg',
+      logoImage: '/images/contact/dj-phelix-logo.jpg',
+      websiteQr: '/images/contact/website-contact-qr.png',
+      websiteQrPng: '/images/contact/website-contact-qr.png',
+      landingPath: '/contact/#save-contact'
+    }
   },
   booking: {
     formEndpoint: '',
