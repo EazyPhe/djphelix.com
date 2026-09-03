@@ -3,9 +3,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import BookingForm from '../components/BookingForm.astro';
 import { site } from '../data/site';
 
-// Reuse only the owner-approved contact address. Never use a placeholder inbox
-// or store a completed W-9, EIN, signature, or document-access link in this site.
+// Use only the owner-approved contact address. Never store completed tax,
+// insurance, banking, signature, or document-access data in this public site.
 const inquiryEmail = site.contact.inquiryEmail.trim();
+
 const w9RequestBody = [
   'Hello DJ Phelix,',
   '',
@@ -19,18 +20,39 @@ const w9RequestBody = [
   '',
   'I understand that this request requires manual review and does not grant document access.'
 ].join('\r\n');
-const w9RequestHref = inquiryEmail
-  ? `mailto:${encodeURIComponent(inquiryEmail)}?subject=${encodeURIComponent('W-9 request | DJ Phelix')}&body=${encodeURIComponent(w9RequestBody)}`
-  : undefined;
+
+const vendorInquiryBody = [
+  'Hello DJ Phelix,',
+  '',
+  'I need help with vendor onboarding or payment setup.',
+  '',
+  'Requester name: ',
+  'Venue / business name: ',
+  'Business email: ',
+  'Event name and date: ',
+  'Requirement: vendor registration / contract / purchase order / invoice / ACH-EFT / other',
+  'Deadline: ',
+  'Notes: ',
+  '',
+  'I will not include tax IDs, banking details, passwords, or other sensitive information in this email.'
+].join('\r\n');
+
+const buildMailto = (subject: string, body: string) =>
+  inquiryEmail
+    ? `mailto:${encodeURIComponent(inquiryEmail)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    : undefined;
+
+const w9RequestHref = buildMailto('W-9 request | DJ Phelix', w9RequestBody);
+const vendorInquiryHref = buildMailto('Vendor onboarding or payment inquiry | DJ Phelix', vendorInquiryBody);
 ---
 
-<BaseLayout title="Contact & Booking Inquiry | DJ Phelix" description="Start a DJ Phelix booking inquiry for a Cape Cod wedding, private event, nightlife, or themed event.">
+<BaseLayout title="Contact & Booking Inquiry | DJ Phelix" description="Start a DJ Phelix booking inquiry or request venue and vendor documentation for a Cape Cod event.">
   <section class="page-hero page-hero-simple contact-hero" aria-labelledby="contact-heading">
     <div class="site-shell page-hero-inner">
       <div>
         <p class="section-number">Contact</p>
         <h1 id="contact-heading">Start a booking inquiry.</h1>
-        <a class="button button-secondary" href="#w9-request">Request W-9</a>
+        <a class="button button-secondary" href="#vendor-resources">Venue resources</a>
       </div>
       <p>Share the shape of the event. A connected inbox or secure form endpoint will take it from there once Phelix supplies it.</p>
     </div>
@@ -47,66 +69,154 @@ const w9RequestHref = inquiryEmail
     </div>
   </section>
 
-  <section id="w9-request" class="section w9-section" aria-labelledby="w9-heading">
-    <div class="site-shell booking-layout">
-      <div class="booking-intro">
-        <p class="section-number">Venue resources</p>
-        <h2 id="w9-heading">Vendor documentation.</h2>
-        <p>Need a W-9 for vendor setup? Phelix reviews each request before sharing any document privately. Tax documents are not available for public download.</p>
+  <section id="vendor-resources" class="section vendor-section" aria-labelledby="vendor-resources-heading">
+    <div class="site-shell">
+      <div class="vendor-intro">
+        <p class="section-number">Venue & vendor resources</p>
+        <h2 id="vendor-resources-heading">Documentation for approved business requests.</h2>
+        <p>Tax, insurance, and onboarding requests are handled privately. No completed tax forms, banking information, signed contracts, or insurance documents are stored here for public download.</p>
       </div>
-      <div class="w9-panel">
-        <p class="section-number">Manual review required</p>
-        <h3>Request a W-9.</h3>
-        <p>Include your name, venue or business name, business email, and reason for requesting the document. An event date is helpful when available.</p>
-        {w9RequestHref ? (
-          <>
-            <a class="button button-primary" href={w9RequestHref} aria-describedby="w9-delivery-note">Request W-9</a>
-            <p id="w9-delivery-note" class="w9-note">Opens a prefilled email in your email app. Complete the details and press Send there. This does not grant access to a W-9.</p>
-            <p class="w9-note">Email app not opening? Send the details above to <a class="w9-email" href={`mailto:${encodeURIComponent(inquiryEmail)}`}>{inquiryEmail}</a>.</p>
-          </>
-        ) : (
-          <>
-            <button class="button button-primary" type="button" disabled aria-describedby="w9-delivery-note">Request W-9</button>
-            <p id="w9-delivery-note" class="w9-note">Online W-9 requests are not connected yet. Please ask your existing DJ Phelix booking contact for vendor documentation.</p>
-          </>
-        )}
-        <p class="w9-note w9-privacy">Do not include Social Security numbers, EINs, banking details, or tax documents in your request.</p>
+
+      <div class="vendor-grid">
+        <article class="vendor-card">
+          <p class="section-number">Tax documentation</p>
+          <h3>Request a W-9.</h3>
+          <p>For legitimate venue, planner, and accounts-payable requests. Include your name, business, business email, reason for the request, and event date when available.</p>
+          <div class="vendor-action">
+            {w9RequestHref ? (
+              <>
+                <a class="button button-primary" href={w9RequestHref} aria-describedby="w9-delivery-note">Request W-9</a>
+                <p id="w9-delivery-note" class="vendor-note">Opens a prefilled email. The request still requires manual review and does not grant access automatically.</p>
+              </>
+            ) : (
+              <>
+                <button class="button button-disabled" type="button" disabled aria-describedby="w9-delivery-note">Request W-9</button>
+                <p id="w9-delivery-note" class="vendor-note">Online W-9 requests are not connected yet.</p>
+              </>
+            )}
+          </div>
+        </article>
+
+        <article class="vendor-card vendor-card-disabled" aria-labelledby="coi-heading">
+          <p class="section-number">Insurance documentation</p>
+          <h3 id="coi-heading">Request a certificate of insurance.</h3>
+          <p>This option will be enabled after DJ Phelix has active business liability insurance and a confirmed process for venue-specific certificates.</p>
+          <div class="vendor-action">
+            <button class="button button-disabled" type="button" disabled aria-describedby="coi-status">COI requests coming soon</button>
+            <p id="coi-status" class="vendor-note">Currently unavailable. This disabled control does not submit a request.</p>
+          </div>
+        </article>
+
+        <article class="vendor-card">
+          <p class="section-number">Business administration</p>
+          <h3>Vendor onboarding and payment questions.</h3>
+          <p>Use this for vendor registration, contract routing, purchase orders, invoice requirements, payment terms, or questions about an organization’s onboarding process.</p>
+          <div class="vendor-action">
+            {vendorInquiryHref ? (
+              <>
+                <a class="button button-secondary" href={vendorInquiryHref} aria-describedby="vendor-inquiry-note">Vendor / payment inquiry</a>
+                <p id="vendor-inquiry-note" class="vendor-note">Opens a prefilled email to the current DJ Phelix inquiry address.</p>
+              </>
+            ) : (
+              <>
+                <button class="button button-disabled" type="button" disabled aria-describedby="vendor-inquiry-note">Vendor / payment inquiry</button>
+                <p id="vendor-inquiry-note" class="vendor-note">Online vendor inquiries are not connected yet.</p>
+              </>
+            )}
+          </div>
+        </article>
       </div>
+
+      <p class="vendor-privacy">Do not send Social Security numbers, EINs, banking details, passwords, tax documents, voided checks, or other sensitive records through these email links.</p>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .w9-section {
+  .vendor-section {
     border-top: 1px solid var(--line);
     scroll-margin-top: 7rem;
   }
 
-  .w9-panel {
+  .vendor-intro {
+    max-width: 64rem;
+    margin-bottom: var(--space-4);
+  }
+
+  .vendor-intro h2 {
+    max-width: 14ch;
+    margin-bottom: var(--space-2);
+  }
+
+  .vendor-intro > p:last-child {
+    max-width: 52rem;
+    margin-bottom: 0;
+  }
+
+  .vendor-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-2);
+    align-items: stretch;
+  }
+
+  .vendor-card {
+    display: flex;
     min-width: 0;
+    min-height: 100%;
+    flex-direction: column;
     padding: var(--space-3);
     border: 1px solid var(--line);
     background: var(--canvas-raised);
   }
 
-  .w9-note {
+  .vendor-card h3 {
+    margin-bottom: var(--space-1);
+  }
+
+  .vendor-card > p:not(.section-number) {
+    margin-bottom: 0;
+  }
+
+  .vendor-card-disabled {
+    background: var(--canvas-soft);
+  }
+
+  .vendor-action {
+    margin-top: auto;
+    padding-top: var(--space-3);
+  }
+
+  .vendor-note {
     margin: 1rem 0 0;
     font-size: 0.875rem;
   }
 
-  .w9-email {
-    overflow-wrap: anywhere;
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
-  }
-
-  .w9-privacy {
-    padding-top: 1rem;
-    border-top: 1px solid var(--line);
-  }
-
-  .w9-panel button:disabled {
-    opacity: 0.65;
+  .button-disabled,
+  .button-disabled:hover {
+    border-color: var(--line);
+    color: var(--muted);
+    background: rgba(242, 237, 230, 0.04);
+    cursor: not-allowed;
+    opacity: 0.72;
     transform: none;
+  }
+
+  .vendor-privacy {
+    max-width: 72rem;
+    margin: var(--space-3) 0 0;
+    padding-top: var(--space-2);
+    border-top: 1px solid var(--line);
+    font-size: 0.875rem;
+  }
+
+  @media (max-width: 980px) {
+    .vendor-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .vendor-card {
+      min-height: auto;
+    }
   }
 </style>
