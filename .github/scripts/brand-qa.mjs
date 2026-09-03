@@ -124,12 +124,22 @@ try {
 
       const menuCta = page.locator('.mobile-nav-cta');
       await menuCta.scrollIntoViewIfNeeded();
-      menu.ctaReachable = await menuCta.evaluate((link) => {
+      const ctaState = await menuCta.evaluate((link) => {
         const rectangle = link.getBoundingClientRect();
-        return rectangle.top >= 0 && rectangle.bottom <= innerHeight;
+        const style = getComputedStyle(link);
+        return {
+          reachable: rectangle.top >= 0 && rectangle.bottom <= innerHeight,
+          color: style.color,
+          backgroundColor: style.backgroundColor,
+        };
       });
+      menu.ctaReachable = ctaState.reachable;
+      menu.ctaColor = ctaState.color;
+      menu.ctaBackgroundColor = ctaState.backgroundColor;
       menu.scrollTopAfterCta = await page.locator('[data-site-menu]').evaluate((navigation) => navigation.scrollTop);
       assert.equal(menu.ctaReachable, true, 'mobile: final booking CTA is not reachable inside the menu');
+      assert.equal(menu.ctaColor, 'rgb(8, 5, 11)', 'mobile: final booking CTA text does not use the high-contrast canvas color');
+      assert.equal(menu.ctaBackgroundColor, 'rgb(255, 53, 209)', 'mobile: final booking CTA background does not use the brand pink');
       assert.ok(menu.scrollTopAfterCta > 0, 'mobile: overflowing menu did not scroll to its final CTA');
       await page.screenshot({
         path: path.join(outputDir, 'mobile-menu-cta.png'),

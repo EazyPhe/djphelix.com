@@ -1363,6 +1363,20 @@ p {
 
   .site-header .primary-nav .mobile-nav-cta {
     display: inline-flex !important;
+    padding: 0.95rem 1.2rem;
+    color: var(--canvas);
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+  }
+
+  .site-header .primary-nav .mobile-nav-cta:hover {
+    color: var(--canvas);
+  }
+
+  .site-header .primary-nav .mobile-nav-cta::after {
+    display: none;
   }
 
   .hero-media {
