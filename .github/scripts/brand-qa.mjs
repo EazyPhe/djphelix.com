@@ -48,7 +48,10 @@ try {
         complete: image.complete,
         naturalWidth: image.naturalWidth,
         naturalHeight: image.naturalHeight,
-        visible: Boolean(image.getClientRects().length),
+        inViewport: (() => {
+          const rectangle = image.getBoundingClientRect();
+          return rectangle.bottom > 0 && rectangle.top < innerHeight && rectangle.right > 0 && rectangle.left < innerWidth;
+        })(),
       }));
 
       return {
@@ -70,8 +73,10 @@ try {
     assert.equal(home.horizontalOverflow, false, `${viewport.name}: horizontal overflow detected`);
     assert.equal(home.frameworkOverlay, false, `${viewport.name}: framework error overlay detected`);
     assert.equal(home.heroCopyLogoOverlap, false, `${viewport.name}: hero copy overlaps the lion logo`);
+    const visibleLogos = home.logos.filter((logo) => logo.inViewport);
     assert.ok(home.logos.length >= 3, `${viewport.name}: expected repeated lion branding`);
-    assert.ok(home.logos.every((logo) => logo.complete && logo.naturalWidth > 0), `${viewport.name}: a lion logo failed to load`);
+    assert.ok(visibleLogos.length >= 2, `${viewport.name}: header and hero logos are not both visible`);
+    assert.ok(visibleLogos.every((logo) => logo.complete && logo.naturalWidth > 0), `${viewport.name}: a visible lion logo failed to load`);
     assert.equal(home.heroAnimation, 'none', `${viewport.name}: reduced-motion preference was not respected`);
 
     await page.screenshot({
@@ -116,6 +121,12 @@ try {
       assert.equal(menu.expandedAfterEscape, 'false', 'mobile: Escape did not collapse toggle state');
       assert.equal(menu.openStateAfterEscape, 'false', 'mobile: Escape did not close navigation');
     }
+
+    const footerLogo = page.locator('.brand-logo-footer');
+    await footerLogo.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(100);
+    const footerLogoLoaded = await footerLogo.evaluate((image) => image.complete && image.naturalWidth > 0);
+    assert.equal(footerLogoLoaded, true, `${viewport.name}: footer lion logo failed to load`);
 
     let booking = null;
     if (viewport.name === 'desktop') {
