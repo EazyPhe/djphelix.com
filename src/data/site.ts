@@ -18,7 +18,51 @@ export const site = {
   media: {
     approvedPhotoLinks: [] as string[],
     approvedVideoLinks: [] as string[],
-    approvedMixLinks: [] as string[]
+    approvedMixLinks: [] as string[],
+    spotifyPlaylists: [
+      {
+        slug: 'chill-covers',
+        spotifyId: '2hIrTOMiPYsWcbONb8ifxR',
+        title: 'Chill Covers',
+        description:
+          'A growing collection of relaxed cover versions curated by DJ Phelix.',
+        primaryCategory: 'mood',
+        genres: ['Covers'],
+        moods: ['Chill'],
+        eras: [],
+        eventMoments: [],
+        spotifyUrl: 'https://open.spotify.com/playlist/2hIrTOMiPYsWcbONb8ifxR',
+        featured: true
+      },
+      {
+        slug: 'uk-drill-mix',
+        spotifyId: '4aouQuTVsQA5m6ljdEquA9',
+        title: 'UK Drill Mix',
+        description:
+          'A growing collection of UK drill selections curated by DJ Phelix.',
+        primaryCategory: 'genre',
+        genres: ['UK Drill'],
+        moods: [],
+        eras: [],
+        eventMoments: [],
+        spotifyUrl: 'https://open.spotify.com/playlist/4aouQuTVsQA5m6ljdEquA9',
+        featured: false
+      },
+      {
+        slug: 'christian-afrobeat',
+        spotifyId: '3HSiAkSrCss52LwRNtnus0',
+        title: 'Christian Afrobeat',
+        description:
+          'A growing collection of Christian Afrobeat selections curated by DJ Phelix.',
+        primaryCategory: 'genre',
+        genres: ['Afrobeat', 'Christian'],
+        moods: [],
+        eras: [],
+        eventMoments: [],
+        spotifyUrl: 'https://open.spotify.com/playlist/3HSiAkSrCss52LwRNtnus0',
+        featured: false
+      }
+    ]
   },
   navigation: [
     { label: 'Home', href: '/' },
@@ -26,6 +70,7 @@ export const site = {
     { label: 'Weddings', href: '/weddings/' },
     { label: 'Events & Nightlife', href: '/events-nightlife/' },
     { label: 'About', href: '/about/' },
+    { label: 'Playlists', href: '/playlists/' },
     { label: 'Mixes', href: '/mixes/' },
     { label: 'Contact', href: '/contact/' }
   ],
