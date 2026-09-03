@@ -1,0 +1,310 @@
+.contact-card {
+  --card-accent: #ff28bd;
+  --card-text: #f6f4f7;
+  --card-dim: #c7c4cd;
+  padding-block: clamp(3rem, 6vw, 6rem);
+  border-block: 1px solid rgba(255, 40, 189, 0.3);
+  background: var(--canvas-raised, #0d1016);
+  color: var(--card-text);
+  font-family: var(--sans, 'Segoe UI', sans-serif);
+  scroll-margin-top: 6.5rem;
+}
+
+.contact-card-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(16rem, 0.8fr);
+  align-items: center;
+  gap: clamp(2rem, 5vw, 5rem);
+}
+
+.contact-card-copy { min-width: 0; }
+
+.contact-card-brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.contact-card-eyebrow {
+  margin: 0;
+  color: var(--card-accent);
+  font-size: 0.75rem;
+  font-weight: 750;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.contact-card-logo {
+  width: 88px;
+  height: 88px;
+  object-fit: contain;
+  background: #000;
+  border-radius: 50%;
+}
+
+.contact-card h2 {
+  max-width: 17ch;
+  margin: 0 0 1.25rem;
+  color: var(--card-text);
+  font-family: inherit;
+  font-size: clamp(2.2rem, 4.1vw, 3.7rem);
+  font-weight: 720;
+  letter-spacing: -0.045em;
+  line-height: 1.04;
+}
+
+.contact-card-intro {
+  max-width: 48ch;
+  margin: 0 0 1.7rem;
+  color: var(--card-dim);
+  font-size: 1.04rem;
+  line-height: 1.65;
+}
+
+.contact-card-profile {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.contact-card-profile > img {
+  flex: 0 0 auto;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.contact-card-name {
+  margin: 0 0 0.2rem;
+  color: var(--card-text);
+  font-size: 1.4rem;
+  font-weight: 720;
+  line-height: 1.2;
+}
+
+.contact-card-role {
+  max-width: 35ch;
+  margin: 0;
+  color: var(--card-dim);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.contact-card-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 1.3rem;
+  margin-bottom: 1.75rem;
+}
+
+.contact-card-details a {
+  color: var(--card-text);
+  font-size: 0.87rem;
+  overflow-wrap: anywhere;
+  text-decoration: underline;
+  text-underline-offset: 0.22em;
+}
+
+.contact-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.contact-card-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 3.4rem;
+  padding: 0.85rem 1.1rem;
+  border: 1px solid rgba(246, 244, 247, 0.4);
+  border-radius: 4px;
+  font-size: 0.87rem;
+  font-weight: 750;
+  line-height: 1.25;
+  text-decoration: none;
+}
+
+.contact-card-primary {
+  border-color: var(--card-accent);
+  color: #0a080b;
+  background: var(--card-accent);
+}
+
+.contact-card-primary:hover {
+  border-color: #ff69d2;
+  color: #0a080b;
+  background: #ff69d2;
+}
+
+.contact-card-secondary {
+  color: var(--card-text);
+  background: transparent;
+}
+
+.contact-card-secondary:hover {
+  color: #0a080b;
+  background: var(--card-text);
+}
+
+.contact-card a:focus-visible {
+  outline: 3px solid #84def4;
+  outline-offset: 5px;
+}
+
+.contact-card-platform-note {
+  max-width: 52ch;
+  margin: 0.8rem 0 0;
+  color: var(--card-dim);
+  font-size: 0.78rem;
+  line-height: 1.6;
+}
+
+.contact-card-alternative {
+  margin: 0.8rem 0 1.25rem;
+  font-size: 0.82rem;
+}
+
+.contact-card-alternative a,
+.contact-card-qr-link {
+  color: var(--card-text);
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
+.contact-card-instructions {
+  max-width: 48rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(246, 244, 247, 0.18);
+}
+
+.contact-card-instructions-heading {
+  margin: 0 0 0.65rem;
+  color: var(--card-text);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.contact-card-instruction-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.contact-card-instruction-grid details {
+  min-width: 0;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid rgba(246, 244, 247, 0.18);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.contact-card[data-platform='ios'] [data-platform-help='ios'],
+.contact-card[data-platform='android'] [data-platform-help='android'] {
+  border-color: rgba(255, 40, 189, 0.7);
+}
+
+.contact-card-instruction-grid summary {
+  min-height: 1.5rem;
+  color: var(--card-text);
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.contact-card-instruction-grid summary:focus-visible {
+  outline: 3px solid #84def4;
+  outline-offset: 4px;
+}
+
+.contact-card-instruction-grid ol {
+  margin: 0.8rem 0 0;
+  padding-left: 1.25rem;
+  color: var(--card-dim);
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+
+.contact-card-instruction-grid li + li { margin-top: 0.35rem; }
+.contact-card-instruction-grid strong { color: var(--card-text); }
+
+.contact-card-qr {
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+.contact-card-qr-image {
+  display: block;
+  padding: 12px;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.contact-card-qr-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: contain;
+}
+
+.contact-card-qr figcaption { margin-top: 1.3rem; }
+
+.contact-card-qr h3 {
+  margin: 0 0 0.55rem;
+  color: var(--card-text);
+  font-family: inherit;
+  font-size: 1.05rem;
+  font-weight: 720;
+  letter-spacing: 0;
+  line-height: 1.4;
+}
+
+.contact-card-qr p {
+  margin: 0 0 0.85rem;
+  color: var(--card-dim);
+  font-size: 0.84rem;
+  line-height: 1.6;
+}
+
+.contact-card-qr-link {
+  font-size: 0.81rem;
+  font-weight: 650;
+}
+
+@media (max-width: 800px) {
+  .contact-card-grid {
+    grid-template-columns: 1fr;
+    gap: 2.7rem;
+  }
+
+  .contact-card-logo {
+    width: 76px;
+    height: 76px;
+  }
+
+  .contact-card h2 { max-width: 19ch; }
+  .contact-card-qr { max-width: 340px; }
+}
+
+@media (max-width: 560px) {
+  .contact-card-instruction-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 420px) {
+  .contact-card-actions { flex-direction: column; }
+  .contact-card-button { width: 100%; }
+  .contact-card-brand { gap: 0.65rem; }
+
+  .contact-card-eyebrow {
+    max-width: 20ch;
+    font-size: 0.68rem;
+    line-height: 1.5;
+  }
+}
