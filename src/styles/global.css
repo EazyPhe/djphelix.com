@@ -1626,6 +1626,10 @@ p {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .hero-brand-art img {
+    animation: none !important;
+  }
+
   *,
   *::before,
   *::after {
