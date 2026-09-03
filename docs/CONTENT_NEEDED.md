@@ -22,6 +22,10 @@ The site intentionally avoids filling gaps with invented claims. Supply and appr
 - Approved professional photo, logo/wordmark, video, and mix files or final public URLs.
 - Captions, credit/usage rights, accessibility alt text, and confirmation that identifiable people/venues may be shown.
 - Final social, streaming, and media-platform destinations.
+- Confirm that each Spotify playlist intended for the website is public and embeddable.
+- Review the provisional playlist descriptions and category tags; the starter metadata is based on playlist titles because the connected inventory did not expose track-level contents.
+- Approve final playlist titles, descriptions, category tags, featured order, and whether any third-party saved playlists may be shown.
+- Supply additional owned playlist links for era-specific and event-moment collections as the library grows.
 
 ## Legal and launch review
 
