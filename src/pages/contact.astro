@@ -1,6 +1,27 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BookingForm from '../components/BookingForm.astro';
+import { site } from '../data/site';
+
+// Reuse only the owner-approved contact address. Never use a placeholder inbox
+// or store a completed W-9, EIN, signature, or document-access link in this site.
+const inquiryEmail = site.contact.inquiryEmail.trim();
+const w9RequestBody = [
+  'Hello DJ Phelix,',
+  '',
+  'Please review my request for a W-9 for vendor setup.',
+  '',
+  'Requester name: ',
+  'Venue / business name: ',
+  'Business email: ',
+  'Reason for requesting a W-9: ',
+  'Event date (optional): ',
+  '',
+  'I understand that this request requires manual review and does not grant document access.'
+].join('\r\n');
+const w9RequestHref = inquiryEmail
+  ? `mailto:${encodeURIComponent(inquiryEmail)}?subject=${encodeURIComponent('W-9 request | DJ Phelix')}&body=${encodeURIComponent(w9RequestBody)}`
+  : undefined;
 ---
 
 <BaseLayout title="Contact & Booking Inquiry | DJ Phelix" description="Start a DJ Phelix booking inquiry for a Cape Cod wedding, private event, nightlife, or themed event.">
@@ -9,6 +30,7 @@ import BookingForm from '../components/BookingForm.astro';
       <div>
         <p class="section-number">Contact</p>
         <h1 id="contact-heading">Start a booking inquiry.</h1>
+        <a class="button button-secondary" href="#w9-request">Request W-9</a>
       </div>
       <p>Share the shape of the event. A connected inbox or secure form endpoint will take it from there once Phelix supplies it.</p>
     </div>
@@ -24,4 +46,67 @@ import BookingForm from '../components/BookingForm.astro';
       <BookingForm />
     </div>
   </section>
+
+  <section id="w9-request" class="section w9-section" aria-labelledby="w9-heading">
+    <div class="site-shell booking-layout">
+      <div class="booking-intro">
+        <p class="section-number">Venue resources</p>
+        <h2 id="w9-heading">Vendor documentation.</h2>
+        <p>Need a W-9 for vendor setup? Phelix reviews each request before sharing any document privately. Tax documents are not available for public download.</p>
+      </div>
+      <div class="w9-panel">
+        <p class="section-number">Manual review required</p>
+        <h3>Request a W-9.</h3>
+        <p>Include your name, venue or business name, business email, and reason for requesting the document. An event date is helpful when available.</p>
+        {w9RequestHref ? (
+          <>
+            <a class="button button-primary" href={w9RequestHref} aria-describedby="w9-delivery-note">Request W-9</a>
+            <p id="w9-delivery-note" class="w9-note">Opens a prefilled email in your email app. Complete the details and press Send there. This does not grant access to a W-9.</p>
+            <p class="w9-note">Email app not opening? Send the details above to <a class="w9-email" href={`mailto:${encodeURIComponent(inquiryEmail)}`}>{inquiryEmail}</a>.</p>
+          </>
+        ) : (
+          <>
+            <button class="button button-primary" type="button" disabled aria-describedby="w9-delivery-note">Request W-9</button>
+            <p id="w9-delivery-note" class="w9-note">Online W-9 requests are not connected yet. Please ask your existing DJ Phelix booking contact for vendor documentation.</p>
+          </>
+        )}
+        <p class="w9-note w9-privacy">Do not include Social Security numbers, EINs, banking details, or tax documents in your request.</p>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
+
+<style>
+  .w9-section {
+    border-top: 1px solid var(--line);
+    scroll-margin-top: 7rem;
+  }
+
+  .w9-panel {
+    min-width: 0;
+    padding: var(--space-3);
+    border: 1px solid var(--line);
+    background: var(--canvas-raised);
+  }
+
+  .w9-note {
+    margin: 1rem 0 0;
+    font-size: 0.875rem;
+  }
+
+  .w9-email {
+    overflow-wrap: anywhere;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .w9-privacy {
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .w9-panel button:disabled {
+    opacity: 0.65;
+    transform: none;
+  }
+</style>
