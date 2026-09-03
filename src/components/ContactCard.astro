@@ -1,0 +1,108 @@
+---
+import { site } from '../data/site';
+import '../styles/contact-card.css';
+
+interface Props {
+  variant?: 'home' | 'contact';
+}
+
+const { variant = 'contact' } = Astro.props;
+const isHome = variant === 'home';
+const card = site.contact.card;
+const sectionId = isHome ? 'business-card' : 'save-contact';
+const headingId = `${sectionId}-heading`;
+const downloadHelpId = `${sectionId}-download-help`;
+const instructionsHeadingId = `${sectionId}-instructions-heading`;
+const heading = isHome ? 'Keep DJ Phelix in your contacts.' : 'Save DJ Phelix to your contacts.';
+const secondaryHref = isHome ? card.landingPath : `sms:${site.contact.phone}`;
+const secondaryLabel = isHome ? 'Contact & booking' : 'Text Phelix';
+const qrImage = card.websiteQr;
+const qrFullImage = card.websiteQrPng;
+---
+
+<section class="contact-card" id={sectionId} aria-labelledby={headingId} data-contact-card>
+  <div class="site-shell contact-card-shell">
+    <div class="contact-card-grid">
+      <div class="contact-card-copy">
+        <div class="contact-card-brand">
+          <p class="contact-card-eyebrow">DJ Phelix / Contact card</p>
+          <img class="contact-card-logo" src={card.logoImage} width="104" height="104" alt="DJ Phelix neon lion logo" loading="lazy" />
+        </div>
+
+        <h2 id={headingId}>{heading}</h2>
+        <p class="contact-card-intro">Save my number, email, website and contact photo together in one contact card.</p>
+
+        <div class="contact-card-profile">
+          <img src={card.photoImage} width="80" height="80" alt="Contact photo supplied by DJ Phelix" loading="lazy" />
+          <div>
+            <p class="contact-card-name">{site.name}</p>
+            <p class="contact-card-role">{card.title}</p>
+          </div>
+        </div>
+
+        <div class="contact-card-details">
+          <a href={`tel:${site.contact.phone}`}>{site.contact.phoneDisplay}</a>
+          <a href={`mailto:${site.contact.inquiryEmail}`}>{site.contact.inquiryEmail}</a>
+          <a href={site.canonicalUrl}>djphelix.com</a>
+        </div>
+
+        <div class="contact-card-actions">
+          <a
+            class="contact-card-button contact-card-primary"
+            href={card.photoDownload}
+            download="DJ_Phelix.vcf"
+            type="text/vcard"
+            aria-describedby={downloadHelpId}
+            data-contact-download
+          >
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M5 16v5h14v-5" /></svg>
+            <span data-contact-download-label>Save DJ Phelix Contact</span>
+          </a>
+          <a class="contact-card-button contact-card-secondary" href={secondaryHref}>{secondaryLabel}</a>
+        </div>
+
+        <p id={downloadHelpId} class="contact-card-platform-note" data-contact-platform-note>
+          Works with iPhone, Android, and most contact apps.
+        </p>
+        <p class="contact-card-alternative"><a href={card.logoDownload} download="DJ_Phelix_Logo.vcf" type="text/vcard">Use the lion logo instead of the photo</a></p>
+
+        <div class="contact-card-instructions" aria-labelledby={instructionsHeadingId}>
+          <p id={instructionsHeadingId} class="contact-card-instructions-heading">Need help saving it?</p>
+          <div class="contact-card-instruction-grid">
+            <details data-platform-help="ios">
+              <summary>iPhone instructions</summary>
+              <ol>
+                <li>Tap the contact button and open the downloaded vCard.</li>
+                <li>Choose <strong>Create New Contact</strong>.</li>
+                <li>Review the details, then tap <strong>Done</strong>.</li>
+              </ol>
+            </details>
+            <details data-platform-help="android">
+              <summary>Android instructions</summary>
+              <ol>
+                <li>Tap the contact button and open the file with Contacts.</li>
+                <li>Choose the account or device location when prompted.</li>
+                <li>If it does not open automatically, use Contacts → Import from file.</li>
+              </ol>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <figure class="contact-card-qr">
+        <a class="contact-card-qr-image" href={qrFullImage} target="_blank" rel="noopener noreferrer" aria-label="Open the full-size DJ Phelix website contact QR in a new tab">
+          <img src={qrImage} width="360" height="360" alt="QR code linking to the DJ Phelix contact page" loading="lazy" />
+        </a>
+        <figcaption>
+          <h3>Scan. Save. Stay in touch.</h3>
+          <p>Viewing this on a computer? Scan with your phone, then use the contact button for the latest card.</p>
+          <a class="contact-card-qr-link" href={qrFullImage} target="_blank" rel="noopener noreferrer">Open full-size QR <span aria-hidden="true">↗</span></a>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<script>
+  import '../scripts/contactCard';
+</script>
