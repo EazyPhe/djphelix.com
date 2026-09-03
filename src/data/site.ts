@@ -7,7 +7,7 @@ export const site = {
   serviceArea: 'Cape Cod and surrounding areas',
   primaryAction: 'Check availability',
   contact: {
-    inquiryEmail: '',
+    inquiryEmail: 'estinvilp3@gmail.com',
     phone: '',
     socialLinks: [] as Array<{ label: string; href: string }>
   },
