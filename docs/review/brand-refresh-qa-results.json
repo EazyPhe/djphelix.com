@@ -211,6 +211,10 @@
         "expandedAfterOpen": "true",
         "openStateAfterOpen": "true",
         "closeVisible": true,
+        "ctaReachable": true,
+        "ctaColor": "rgb(8, 5, 11)",
+        "ctaBackgroundColor": "rgb(255, 53, 209)",
+        "scrollTopAfterCta": 134,
         "expandedAfterEscape": "false",
         "openStateAfterEscape": "false"
       },
@@ -326,6 +330,14 @@
       "status": 200,
       "heading": {
         "text": "Media, when it is ready to share.",
+        "visible": true
+      }
+    },
+    {
+      "route": "/client-documents/",
+      "status": 200,
+      "heading": {
+        "text": "Start organized before the gig.",
         "visible": true
       }
     },
