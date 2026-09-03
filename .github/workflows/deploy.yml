@@ -7,6 +7,8 @@ on:
     paths:
       - '.github/workflows/deploy.yml'
 
+# Controlled deployment marker: spotify-playlists-2026-09-03
+
 permissions:
   contents: read
   pages: write
