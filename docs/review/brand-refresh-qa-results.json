@@ -1,0 +1,349 @@
+{
+  "status": "passed",
+  "results": [
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 960
+      },
+      "home": {
+        "title": "DJ Phelix",
+        "heading": "Music for the moment your room becomes unforgettable.",
+        "visibleTextLength": 2882,
+        "horizontalOverflow": false,
+        "frameworkOverlay": false,
+        "heroCopyLogoOverlap": false,
+        "logos": [
+          {
+            "complete": true,
+            "naturalWidth": 768,
+            "naturalHeight": 768,
+            "inViewport": true
+          },
+          {
+            "complete": true,
+            "naturalWidth": 768,
+            "naturalHeight": 768,
+            "inViewport": false
+          },
+          {
+            "complete": true,
+            "naturalWidth": 768,
+            "naturalHeight": 768,
+            "inViewport": true
+          },
+          {
+            "complete": false,
+            "naturalWidth": 768,
+            "naturalHeight": 768,
+            "inViewport": false
+          }
+        ],
+        "heroAnimation": "none"
+      },
+      "focus": {
+        "tag": "A",
+        "outlineStyle": "solid",
+        "outlineWidth": 3
+      },
+      "menu": null,
+      "booking": {
+        "url": "http://127.0.0.1:4173/contact/",
+        "status": "No inquiry delivery route is connected. Your details have not been sent. Add an owner-supplied booking email or secure form endpoint before launch.",
+        "formAction": null
+      },
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": []
+    },
+    {
+      "viewport": {
+        "name": "tablet-landscape",
+        "width": 1024,
+        "height": 768
+      },
+      "home": {
+        "title": "DJ Phelix",
+        "heading": "Music for the moment your room becomes unforgettable.",
+        "visibleTextLength": 2897,
+        "horizontalOverflow": false,
+        "frameworkOverlay": false,
+        "heroCopyLogoOverlap": false,
+        "logos": [
+          {
+            "complete": true,
+            "naturalWidth": 768,
+            "naturalHeight": 768,
+            "inViewport": true
+          },
+          {
+            "complete": true,
+            "naturalWidth": 768,
+            "naturalHeight": 768,
+            "inViewport": false
+          },
+          {
+            "complete": true,
+            "naturalWidth": 768,
+            "naturalHeight": 768,
+            "inViewport": true
+          },
+          {
+            "complete": false,
+            "naturalWidth": 768,
+            "naturalHeight": 768,
+            "inViewport": false
+          }
+        ],
+        "heroAnimation": "none"
+      },
+      "focus": {
+        "tag": "A",
+        "outlineStyle": "solid",
+        "outlineWidth": 3
+      },
+      "menu": null,
+      "booking": null,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": []
+    },
+    {
+      "viewport": {
+        "name": "tablet",
+        "width": 834,
+        "height": 1112
+      },
+      "home": {
+        "title": "DJ Phelix",
+        "heading": "Music for the moment your room becomes unforgettable.",
+        "visibleTextLength": 2897,
+        "horizontalOverflow": false,
+        "frameworkOverlay": false,
+        "heroCopyLogoOverlap": false,
+        "logos": [
+          {
+            "complete": true,
+            "naturalWidth": 768,
+            "naturalHeight": 768,
+            "inViewport": true
+          },
+          {
+            "complete": true,
+            "naturalWidth": 768,
+            "naturalHeight": 768,
+            "inViewport": false
+          },
+          {
+            "complete": true,
+            "naturalWidth": 768,
+            "naturalHeight": 768,
+            "inViewport": true
+          },
+          {
+            "complete": false,
+            "naturalWidth": 768,
+            "naturalHeight": 768,
+            "inViewport": false
+          }
+        ],
+        "heroAnimation": "none"
+      },
+      "focus": {
+        "tag": "A",
+        "outlineStyle": "solid",
+        "outlineWidth": 3
+      },
+      "menu": null,
+      "booking": null,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": []
+    },
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "home": {
+        "title": "DJ Phelix",
+        "heading": "Music for the moment your room becomes unforgettable.",
+        "visibleTextLength": 2879,
+        "horizontalOverflow": false,
+        "frameworkOverlay": false,
+        "heroCopyLogoOverlap": false,
+        "logos": [
+          {
+            "complete": true,
+            "naturalWidth": 768,
+            "naturalHeight": 768,
+            "inViewport": true
+          },
+          {
+            "complete": true,
+            "naturalWidth": 768,
+            "naturalHeight": 768,
+            "inViewport": false
+          },
+          {
+            "complete": true,
+            "naturalWidth": 768,
+            "naturalHeight": 768,
+            "inViewport": true
+          },
+          {
+            "complete": false,
+            "naturalWidth": 768,
+            "naturalHeight": 768,
+            "inViewport": false
+          }
+        ],
+        "heroAnimation": "none"
+      },
+      "focus": {
+        "tag": "A",
+        "outlineStyle": "solid",
+        "outlineWidth": 3
+      },
+      "menu": {
+        "expandedAfterOpen": "true",
+        "openStateAfterOpen": "true",
+        "closeVisible": true,
+        "expandedAfterEscape": "false",
+        "openStateAfterEscape": "false"
+      },
+      "booking": null,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": []
+    },
+    {
+      "viewport": {
+        "name": "mobile-narrow",
+        "width": 375,
+        "height": 812
+      },
+      "home": {
+        "title": "DJ Phelix",
+        "heading": "Music for the moment your room becomes unforgettable.",
+        "visibleTextLength": 2879,
+        "horizontalOverflow": false,
+        "frameworkOverlay": false,
+        "heroCopyLogoOverlap": false,
+        "logos": [
+          {
+            "complete": true,
+            "naturalWidth": 768,
+            "naturalHeight": 768,
+            "inViewport": true
+          },
+          {
+            "complete": true,
+            "naturalWidth": 768,
+            "naturalHeight": 768,
+            "inViewport": false
+          },
+          {
+            "complete": true,
+            "naturalWidth": 768,
+            "naturalHeight": 768,
+            "inViewport": true
+          },
+          {
+            "complete": false,
+            "naturalWidth": 768,
+            "naturalHeight": 768,
+            "inViewport": false
+          }
+        ],
+        "heroAnimation": "none"
+      },
+      "focus": {
+        "tag": "A",
+        "outlineStyle": "solid",
+        "outlineWidth": 3
+      },
+      "menu": null,
+      "booking": null,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": []
+    }
+  ],
+  "routeResults": [
+    {
+      "route": "/",
+      "status": 200,
+      "heading": {
+        "text": "Music for the moment your room becomes unforgettable.",
+        "visible": true
+      }
+    },
+    {
+      "route": "/services/",
+      "status": 200,
+      "heading": {
+        "text": "The right tone begins with a few good questions.",
+        "visible": true
+      }
+    },
+    {
+      "route": "/weddings/",
+      "status": 200,
+      "heading": {
+        "text": "A wedding set with room to feel like yours.",
+        "visible": true
+      }
+    },
+    {
+      "route": "/events-nightlife/",
+      "status": 200,
+      "heading": {
+        "text": "The room sets the energy. The set meets it there.",
+        "visible": true
+      }
+    },
+    {
+      "route": "/about/",
+      "status": 200,
+      "heading": {
+        "text": "A Cape Cod DJ, built around the room in front of them.",
+        "visible": true
+      }
+    },
+    {
+      "route": "/playlists/",
+      "status": 200,
+      "heading": {
+        "text": "Find the sound that fits the moment.",
+        "visible": true
+      }
+    },
+    {
+      "route": "/mixes/",
+      "status": 200,
+      "heading": {
+        "text": "Media, when it is ready to share.",
+        "visible": true
+      }
+    },
+    {
+      "route": "/contact/",
+      "status": 200,
+      "heading": {
+        "text": "Start a booking inquiry.",
+        "visible": true
+      }
+    },
+    {
+      "route": "/privacy/",
+      "status": 200,
+      "heading": {
+        "text": "A privacy policy is still to be finalized.",
+        "visible": true
+      }
+    }
+  ]
+}
