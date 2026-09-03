@@ -1,0 +1,393 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArrowIcon from '../components/ArrowIcon.astro';
+
+const documents = [
+  {
+    number: '01',
+    eyebrow: 'Agreement template',
+    title: 'Event Entertainment Service Agreement',
+    description:
+      'A fillable four-page planning and contract template covering the client, event, schedule, services, fees, cancellation choices, venue responsibilities, operating terms, attachments, and signatures.',
+    href: '/documents/DJ_Phelix_Event_Service_Agreement_Template.pdf',
+    filename: 'DJ_Phelix_Event_Service_Agreement_Template.pdf',
+    pages: '4 pages',
+    note:
+      'Review template only. It does not become an active agreement until the final version is completed, reviewed, intentionally accepted, and signed by both parties.',
+    includes: [
+      'Event scope, schedule, access, and service selections',
+      'Fees, retainer, balance, overtime, cancellation, and rescheduling fields',
+      'Client and venue responsibilities, music direction, and operating conditions',
+      'Final terms, attachment references, and signature areas'
+    ]
+  },
+  {
+    number: '02',
+    eyebrow: 'Planning questionnaire',
+    title: 'Event, Music & Service Request Form',
+    description:
+      'A fillable five-page worksheet for event goals, timeline cues, must-play and do-not-play selections, key songs, MC details, service requests, and venue logistics.',
+    href: '/documents/DJ_Phelix_Event_Music_Service_Request_Form.pdf',
+    filename: 'DJ_Phelix_Event_Music_Service_Request_Form.pdf',
+    pages: '5 pages',
+    note:
+      'This worksheet communicates preferences and expectations. It does not add equipment, performance time, staffing, or services unless DJ Phelix confirms them in writing.',
+    includes: [
+      'Event profile, audience context, atmosphere, and priorities',
+      'Detailed timeline for entrances, formalities, dancing, and closing',
+      'Music direction, featured songs, priority requests, and exclusions',
+      'MC notes, service inquiries, access, power, weather, and accessibility details'
+    ]
+  }
+] as const;
+---
+
+<BaseLayout
+  title="Client Documents | DJ Phelix"
+  description="Download public, fillable DJ Phelix event agreement and music, service, timeline, and venue-planning PDF forms."
+>
+  <section class="page-hero page-hero-simple documents-hero" aria-labelledby="documents-heading">
+    <div class="site-shell page-hero-inner">
+      <div>
+        <p class="section-number">Client documents</p>
+        <h1 id="documents-heading">Start organized before the gig.</h1>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#downloads">View downloads</a>
+          <a class="button button-secondary" href="/contact/">Contact DJ Phelix</a>
+        </div>
+      </div>
+      <p>These public, fillable PDFs help the client, venue, and DJ document the event scope, music direction, timeline, service requests, and operating expectations before the final confirmation.</p>
+    </div>
+  </section>
+
+  <section id="downloads" class="section documents-section" aria-labelledby="downloads-heading">
+    <div class="site-shell">
+      <div class="section-intro compact-intro documents-intro">
+        <div>
+          <p class="section-number">Public downloads</p>
+          <h2 id="downloads-heading">Two forms. One clearer event plan.</h2>
+        </div>
+        <p>Download the files, save a local copy, and complete the applicable sections. Leave uncertain details blank or identify them as questions rather than guessing.</p>
+      </div>
+
+      <div class="document-grid">
+        {documents.map((document) => (
+          <article class="document-card">
+            <div class="document-card-top">
+              <span class="document-number" aria-hidden="true">{document.number}</span>
+              <div>
+                <p class="section-number">{document.eyebrow}</p>
+                <h3>{document.title}</h3>
+              </div>
+            </div>
+
+            <p class="document-description">{document.description}</p>
+
+            <ul class="document-includes" aria-label={`${document.title} includes`}>
+              {document.includes.map((item) => <li>{item}</li>)}
+            </ul>
+
+            <div class="document-status">
+              <span>Fillable PDF</span>
+              <span>{document.pages}</span>
+              <span>Printable</span>
+            </div>
+
+            <p class="document-note">{document.note}</p>
+
+            <div class="document-actions">
+              <a class="button button-primary" href={document.href} download={document.filename}>
+                Download fillable PDF
+                <ArrowIcon size={16} />
+              </a>
+              <a class="button button-secondary" href={document.href} target="_blank" rel="noreferrer">
+                Open in browser
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section use-section" aria-labelledby="use-heading">
+    <div class="site-shell use-layout">
+      <div class="use-intro">
+        <p class="section-number">Recommended workflow</p>
+        <h2 id="use-heading">Complete, review, then confirm.</h2>
+        <p>These forms are designed to expose unanswered questions before they become day-of-event problems.</p>
+      </div>
+
+      <ol class="use-steps">
+        <li>
+          <span>01</span>
+          <div>
+            <h3>Download and save a copy.</h3>
+            <p>Work from the saved PDF rather than an unsaved browser preview so your entries are retained.</p>
+          </div>
+        </li>
+        <li>
+          <span>02</span>
+          <div>
+            <h3>Fill in what is known.</h3>
+            <p>Document names, dates, times, venue access, formalities, music preferences, and requested services.</p>
+          </div>
+        </li>
+        <li>
+          <span>03</span>
+          <div>
+            <h3>Mark unresolved decisions.</h3>
+            <p>Use the notes and open-question fields for items that still require the venue, planner, client, or DJ to confirm.</p>
+          </div>
+        </li>
+        <li>
+          <span>04</span>
+          <div>
+            <h3>Return the planning form and finalize terms.</h3>
+            <p>The service agreement should reflect the confirmed scope. Requested equipment or services are not included until confirmed in writing.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section documents-safety" aria-labelledby="safety-heading">
+    <div class="site-shell safety-panel">
+      <div>
+        <p class="section-number">Document safety</p>
+        <h2 id="safety-heading">Keep sensitive records out of public forms.</h2>
+      </div>
+      <div>
+        <p>Do not place Social Security numbers, EINs, banking details, passwords, copies of identification, tax forms, voided checks, or payment-card information in either PDF.</p>
+        <p>The agreement is a public starting template, not individualized legal advice. Final business terms should be reviewed before production use.</p>
+        <a class="text-link" href="/contact/#vendor-resources">Need private vendor documentation? Visit venue resources.</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .documents-section,
+  .use-section,
+  .documents-safety {
+    border-top: 1px solid var(--line);
+  }
+
+  #downloads {
+    scroll-margin-top: 7rem;
+  }
+
+  .documents-intro h2 {
+    max-width: 13ch;
+  }
+
+  .document-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-2);
+  }
+
+  .document-card {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    padding: var(--space-3);
+    border: 1px solid var(--line);
+    background: var(--canvas-raised);
+  }
+
+  .document-card-top {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .document-number {
+    display: grid;
+    width: 2.35rem;
+    height: 2.35rem;
+    place-items: center;
+    border: 1px solid var(--coral);
+    color: var(--coral-bright);
+    font-size: 0.7rem;
+    font-weight: 750;
+    letter-spacing: 0.08em;
+  }
+
+  .document-card h3 {
+    max-width: 16ch;
+    margin-bottom: var(--space-1);
+  }
+
+  .document-description {
+    max-width: 41rem;
+    margin-bottom: var(--space-2);
+  }
+
+  .document-includes {
+    display: grid;
+    gap: 0.75rem;
+    padding: 0;
+    margin: 0 0 var(--space-3);
+    list-style: none;
+  }
+
+  .document-includes li {
+    position: relative;
+    padding-left: 1.3rem;
+    color: var(--paper-dim);
+    font-size: 0.86rem;
+  }
+
+  .document-includes li::before {
+    position: absolute;
+    top: 0.72em;
+    left: 0;
+    width: 0.45rem;
+    height: 1px;
+    background: var(--coral);
+    content: '';
+  }
+
+  .document-status {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    margin-top: auto;
+    padding-top: var(--space-2);
+    border-top: 1px solid var(--line);
+  }
+
+  .document-status span {
+    padding: 0.35rem 0.55rem;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .document-note {
+    margin: var(--space-2) 0 0;
+    padding-left: 1rem;
+    border-left: 2px solid var(--coral);
+    color: var(--muted);
+    font-size: 0.78rem;
+  }
+
+  .document-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: var(--space-3);
+  }
+
+  .use-section {
+    background: var(--canvas-soft);
+  }
+
+  .use-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+    gap: var(--space-4);
+    align-items: start;
+  }
+
+  .use-intro {
+    position: sticky;
+    top: 8rem;
+  }
+
+  .use-intro h2 {
+    max-width: 10ch;
+    margin-bottom: var(--space-2);
+  }
+
+  .use-intro p:last-child {
+    max-width: 30rem;
+    margin-bottom: 0;
+  }
+
+  .use-steps {
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--line);
+    list-style: none;
+  }
+
+  .use-steps li {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 1.2rem;
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .use-steps li > span {
+    color: var(--coral-bright);
+    font-size: 0.7rem;
+    font-weight: 750;
+    letter-spacing: 0.12em;
+  }
+
+  .use-steps h3 {
+    margin-bottom: 0.55rem;
+    font-size: clamp(1.45rem, 2vw, 2rem);
+  }
+
+  .use-steps p {
+    max-width: 43rem;
+    margin-bottom: 0;
+    font-size: 0.9rem;
+  }
+
+  .safety-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: var(--space-4);
+    padding: var(--space-4);
+    border: 1px solid var(--line);
+    background: var(--canvas-raised);
+  }
+
+  .safety-panel h2 {
+    max-width: 12ch;
+  }
+
+  .safety-panel p {
+    max-width: 43rem;
+  }
+
+  .safety-panel .text-link {
+    margin-top: var(--space-1);
+  }
+
+  @media (max-width: 900px) {
+    .document-grid,
+    .use-layout,
+    .safety-panel {
+      grid-template-columns: 1fr;
+    }
+
+    .use-intro {
+      position: static;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .document-card,
+    .safety-panel {
+      padding: var(--space-2);
+    }
+
+    .document-actions {
+      display: grid;
+    }
+
+    .document-actions .button {
+      width: 100%;
+    }
+  }
+</style>

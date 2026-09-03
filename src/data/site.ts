@@ -121,6 +121,7 @@ export const site = {
     { label: 'About', href: '/about/' },
     { label: 'Playlists', href: '/playlists/' },
     { label: 'Mixes', href: '/mixes/' },
+    { label: 'Client Docs', href: '/client-documents/' },
     { label: 'Contact', href: '/contact/' }
   ],
   services: [

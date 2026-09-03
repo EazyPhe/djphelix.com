@@ -4,10 +4,12 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "documents": "python scripts/generate_client_documents.py",
+    "predev": "npm run documents",
     "dev": "astro dev",
     "start": "astro dev",
     "check": "astro check",
-    "build": "astro build",
+    "build": "npm run documents && astro build",
     "preview": "astro preview"
   },
   "devDependencies": {
