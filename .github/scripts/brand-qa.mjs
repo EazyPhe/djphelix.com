@@ -8,8 +8,10 @@ const outputDir = path.resolve('brand-qa-artifacts');
 const results = [];
 const viewports = [
   { name: 'desktop', width: 1440, height: 960 },
+  { name: 'tablet-landscape', width: 1024, height: 768 },
   { name: 'tablet', width: 834, height: 1112 },
   { name: 'mobile', width: 390, height: 844 },
+  { name: 'mobile-narrow', width: 375, height: 812 },
 ];
 
 await fs.mkdir(outputDir, { recursive: true });
@@ -102,6 +104,10 @@ try {
     let menu = null;
     if (viewport.name === 'mobile') {
       const toggle = page.locator('[data-menu-toggle]');
+      await page.evaluate(() => {
+        if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
+      });
+      await toggle.focus();
       await toggle.click();
       menu = {
         expandedAfterOpen: await toggle.getAttribute('aria-expanded'),
@@ -169,10 +175,19 @@ try {
   const routeResults = [];
   for (const route of routes) {
     const response = await routePage.goto(`${baseUrl}${route}`, { waitUntil: 'domcontentloaded' });
-    const headingCount = await routePage.locator('h1').count();
-    routeResults.push({ route, status: response?.status(), headingCount });
+    const heading = await routePage.evaluate(() => {
+      const primaryHeading = document.querySelector('main h1, body > h1');
+      if (!(primaryHeading instanceof HTMLElement)) return null;
+      const rectangle = primaryHeading.getBoundingClientRect();
+      const style = getComputedStyle(primaryHeading);
+      return {
+        text: primaryHeading.textContent?.replace(/\s+/g, ' ').trim() || '',
+        visible: rectangle.width > 0 && rectangle.height > 0 && style.visibility !== 'hidden' && style.display !== 'none',
+      };
+    });
+    routeResults.push({ route, status: response?.status(), heading });
     assert.equal(response?.status(), 200, `${route}: expected 200 response`);
-    assert.equal(headingCount, 1, `${route}: expected one h1`);
+    assert.ok(heading?.visible && heading.text, `${route}: expected a visible primary heading`);
   }
   await routeContext.close();
 
