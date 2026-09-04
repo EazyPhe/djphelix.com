@@ -6,8 +6,17 @@ interface Props {
 }
 
 const { currentPath } = Astro.props;
-const isCurrent = (href: string) =>
-  href === '/' ? currentPath === '/' : currentPath.startsWith(href);
+const isCurrent = (href: string) => {
+  if (href.includes('#')) return false;
+
+  const targetPath = href.split('?')[0];
+  return targetPath === '/' ? currentPath === '/' : currentPath.startsWith(targetPath);
+};
+const isPrimaryCurrent = (item: (typeof site.primaryNavigation)[number]) =>
+  'activePaths' in item
+    ? item.activePaths.some((href) => isCurrent(href))
+    : isCurrent(item.href);
+const slugify = (value: string) => value.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 ---
 
 <header class="site-header">
@@ -35,6 +44,15 @@ const isCurrent = (href: string) =>
       <span class="menu-bars" aria-hidden="true"><i></i><i></i></span>
     </button>
 
+    <button
+      class="menu-backdrop"
+      type="button"
+      data-menu-backdrop
+      aria-label="Close navigation"
+      tabindex="-1"
+      hidden
+    ></button>
+
     <nav id="site-navigation" class="primary-nav" aria-label="Primary navigation" data-site-menu>
       <div class="mobile-nav-head">
         <span class="wordmark wordmark-small">
@@ -54,37 +72,225 @@ const isCurrent = (href: string) =>
           </svg>
         </button>
       </div>
-      <ul>
-        {site.navigation.map((item) => (
-          <li>
-            <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined} data-nav-link>
-              {item.label}
-            </a>
-          </li>
+
+      <ul class="primary-nav-list">
+        <li class="nav-item mobile-home-item">
+          <a
+            class="nav-primary-link"
+            href="/"
+            aria-current={isCurrent('/') ? 'page' : undefined}
+            data-nav-link
+          >
+            Home
+          </a>
+        </li>
+
+        {site.primaryNavigation.map((item) => (
+          'groups' in item ? (
+            <li
+              class:list={[
+                'nav-item',
+                'nav-item-has-menu',
+                { 'nav-menu-compact': 'compact' in item && item.compact }
+              ]}
+              data-nav-dropdown
+            >
+              <button
+                class="nav-dropdown-toggle"
+                type="button"
+                aria-expanded="false"
+                aria-controls={`nav-panel-${item.key}`}
+                data-nav-dropdown-toggle
+                data-current={isPrimaryCurrent(item) ? 'true' : undefined}
+              >
+                <span>{item.label}</span>
+                <svg class="nav-chevron" width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true">
+                  <path d="m1 1.25 5 5 5-5" stroke="currentColor" stroke-width="1.4" stroke-linecap="square" />
+                </svg>
+              </button>
+
+              <div
+                class="nav-dropdown-panel"
+                id={`nav-panel-${item.key}`}
+                data-nav-dropdown-panel
+                hidden
+              >
+                {'overview' in item && (
+                  <a
+                    class="nav-menu-overview"
+                    href={item.overview.href}
+                    aria-current={isCurrent(item.overview.href) ? 'page' : undefined}
+                    data-nav-link
+                  >
+                    <span>{item.overview.label}</span>
+                    <small>{item.overview.description}</small>
+                  </a>
+                )}
+
+                <div class="nav-menu-groups">
+                  {item.groups.map((group) => {
+                    const groupId = `nav-${item.key}-${slugify(group.label)}`;
+
+                    return (
+                      <div class="nav-menu-group">
+                        <p class="nav-menu-label" id={groupId}>{group.label}</p>
+                        <ul class="nav-menu-list" aria-labelledby={groupId}>
+                          {group.items.map((child) => (
+                            <li>
+                              <a
+                                class="nav-menu-link"
+                                href={child.href}
+                                aria-current={isCurrent(child.href) ? 'page' : undefined}
+                                data-nav-link
+                              >
+                                <span>{child.label}</span>
+                                <small>{child.description}</small>
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </li>
+          ) : (
+            <li class="nav-item">
+              <a
+                class="nav-primary-link"
+                href={item.href}
+                aria-current={isPrimaryCurrent(item) ? 'page' : undefined}
+                data-nav-link
+              >
+                {item.label}
+              </a>
+            </li>
+          )
         ))}
       </ul>
-      <a class="button button-primary mobile-nav-cta" href="/contact/">{site.primaryAction}</a>
+
+      <a class="button button-primary mobile-nav-cta" href="/contact/" data-nav-link>
+        {site.primaryAction}
+      </a>
     </nav>
+
     <a class="button button-primary header-cta" href="/contact/">{site.primaryAction}</a>
   </div>
 </header>
 
 <script>
+  const mobileNavigationQuery = window.matchMedia('(max-width: 1080px)');
   const menuToggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
   const menuClose = document.querySelector<HTMLButtonElement>('[data-menu-close]');
+  const menuBackdrop = document.querySelector<HTMLButtonElement>('[data-menu-backdrop]');
   const menu = document.querySelector<HTMLElement>('[data-site-menu]');
   const navLinks = document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]');
+  const dropdowns = Array.from(document.querySelectorAll<HTMLElement>('[data-nav-dropdown]'));
 
-  const setMenuOpen = (open: boolean) => {
-    if (!menuToggle || !menu) return;
+  const setDropdownOpen = (dropdown: HTMLElement, open: boolean) => {
+    const toggle = dropdown.querySelector<HTMLButtonElement>('[data-nav-dropdown-toggle]');
+    const panel = dropdown.querySelector<HTMLElement>('[data-nav-dropdown-panel]');
+    if (!toggle || !panel) return;
+
+    toggle.setAttribute('aria-expanded', String(open));
+    panel.hidden = !open;
+    dropdown.dataset.open = String(open);
+
+    if (!open) {
+      dropdown.dataset.pinned = 'false';
+    }
+  };
+
+  const closeDropdowns = (except?: HTMLElement) => {
+    dropdowns.forEach((dropdown) => {
+      if (dropdown !== except) setDropdownOpen(dropdown, false);
+    });
+  };
+
+  dropdowns.forEach((dropdown) => {
+    const toggle = dropdown.querySelector<HTMLButtonElement>('[data-nav-dropdown-toggle]');
+    if (!toggle) return;
+
+    toggle.addEventListener('click', () => {
+      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+      const isPinned = dropdown.dataset.pinned === 'true';
+
+      if (isOpen && isPinned) {
+        setDropdownOpen(dropdown, false);
+        return;
+      }
+
+      closeDropdowns(dropdown);
+      setDropdownOpen(dropdown, true);
+      dropdown.dataset.pinned = 'true';
+    });
+
+    dropdown.addEventListener('pointerenter', (event) => {
+      if (mobileNavigationQuery.matches || event.pointerType === 'touch') return;
+      closeDropdowns(dropdown);
+      setDropdownOpen(dropdown, true);
+    });
+
+    dropdown.addEventListener('pointerleave', () => {
+      if (mobileNavigationQuery.matches || dropdown.dataset.pinned === 'true') return;
+      if (!dropdown.contains(document.activeElement)) setDropdownOpen(dropdown, false);
+    });
+
+    dropdown.addEventListener('focusin', () => {
+      closeDropdowns(dropdown);
+      setDropdownOpen(dropdown, true);
+    });
+
+    dropdown.addEventListener('focusout', () => {
+      requestAnimationFrame(() => {
+        const hasFocus = dropdown.contains(document.activeElement);
+        const isHovered = !mobileNavigationQuery.matches && dropdown.matches(':hover');
+        if (!hasFocus && !isHovered) setDropdownOpen(dropdown, false);
+      });
+    });
+  });
+
+  const setMenuOpen = (open: boolean, returnFocus = true) => {
+    if (!menuToggle || !menu || !mobileNavigationQuery.matches) return;
+
     menuToggle.setAttribute('aria-expanded', String(open));
     menu.dataset.open = String(open);
+    menu.toggleAttribute('inert', !open);
+    menu.setAttribute('aria-hidden', String(!open));
     document.body.classList.toggle('menu-is-open', open);
 
+    if (menuBackdrop) {
+      menuBackdrop.hidden = !open;
+    }
+
     if (open) {
-      menu.querySelector<HTMLAnchorElement>('a')?.focus();
+      requestAnimationFrame(() => {
+        menu.querySelector<HTMLElement>('a, button:not([disabled])')?.focus();
+      });
     } else {
-      menuToggle.focus();
+      closeDropdowns();
+      if (returnFocus) menuToggle.focus();
+    }
+  };
+
+  const syncNavigationMode = () => {
+    if (!menu || !menuToggle) return;
+
+    closeDropdowns();
+    document.body.classList.remove('menu-is-open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+
+    if (mobileNavigationQuery.matches) {
+      menu.dataset.open = 'false';
+      menu.setAttribute('inert', '');
+      menu.setAttribute('aria-hidden', 'true');
+      if (menuBackdrop) menuBackdrop.hidden = true;
+    } else {
+      delete menu.dataset.open;
+      menu.removeAttribute('inert');
+      menu.removeAttribute('aria-hidden');
+      if (menuBackdrop) menuBackdrop.hidden = true;
     }
   };
 
@@ -93,11 +299,41 @@ const isCurrent = (href: string) =>
   });
 
   menuClose?.addEventListener('click', () => setMenuOpen(false));
-  navLinks.forEach((link) => link.addEventListener('click', () => setMenuOpen(false)));
+  menuBackdrop?.addEventListener('click', () => setMenuOpen(false));
+  navLinks.forEach((link) => {
+    link.addEventListener('click', () => {
+      closeDropdowns();
+      setMenuOpen(false, false);
+    });
+  });
+
+  document.addEventListener('click', (event) => {
+    const target = event.target;
+    if (!(target instanceof Node)) return;
+    if (!dropdowns.some((dropdown) => dropdown.contains(target))) closeDropdowns();
+  });
 
   document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && menuToggle?.getAttribute('aria-expanded') === 'true') {
+    if (event.key !== 'Escape') return;
+
+    const openDropdown = dropdowns.find((dropdown) =>
+      dropdown.querySelector('[data-nav-dropdown-toggle][aria-expanded="true"]')
+    );
+
+    if (openDropdown) {
+      event.preventDefault();
+      const toggle = openDropdown.querySelector<HTMLButtonElement>('[data-nav-dropdown-toggle]');
+      setDropdownOpen(openDropdown, false);
+      toggle?.focus();
+      return;
+    }
+
+    if (menuToggle?.getAttribute('aria-expanded') === 'true') {
+      event.preventDefault();
       setMenuOpen(false);
     }
   });
+
+  mobileNavigationQuery.addEventListener('change', syncNavigationMode);
+  syncNavigationMode();
 </script>

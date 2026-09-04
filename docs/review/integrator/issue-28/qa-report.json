@@ -1,0 +1,91 @@
+{
+  "generatedAt": "2026-09-04T09:54:23.933Z",
+  "tests": [
+    {
+      "name": "desktop-1440",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "desktop-1081",
+      "viewport": {
+        "width": 1081,
+        "height": 800
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "tablet-1024",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "mobile-390",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "desktop-menu-regression",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": "PASS",
+      "coverage": [
+        "same-page link closes disclosure",
+        "pointer hover opens",
+        "pointer leave closes"
+      ]
+    }
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "summary": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0
+  },
+  "postRebaseValidation": {
+    "testedAt": "2026-09-04T09:59:38.565Z",
+    "baseCommit": "494567e5bf9bedcbd4c02e9d096f97c469fa46ee",
+    "status": "PASS",
+    "htmlFiles": 13,
+    "referencesChecked": 673,
+    "linkFailures": 0,
+    "viewports": [
+      {
+        "name": "desktop-1440",
+        "width": 1440,
+        "height": 900,
+        "status": "PASS"
+      },
+      {
+        "name": "desktop-1081",
+        "width": 1081,
+        "height": 800,
+        "status": "PASS"
+      },
+      {
+        "name": "tablet-1024",
+        "width": 1024,
+        "height": 768,
+        "status": "PASS"
+      },
+      {
+        "name": "mobile-390",
+        "width": 390,
+        "height": 844,
+        "status": "PASS"
+      }
+    ]
+  }
+}

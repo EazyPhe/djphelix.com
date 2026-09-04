@@ -1,3 +1,161 @@
+const serviceOfferings = [
+  {
+    id: 'weddings',
+    category: 'Celebrations',
+    title: 'Weddings',
+    description:
+      'A personal soundtrack and a clear event plan shaped around your people, priorities, and timeline.',
+    actionLabel: 'Explore weddings',
+    actionHref: '/weddings/'
+  },
+  {
+    id: 'birthdays-private-parties',
+    category: 'Celebrations',
+    title: 'Birthdays & private parties',
+    description:
+      'Music and event pacing shaped around the occasion, the guest list, and the atmosphere you want to create.',
+    actionLabel: 'Discuss a private event',
+    actionHref: '/contact/'
+  },
+  {
+    id: 'corporate-events',
+    category: 'Business & community',
+    title: 'Corporate events',
+    description:
+      'Professional DJ and MC support for company gatherings, celebrations, and other business events.',
+    actionLabel: 'Discuss a corporate event',
+    actionHref: '/contact/'
+  },
+  {
+    id: 'community-family-events',
+    category: 'Business & community',
+    title: 'Community & family events',
+    description:
+      'Audience-aware music for community occasions, family gatherings, fundraisers, and all-age events.',
+    actionLabel: 'Discuss a community event',
+    actionHref: '/contact/'
+  },
+  {
+    id: 'karaoke',
+    category: 'Entertainment',
+    title: 'Karaoke',
+    description:
+      'Hosted karaoke for private events and public gatherings where the guests become part of the entertainment.',
+    actionLabel: 'Ask about karaoke',
+    actionHref: '/contact/'
+  },
+  {
+    id: 'nightlife-bar-events',
+    category: 'Entertainment',
+    title: 'Nightlife & bar events',
+    description:
+      'Adaptive music for bars, restaurants, nightlife events, and recurring public appearances.',
+    actionLabel: 'Explore nightlife events',
+    actionHref: '/events-nightlife/'
+  },
+  {
+    id: 'themed-decade-parties',
+    category: 'Entertainment',
+    title: 'Themed & decade parties',
+    description:
+      'Focused programming for 80s nights and other theme- or era-led events that call for a distinct identity.',
+    actionLabel: 'Explore themed events',
+    actionHref: '/events-nightlife/'
+  }
+] as const;
+
+const primaryNavigation = [
+  {
+    label: 'Services',
+    key: 'services',
+    activePaths: ['/services/', '/weddings/', '/events-nightlife/'],
+    overview: {
+      label: 'View all services',
+      href: '/services/',
+      description: 'Compare every confirmed DJ Phelix event offering in one place.'
+    },
+    groups: [
+      {
+        label: 'Celebrations',
+        items: [
+          {
+            label: 'Weddings',
+            href: '/weddings/',
+            description: 'Wedding music, planning, and event-flow support.'
+          },
+          {
+            label: 'Birthdays & private parties',
+            href: '/services/#birthdays-private-parties',
+            description: 'Personal celebrations with their own energy.'
+          }
+        ]
+      },
+      {
+        label: 'Business & community',
+        items: [
+          {
+            label: 'Corporate events',
+            href: '/services/#corporate-events',
+            description: 'Company gatherings and business celebrations.'
+          },
+          {
+            label: 'Community & family events',
+            href: '/services/#community-family-events',
+            description: 'Community-focused and all-ages occasions.'
+          }
+        ]
+      },
+      {
+        label: 'Entertainment',
+        items: [
+          {
+            label: 'Karaoke',
+            href: '/services/#karaoke',
+            description: 'Hosted sing-along entertainment.'
+          },
+          {
+            label: 'Nightlife & bar events',
+            href: '/events-nightlife/',
+            description: 'Bars, restaurants, and nightlife programming.'
+          },
+          {
+            label: 'Themed & decade parties',
+            href: '/services/#themed-decade-parties',
+            description: '80s nights and other era-led concepts.'
+          }
+        ]
+      }
+    ]
+  },
+  { label: 'Upcoming Events', href: '/events/' },
+  { label: 'About', href: '/about/' },
+  {
+    label: 'Media',
+    key: 'media',
+    activePaths: ['/playlists/', '/mixes/'],
+    compact: true,
+    groups: [
+      {
+        label: 'Listen',
+        items: [
+          {
+            label: 'Playlists',
+            href: '/playlists/',
+            description: 'Browse curated Spotify collections.'
+          },
+          {
+            label: 'Mixes',
+            href: '/mixes/',
+            description: 'Explore DJ Phelix mix content.'
+          }
+        ]
+      }
+    ]
+  },
+  { label: 'Resources', href: '/client-documents/' },
+  { label: 'Contact', href: '/contact/' }
+] as const;
+
 export const site = {
   name: 'DJ Phelix',
   canonicalUrl: 'https://djphelix.com',
@@ -161,6 +319,8 @@ export const site = {
       }
     ]
   },
+  primaryNavigation,
+  serviceOfferings,
   navigation: [
     { label: 'Home', href: '/' },
     { label: 'Services', href: '/services/' },
@@ -182,7 +342,7 @@ export const site = {
     },
     {
       title: 'Private events',
-      href: '/events-nightlife/',
+      href: '/services/#birthdays-private-parties',
       description:
         'A flexible approach for celebrations, gatherings, and nights that need their own energy.'
     },
@@ -195,9 +355,12 @@ export const site = {
   ],
   eventTypes: [
     'Wedding',
-    'Private event',
-    'Nightlife event',
-    'Themed event',
+    'Birthday or private party',
+    'Corporate event',
+    'Karaoke event',
+    'Nightlife or bar event',
+    'Themed or decade party',
+    'Community or family event',
     'Other'
   ]
 } as const;
