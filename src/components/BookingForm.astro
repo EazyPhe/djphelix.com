@@ -3,15 +3,31 @@ import { hasBookingEndpoint, hasInquiryEmail, site } from '../data/site';
 
 const endpoint = site.booking.formEndpoint;
 const formAction = hasBookingEndpoint ? endpoint : undefined;
+const submitLabel = hasBookingEndpoint ? 'Send booking inquiry' : 'Prepare inquiry';
 ---
 
 <form
   class="booking-form"
   action={formAction}
   method={site.booking.method}
+  accept-charset="UTF-8"
   data-booking-form
   data-booking-endpoint={endpoint}
 >
+  {hasBookingEndpoint && (
+    <>
+      <input type="hidden" name="_subject" value={site.booking.subject} />
+      <input type="hidden" name="_next" value={site.booking.successUrl} />
+      <input type="hidden" name="_url" value={site.booking.sourceUrl} />
+      <input type="hidden" name="_template" value="table" />
+      <input type="hidden" name="_autoresponse" value={site.booking.autoresponse} />
+      <div class="form-honeypot" aria-hidden="true">
+        <label for="booking-website">Leave this field empty</label>
+        <input id="booking-website" type="text" name="_honey" tabindex="-1" autocomplete="off" />
+      </div>
+    </>
+  )}
+
   <div class="form-grid">
     <label>
       <span>Name <em aria-hidden="true">*</em></span>
@@ -19,7 +35,7 @@ const formAction = hasBookingEndpoint ? endpoint : undefined;
     </label>
     <label>
       <span>Email <em aria-hidden="true">*</em></span>
-      <input name="email" type="email" autocomplete="email" required />
+      <input name="email" type="email" inputmode="email" autocomplete="email" required />
     </label>
     <label>
       <span>Phone <small>(optional)</small></span>
@@ -52,23 +68,33 @@ const formAction = hasBookingEndpoint ? endpoint : undefined;
 
   <div class="form-action-row">
     <button class="button button-primary" type={hasBookingEndpoint ? 'submit' : 'button'} data-booking-submit>
-      Prepare inquiry
+      {submitLabel}
     </button>
     <div>
       <p class="form-status" data-booking-status role="status" aria-live="polite">
         {hasBookingEndpoint
-          ? 'This form is configured to send to the supplied inquiry endpoint.'
+          ? 'Your inquiry will be sent to DJ Phelix for review. Sending does not reserve a date or confirm availability, pricing, or services. A brief anti-spam check may appear.'
           : 'No booking endpoint is connected yet. This form will not claim to send your message.'}
       </p>
       {hasInquiryEmail ? (
-        <p class="form-fallback">Prefer email? <a href={`mailto:${site.contact.inquiryEmail}`}>{site.contact.inquiryEmail}</a></p>
+        <p class="form-fallback">Prefer direct email? <a href={`mailto:${site.contact.inquiryEmail}`}>{site.contact.inquiryEmail}</a></p>
       ) : (
         <p class="form-fallback">An owner-supplied booking email can be added as the direct fallback before launch.</p>
       )}
     </div>
   </div>
-  <p class="form-privacy">Please do not send sensitive information through this form. <a href="/privacy/">Read the privacy placeholder.</a></p>
-  {!hasBookingEndpoint && <noscript><p class="noscript-note">This form cannot send without a configured delivery route. Add a booking email or secure form endpoint before publishing it.</p></noscript>}
+
+  <p class="form-privacy">
+    By sending this form, you consent to DJ Phelix using these details to respond to and coordinate your inquiry.
+    Do not include Social Security numbers, tax IDs, banking information, passwords, or payment-card details.
+    <a href="/privacy/">Read the privacy notice.</a>
+  </p>
+
+  {!hasBookingEndpoint && (
+    <noscript>
+      <p class="noscript-note">This form cannot send without a configured delivery route. Use the direct email option instead.</p>
+    </noscript>
+  )}
 </form>
 
 <script>
@@ -91,9 +117,19 @@ const formAction = hasBookingEndpoint ? endpoint : undefined;
       }
 
       updateStatus(
-        'No inquiry delivery route is connected. Your details have not been sent. Add an owner-supplied booking email or secure form endpoint before launch.',
+        'No inquiry delivery route is connected. Your details have not been sent. Use the direct email option instead.',
         true
       );
     });
   }
 </script>
+
+<style>
+  .form-honeypot {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+</style>

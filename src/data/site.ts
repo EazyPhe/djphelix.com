@@ -61,8 +61,14 @@ export const site = {
     }
   },
   booking: {
-    formEndpoint: '',
-    method: 'POST' as const
+    formEndpoint: 'https://formsubmit.co/estinvilp3@gmail.com',
+    method: 'POST' as const,
+    provider: 'FormSubmit',
+    successUrl: 'https://djphelix.com/inquiry-received/',
+    sourceUrl: 'https://djphelix.com/contact/',
+    subject: 'New DJ Phelix website booking inquiry',
+    autoresponse:
+      'Thank you for contacting DJ Phelix. Your inquiry was received for review. This automated message does not reserve a date, confirm availability, pricing, or services. DJ Phelix will reply using the contact details you provided.'
   },
   media: {
     approvedPhotoLinks: [] as string[],
