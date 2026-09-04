@@ -1,23 +1,219 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+
+const effectiveDate = 'September 4, 2026';
 ---
 
-<BaseLayout title="Privacy Placeholder | DJ Phelix" description="Pre-launch privacy placeholder for djphelix.com.">
-  <section class="page-hero page-hero-simple" aria-labelledby="privacy-heading">
+<BaseLayout
+  title="Privacy Notice | DJ Phelix"
+  description="How DJ Phelix handles website booking inquiries, contact information, third-party form delivery, and privacy requests."
+>
+  <section class="page-hero page-hero-simple privacy-hero" aria-labelledby="privacy-heading">
     <div class="site-shell page-hero-inner">
       <div>
-        <p class="section-number">Privacy</p>
-        <h1 id="privacy-heading">A privacy policy is still to be finalized.</h1>
+        <p class="section-number">Privacy notice</p>
+        <h1 id="privacy-heading">How inquiry information is handled.</h1>
       </div>
-      <p>This is an honest, minimal pre-launch placeholder. It must be updated with owner-approved privacy terms before an inquiry email or form endpoint begins collecting visitor information.</p>
+      <p>This notice describes the current website workflow while booking inquiries are temporarily routed to the current DJ Phelix inquiry inbox.</p>
     </div>
   </section>
 
-  <section class="section privacy-copy" aria-label="Privacy placeholder details">
-    <div class="site-shell narrow-copy">
-      <h2>What this placeholder means</h2>
-      <p>DJ Phelix has not supplied final information about how inquiry details will be collected, used, stored, shared, retained, or deleted. The current static form is intentionally configured not to claim delivery.</p>
-      <p>Before enabling a booking form or publishing a contact address, Phelix should replace this page with final policy language and a way for visitors to ask privacy questions.</p>
+  <section class="section privacy-overview" aria-labelledby="overview-heading">
+    <div class="site-shell privacy-layout">
+      <div class="privacy-intro">
+        <p class="section-number">Current practice</p>
+        <h2 id="overview-heading">Information is collected to respond to real event inquiries.</h2>
+        <p class="privacy-date">Effective {effectiveDate}</p>
+      </div>
+
+      <div class="privacy-summary">
+        <p>DJ Phelix does not sell website inquiry information. Submitted details are used to review the event, respond to the requester, discuss availability and services, prepare business documents when appropriate, and coordinate a potential or confirmed engagement.</p>
+        <p>Submitting the form does not reserve a date, confirm availability, create a contract, or authorize public release of private vendor records.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section privacy-details" aria-label="Privacy notice details">
+    <div class="site-shell privacy-grid">
+      <article class="privacy-card">
+        <p class="section-number">Information collected</p>
+        <h2>What the booking form asks for.</h2>
+        <ul>
+          <li>Name and email address</li>
+          <li>Optional phone number</li>
+          <li>Event type, date, venue, or location</li>
+          <li>Optional guest count</li>
+          <li>The event description and questions you submit</li>
+        </ul>
+      </article>
+
+      <article class="privacy-card">
+        <p class="section-number">How it is used</p>
+        <h2>Why those details are needed.</h2>
+        <ul>
+          <li>Review the event and determine what follow-up is required</li>
+          <li>Reply about availability, services, pricing, and planning</li>
+          <li>Prepare proposals, planning records, invoices, or agreements when applicable</li>
+          <li>Coordinate with a client, planner, venue, or authorized business contact</li>
+          <li>Maintain reasonable business and communication records</li>
+        </ul>
+      </article>
+
+      <article class="privacy-card">
+        <p class="section-number">Temporary delivery route</p>
+        <h2>FormSubmit and Gmail process the inquiry.</h2>
+        <p>The static website uses FormSubmit to transmit booking-form entries to the current DJ Phelix Gmail inbox. FormSubmit states that submission records may remain in its submission archive for 30 days. The delivered email may remain in Gmail until it is deleted or retained for a legitimate business, accounting, dispute, or legal purpose.</p>
+        <div class="privacy-links">
+          <a href="https://formsubmit.co/documentation" target="_blank" rel="noreferrer">FormSubmit documentation</a>
+          <a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer">Google privacy policy</a>
+        </div>
+      </article>
+
+      <article class="privacy-card">
+        <p class="section-number">Sensitive information</p>
+        <h2>Do not submit confidential financial or identity records.</h2>
+        <p>Do not place Social Security numbers, EINs, banking details, passwords, payment-card information, copies of identification, completed tax forms, or voided checks in a public form or ordinary email.</p>
+        <p>Completed W-9 forms and other private vendor documents are released only through an approved private process after the requester and business purpose are reviewed.</p>
+      </article>
+
+      <article class="privacy-card">
+        <p class="section-number">Retention and deletion</p>
+        <h2>Records are kept only as reasonably needed.</h2>
+        <p>Unneeded inquiries may be deleted. Information connected to an active booking, completed event, payment, contract, dispute, or legal obligation may be kept longer when reasonably necessary.</p>
+        <p>You may request access, correction, or deletion by emailing the address below. Some records may need to be retained where a legitimate business or legal requirement applies.</p>
+      </article>
+
+      <article class="privacy-card">
+        <p class="section-number">External services</p>
+        <h2>Embedded and linked services have their own policies.</h2>
+        <p>The website links to or embeds services such as Spotify, social networks, payment providers, digital contact-card services, and other external sites. Those providers may collect technical or account information under their own terms when you open or use their content.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section privacy-contact" aria-labelledby="privacy-contact-heading">
+    <div class="site-shell privacy-contact-panel">
+      <div>
+        <p class="section-number">Questions or requests</p>
+        <h2 id="privacy-contact-heading">Contact DJ Phelix directly.</h2>
+      </div>
+      <div>
+        <p>Use “Privacy request” in the subject line and identify the email address or event information connected to the request. Do not send sensitive identity documents unless a safer method has been arranged.</p>
+        <a class="button button-primary" href={`mailto:${site.contact.inquiryEmail}?subject=${encodeURIComponent('Privacy request | DJ Phelix')}`}>
+          Email {site.contact.inquiryEmail}
+        </a>
+      </div>
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .privacy-overview,
+  .privacy-details,
+  .privacy-contact {
+    border-top: 1px solid var(--line);
+  }
+
+  .privacy-overview {
+    background: var(--canvas-soft);
+  }
+
+  .privacy-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+    gap: var(--space-4);
+    align-items: end;
+  }
+
+  .privacy-intro h2 {
+    max-width: 13ch;
+    margin-bottom: var(--space-2);
+  }
+
+  .privacy-date {
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  .privacy-summary p {
+    max-width: 48rem;
+    font-size: 1.05rem;
+  }
+
+  .privacy-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-2);
+  }
+
+  .privacy-card {
+    min-width: 0;
+    padding: var(--space-3);
+    border: 1px solid var(--line);
+    background: var(--canvas-raised);
+  }
+
+  .privacy-card h2 {
+    max-width: 16ch;
+    margin-bottom: var(--space-2);
+    font-size: clamp(1.75rem, 2.6vw, 2.7rem);
+  }
+
+  .privacy-card p:last-child,
+  .privacy-card ul:last-child {
+    margin-bottom: 0;
+  }
+
+  .privacy-card ul {
+    display: grid;
+    gap: 0.75rem;
+    padding-left: 1.2rem;
+    color: var(--paper-dim);
+  }
+
+  .privacy-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.2rem;
+    margin-top: var(--space-2);
+  }
+
+  .privacy-links a {
+    border-bottom: 1px solid var(--coral);
+    color: var(--paper);
+    font-size: 0.84rem;
+  }
+
+  .privacy-contact-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: var(--space-4);
+    padding: var(--space-4);
+    border: 1px solid var(--line);
+    background: var(--canvas-raised);
+  }
+
+  .privacy-contact-panel h2 {
+    max-width: 11ch;
+  }
+
+  .privacy-contact-panel p {
+    max-width: 44rem;
+  }
+
+  @media (max-width: 900px) {
+    .privacy-layout,
+    .privacy-grid,
+    .privacy-contact-panel {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .privacy-card,
+    .privacy-contact-panel {
+      padding: var(--space-2);
+    }
+  }
+</style>

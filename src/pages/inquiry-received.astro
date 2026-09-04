@@ -1,0 +1,162 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArrowIcon from '../components/ArrowIcon.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout
+  title="Inquiry Received | DJ Phelix"
+  description="Confirmation that a DJ Phelix website booking inquiry was submitted for review."
+>
+  <section class="page-hero page-hero-simple confirmation-hero" aria-labelledby="confirmation-heading">
+    <div class="site-shell page-hero-inner">
+      <div>
+        <p class="section-number">Inquiry received</p>
+        <h1 id="confirmation-heading">Your event is now in the conversation.</h1>
+        <div class="hero-actions">
+          <a class="button button-primary" href="/">Return home <ArrowIcon size={16} /></a>
+          <a class="button button-secondary" href="/client-documents/">Open event resources</a>
+        </div>
+      </div>
+      <p>Your submission was sent to the current DJ Phelix inquiry inbox for review. Keep an eye on the email address and phone number you provided.</p>
+    </div>
+  </section>
+
+  <section class="section confirmation-section" aria-labelledby="next-heading">
+    <div class="site-shell confirmation-layout">
+      <div class="confirmation-intro">
+        <p class="section-number">What happens next</p>
+        <h2 id="next-heading">Review first. Confirm in writing.</h2>
+        <p>The website submission starts a conversation. It is not a booking confirmation, contract, invoice, or guarantee of availability.</p>
+      </div>
+
+      <ol class="confirmation-steps">
+        <li>
+          <span>01</span>
+          <div>
+            <h3>The event details are reviewed.</h3>
+            <p>DJ Phelix will review the date, location, event type, and the information included in your message.</p>
+          </div>
+        </li>
+        <li>
+          <span>02</span>
+          <div>
+            <h3>A direct reply continues the conversation.</h3>
+            <p>Questions, availability, pricing, services, and planning needs are handled through direct communication.</p>
+          </div>
+        </li>
+        <li>
+          <span>03</span>
+          <div>
+            <h3>Your date is reserved only after confirmation.</h3>
+            <p>Only the final written booking process and accepted terms can establish a confirmed engagement.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section confirmation-help" aria-labelledby="help-heading">
+    <div class="site-shell confirmation-panel">
+      <div>
+        <p class="section-number">Need to add something?</p>
+        <h2 id="help-heading">Send a direct follow-up.</h2>
+      </div>
+      <div>
+        <p>Use the same name and event date so the additional information can be connected to the original inquiry.</p>
+        <a class="text-link" href={`mailto:${site.contact.inquiryEmail}?subject=${encodeURIComponent('Follow-up to DJ Phelix website inquiry')}`}>
+          Email {site.contact.inquiryEmail} <ArrowIcon size={16} />
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .confirmation-section,
+  .confirmation-help {
+    border-top: 1px solid var(--line);
+  }
+
+  .confirmation-section {
+    background: var(--canvas-soft);
+  }
+
+  .confirmation-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.76fr) minmax(0, 1.24fr);
+    gap: var(--space-4);
+    align-items: start;
+  }
+
+  .confirmation-intro h2 {
+    max-width: 11ch;
+    margin-bottom: var(--space-2);
+  }
+
+  .confirmation-intro p:last-child {
+    max-width: 30rem;
+  }
+
+  .confirmation-steps {
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--line);
+    list-style: none;
+  }
+
+  .confirmation-steps li {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 1.2rem;
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .confirmation-steps li > span {
+    color: var(--coral-bright);
+    font-size: 0.7rem;
+    font-weight: 750;
+    letter-spacing: 0.12em;
+  }
+
+  .confirmation-steps h3 {
+    margin-bottom: 0.55rem;
+    font-size: clamp(1.45rem, 2vw, 2rem);
+  }
+
+  .confirmation-steps p {
+    max-width: 43rem;
+    margin-bottom: 0;
+  }
+
+  .confirmation-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: var(--space-4);
+    padding: var(--space-4);
+    border: 1px solid var(--line);
+    background: var(--canvas-raised);
+  }
+
+  .confirmation-panel h2 {
+    max-width: 10ch;
+  }
+
+  .confirmation-panel p {
+    max-width: 42rem;
+  }
+
+  @media (max-width: 900px) {
+    .confirmation-layout,
+    .confirmation-panel {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .confirmation-panel {
+      padding: var(--space-2);
+    }
+  }
+</style>
