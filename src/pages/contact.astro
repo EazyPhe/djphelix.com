@@ -57,15 +57,13 @@ const vendorInquiryHref = buildMailto('Vendor onboarding inquiry | DJ Phelix', v
         <p class="section-number">Contact</p>
         <h1 id="contact-heading">Start a booking inquiry.</h1>
         <div class="hero-actions">
-          <a class="button button-primary" href="#save-contact">Save contact</a>
+          <a class="button button-primary contact-mobile-action" href="#save-contact">Save contact</a>
           <a class="button button-secondary" href="#vendor-resources">Venue resources</a>
         </div>
       </div>
       <p>Save the contact card, text or email directly, and share the event date, location, and atmosphere you have in mind.</p>
     </div>
   </section>
-
-  <ContactCard />
 
   <section class="section booking-section" aria-labelledby="booking-form-heading">
     <div class="site-shell booking-layout">
@@ -77,6 +75,8 @@ const vendorInquiryHref = buildMailto('Vendor onboarding inquiry | DJ Phelix', v
       <BookingForm />
     </div>
   </section>
+
+  <ContactCard />
 
   <section id="vendor-resources" class="section vendor-section" aria-labelledby="vendor-resources-heading">
     <div class="site-shell">
