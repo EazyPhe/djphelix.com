@@ -110,6 +110,48 @@ export const site = {
         eventMoments: [],
         spotifyUrl: 'https://open.spotify.com/playlist/3HSiAkSrCss52LwRNtnus0',
         featured: false
+      },
+      {
+        slug: 'karaoke-ideas',
+        spotifyId: '2AQy1vDjOF2h6NyME8uPqZ',
+        title: 'Karaoke Ideas',
+        description:
+          'A growing collection of karaoke and sing-along ideas gathered by DJ Phelix.',
+        primaryCategory: 'event',
+        genres: [],
+        moods: ['Sing-along'],
+        eras: [],
+        eventMoments: ['Karaoke'],
+        spotifyUrl: 'https://open.spotify.com/playlist/2AQy1vDjOF2h6NyME8uPqZ',
+        featured: false
+      },
+      {
+        slug: '80s-90s-hip-hop',
+        spotifyId: '27nrt3FaUH02UcLensApee',
+        title: '80s & 90s Hip-Hop',
+        description:
+          'A collection of 1980s and 1990s hip-hop selections curated by DJ Phelix.',
+        primaryCategory: 'era',
+        genres: ['Hip-Hop'],
+        moods: [],
+        eras: ['1980s', '1990s'],
+        eventMoments: [],
+        spotifyUrl: 'https://open.spotify.com/playlist/27nrt3FaUH02UcLensApee',
+        featured: false
+      },
+      {
+        slug: 'spanish-mix',
+        spotifyId: '1wwuzF8zAcqi2JduPjnRUs',
+        title: 'Spanish Mix',
+        description:
+          'A growing collection of Spanish-language selections curated by DJ Phelix.',
+        primaryCategory: 'genre',
+        genres: ['Spanish-language'],
+        moods: [],
+        eras: [],
+        eventMoments: [],
+        spotifyUrl: 'https://open.spotify.com/playlist/1wwuzF8zAcqi2JduPjnRUs',
+        featured: false
       }
     ]
   },
