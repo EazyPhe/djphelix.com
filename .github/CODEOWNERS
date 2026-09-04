@@ -1,0 +1,19 @@
+# Human review routing. Server-side enforcement requires branch protection or a repository ruleset.
+* @EazyPhe
+
+/AGENTS.md @EazyPhe
+/.coordination/ @EazyPhe
+/.github/ @EazyPhe
+/package.json @EazyPhe
+/package-lock.json @EazyPhe
+/astro.config.mjs @EazyPhe
+/tsconfig.json @EazyPhe
+/requirements-client-documents.txt @EazyPhe
+/scripts/check-agent-scope.mjs @EazyPhe
+/scripts/generate_client_documents.py @EazyPhe
+/src/data/site.ts @EazyPhe
+/src/layouts/ @EazyPhe
+/src/components/Header.astro @EazyPhe
+/src/components/Footer.astro @EazyPhe
+/src/styles/global.css @EazyPhe
+/docs/decisions/ @EazyPhe
