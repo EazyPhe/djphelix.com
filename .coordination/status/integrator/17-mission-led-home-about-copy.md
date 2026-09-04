@@ -2,7 +2,7 @@
 
 - Lane: integrator
 - Branch: integrator/mission-led-home-about-copy
-- State: ready-for-qa
+- State: ready-for-integration
 - Base reviewed: 4acfdc6afd5c8716bfa823f6d637e85cf214daf4
 - Pull request: #18
 - Last update: 2026-09-04
@@ -29,13 +29,15 @@
 - Replaced the public About placeholders with a first-person mission covering happiness, laughter, connection, responsive pacing, positive energy, and lasting memories.
 - Preserved the existing service facts, lion artwork, contact routes, calls to action, dependencies, workflows, global styles, Pages settings, and DNS.
 - Opened pull request #18.
-- Confirmed the branch was three commits ahead and zero commits behind `main` before opening the pull request.
+- Passed `Enforce agent ownership`, `npm run coordination:test`, `npm run check`, and `npm run build` on CI run 33838551528.
+- Reviewed the exact Pages artifact at 1440 × 1000, 834 × 1112, 390 × 844, and 375 × 812.
+- Verified zero horizontal overflow, clipped text, console errors, page errors, failed asset loads, or hero copy/art overlap.
+- Confirmed the branch remained four commits ahead and zero commits behind `main` after QA.
 
 ## Next
 
-- Confirm GitHub scope and build checks pass on the final head.
-- Review the rendered homepage and About page at desktop, tablet, and mobile widths.
-- Mark the pull request ready, merge after validation, deploy deliberately, and verify the custom domain.
+- Confirm required checks pass on this status-only final head.
+- Mark pull request #18 ready for review, merge by squash, deploy deliberately, and verify the custom domain.
 
 ## Blockers and requests
 
