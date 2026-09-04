@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BookingForm from '../components/BookingForm.astro';
 import ContactCard from '../components/ContactCard.astro';
+import ArrowIcon from '../components/ArrowIcon.astro';
 import { site } from '../data/site';
 
 // Use only the owner-approved contact address. Never store completed tax,
@@ -17,22 +18,24 @@ const w9RequestBody = [
   'Venue / business name: ',
   'Business email: ',
   'Reason for requesting a W-9: ',
-  'Event date (optional): ',
+  'Event name and date (when applicable): ',
+  'Submission deadline: ',
   '',
-  'I understand that this request requires manual review and does not grant document access.'
+  'I understand that this request requires manual review and does not grant document access automatically.'
 ].join('\r\n');
 
 const vendorInquiryBody = [
   'Hello DJ Phelix,',
   '',
-  'I need help with vendor onboarding or payment setup.',
+  'I need help with vendor onboarding or event administration.',
   '',
   'Requester name: ',
   'Venue / business name: ',
   'Business email: ',
   'Event name and date: ',
-  'Requirement: vendor registration / contract / purchase order / invoice / ACH-EFT / other',
+  'Requirement: vendor registration / contract / purchase order / invoice / insurance requirement / other',
   'Deadline: ',
+  'Portal or submission instructions: ',
   'Notes: ',
   '',
   'I will not include tax IDs, banking details, passwords, or other sensitive information in this email.'
@@ -44,7 +47,7 @@ const buildMailto = (subject: string, body: string) =>
     : undefined;
 
 const w9RequestHref = buildMailto('W-9 request | DJ Phelix', w9RequestBody);
-const vendorInquiryHref = buildMailto('Vendor onboarding or payment inquiry | DJ Phelix', vendorInquiryBody);
+const vendorInquiryHref = buildMailto('Vendor onboarding inquiry | DJ Phelix', vendorInquiryBody);
 ---
 
 <BaseLayout title="Contact & Booking Inquiry | DJ Phelix" description="Save the DJ Phelix contact card, start a booking inquiry, or request venue and vendor documentation for a Cape Cod event.">
@@ -78,21 +81,26 @@ const vendorInquiryHref = buildMailto('Vendor onboarding or payment inquiry | DJ
   <section id="vendor-resources" class="section vendor-section" aria-labelledby="vendor-resources-heading">
     <div class="site-shell">
       <div class="vendor-intro">
-        <p class="section-number">Venue & vendor resources</p>
-        <h2 id="vendor-resources-heading">Documentation for approved business requests.</h2>
-        <p>Tax, insurance, and onboarding requests are handled privately. No completed tax forms, banking information, signed contracts, or insurance documents are stored here for public download.</p>
+        <div>
+          <p class="section-number">Venue & vendor resources</p>
+          <h2 id="vendor-resources-heading">Private documents stay private.</h2>
+        </div>
+        <div>
+          <p>W-9 and organization-specific onboarding requests are reviewed before anything is shared. No completed tax forms, banking information, signed contracts, customer records, or insurance documents are stored here for public download.</p>
+          <a class="text-link" href="/client-documents/">Open all client and venue resources <ArrowIcon size={16} /></a>
+        </div>
       </div>
 
       <div class="vendor-grid">
         <article class="vendor-card">
           <p class="section-number">Tax documentation</p>
           <h3>Request a W-9.</h3>
-          <p>For legitimate venue, planner, and accounts-payable requests. Include your name, business, business email, reason for the request, and event date when available.</p>
+          <p>For legitimate venue, planner, client-accounting, and accounts-payable requests. Include your name, business, business email, reason for the request, event information, and deadline when available.</p>
           <div class="vendor-action">
             {w9RequestHref ? (
               <>
                 <a class="button button-primary" href={w9RequestHref} aria-describedby="w9-delivery-note">Request W-9</a>
-                <p id="w9-delivery-note" class="vendor-note">Opens a prefilled email. The request still requires manual review and does not grant access automatically.</p>
+                <p id="w9-delivery-note" class="vendor-note">Opens a prefilled email. The request requires manual review and does not grant access automatically.</p>
               </>
             ) : (
               <>
@@ -103,29 +111,19 @@ const vendorInquiryHref = buildMailto('Vendor onboarding or payment inquiry | DJ
           </div>
         </article>
 
-        <article class="vendor-card vendor-card-disabled" aria-labelledby="coi-heading">
-          <p class="section-number">Insurance documentation</p>
-          <h3 id="coi-heading">Request a certificate of insurance.</h3>
-          <p>This option will be enabled after DJ Phelix has active business liability insurance and a confirmed process for venue-specific certificates.</p>
-          <div class="vendor-action">
-            <button class="button button-disabled" type="button" disabled aria-describedby="coi-status">COI requests coming soon</button>
-            <p id="coi-status" class="vendor-note">Currently unavailable. This disabled control does not submit a request.</p>
-          </div>
-        </article>
-
         <article class="vendor-card">
           <p class="section-number">Business administration</p>
-          <h3>Vendor onboarding and payment questions.</h3>
-          <p>Use this for vendor registration, contract routing, purchase orders, invoice requirements, payment terms, or questions about an organization’s onboarding process.</p>
+          <h3>Vendor onboarding inquiry.</h3>
+          <p>Use this for vendor registration, contract routing, purchase orders, invoice requirements, portal instructions, payment administration, or a venue's documented insurance requirement.</p>
           <div class="vendor-action">
             {vendorInquiryHref ? (
               <>
-                <a class="button button-secondary" href={vendorInquiryHref} aria-describedby="vendor-inquiry-note">Vendor / payment inquiry</a>
+                <a class="button button-secondary" href={vendorInquiryHref} aria-describedby="vendor-inquiry-note">Start vendor inquiry</a>
                 <p id="vendor-inquiry-note" class="vendor-note">Opens a prefilled email to the current DJ Phelix inquiry address.</p>
               </>
             ) : (
               <>
-                <button class="button button-disabled" type="button" disabled aria-describedby="vendor-inquiry-note">Vendor / payment inquiry</button>
+                <button class="button button-disabled" type="button" disabled aria-describedby="vendor-inquiry-note">Start vendor inquiry</button>
                 <p id="vendor-inquiry-note" class="vendor-note">Online vendor inquiries are not connected yet.</p>
               </>
             )}
@@ -133,7 +131,7 @@ const vendorInquiryHref = buildMailto('Vendor onboarding or payment inquiry | DJ
         </article>
       </div>
 
-      <p class="vendor-privacy">Do not send Social Security numbers, EINs, banking details, passwords, tax documents, voided checks, or other sensitive records through these email links.</p>
+      <p class="vendor-privacy">Do not send Social Security numbers, EINs, banking details, passwords, tax documents, voided checks, copies of identification, or payment-card information through these email links.</p>
     </div>
   </section>
 </BaseLayout>
@@ -145,23 +143,24 @@ const vendorInquiryHref = buildMailto('Vendor onboarding or payment inquiry | DJ
   }
 
   .vendor-intro {
-    max-width: 64rem;
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: var(--space-4);
+    align-items: end;
     margin-bottom: var(--space-4);
   }
 
   .vendor-intro h2 {
-    max-width: 14ch;
-    margin-bottom: var(--space-2);
+    max-width: 12ch;
   }
 
-  .vendor-intro > p:last-child {
+  .vendor-intro > div:last-child > p {
     max-width: 52rem;
-    margin-bottom: 0;
   }
 
   .vendor-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-2);
     align-items: stretch;
   }
@@ -184,10 +183,6 @@ const vendorInquiryHref = buildMailto('Vendor onboarding or payment inquiry | DJ
     margin-bottom: 0;
   }
 
-  .vendor-card-disabled {
-    background: var(--canvas-soft);
-  }
-
   .vendor-action {
     margin-top: auto;
     padding-top: var(--space-3);
@@ -202,7 +197,7 @@ const vendorInquiryHref = buildMailto('Vendor onboarding or payment inquiry | DJ
   .button-disabled:hover {
     border-color: var(--line);
     color: var(--muted);
-    background: rgba(242, 237, 230, 0.04);
+    background: rgba(255, 247, 252, 0.04);
     cursor: not-allowed;
     opacity: 0.72;
     transform: none;
@@ -216,7 +211,8 @@ const vendorInquiryHref = buildMailto('Vendor onboarding or payment inquiry | DJ
     font-size: 0.875rem;
   }
 
-  @media (max-width: 980px) {
+  @media (max-width: 900px) {
+    .vendor-intro,
     .vendor-grid {
       grid-template-columns: 1fr;
     }
