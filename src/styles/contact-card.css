@@ -278,6 +278,16 @@
   font-weight: 650;
 }
 
+@media (min-width: 801px) {
+  .contact-mobile-action,
+  #save-contact .contact-card-actions,
+  #save-contact .contact-card-platform-note,
+  #save-contact .contact-card-alternative,
+  #save-contact .contact-card-instructions {
+    display: none;
+  }
+}
+
 @media (max-width: 800px) {
   .contact-card-grid {
     grid-template-columns: 1fr;
