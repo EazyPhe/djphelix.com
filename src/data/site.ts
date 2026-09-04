@@ -166,6 +166,7 @@ export const site = {
     { label: 'Services', href: '/services/' },
     { label: 'Weddings', href: '/weddings/' },
     { label: 'Events & Nightlife', href: '/events-nightlife/' },
+    { label: 'Upcoming Events', href: '/events/' },
     { label: 'About', href: '/about/' },
     { label: 'Playlists', href: '/playlists/' },
     { label: 'Mixes', href: '/mixes/' },
