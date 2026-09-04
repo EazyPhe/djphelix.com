@@ -8,6 +8,8 @@
     "predev": "npm run documents",
     "dev": "astro dev",
     "start": "astro dev",
+    "coordination:test": "node scripts/check-agent-scope.mjs --self-test",
+    "coordination:check": "node scripts/check-agent-scope.mjs",
     "check": "astro check",
     "build": "npm run documents && astro build",
     "preview": "astro preview"
