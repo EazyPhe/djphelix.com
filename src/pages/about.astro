@@ -4,31 +4,33 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { site } from '../data/site';
 
 const approach = [
-  ['The people', 'Start with the guests, the hosts, and the mood they want to create.'],
-  ['The occasion', 'Match the music to the shape of the event instead of a generic script.'],
-  ['The next step', 'Use a clear inquiry to collect the details that have not yet been published.']
+  ['Thoughtful preparation', 'Every event begins with listening carefully, understanding the occasion, and learning which moments matter most.'],
+  ['Instinctive timing', 'The music, pacing, and energy stay responsive to the people in the room instead of following a rigid script.'],
+  ['Positive energy', 'The goal is to create an atmosphere where guests feel comfortable, connected, and ready to celebrate together.']
 ];
 ---
 
-<BaseLayout title="About DJ Phelix" description="DJ Phelix is a Cape Cod-based DJ for weddings, private events, nightlife, and themed events.">
+<BaseLayout title="About DJ Phelix" description="Learn how DJ Phelix approaches weddings, private events, nightlife, and themed events through thoughtful preparation, instinctive music selection, and positive energy.">
   <section class="page-hero page-hero-simple" aria-labelledby="about-heading">
     <div class="site-shell page-hero-inner">
       <div>
         <p class="section-number">About</p>
-        <h1 id="about-heading">A Cape Cod DJ, built around the room in front of them.</h1>
+        <h1 id="about-heading">More than music. Moments with meaning.</h1>
       </div>
-      <p>DJ Phelix is based in {site.basedIn} and works across weddings, private events, nightlife, themed events, and related live-event work.</p>
+      <p>DJ Phelix is based in {site.basedIn} and serves weddings, private events, nightlife, themed events, and related live-event work.</p>
     </div>
   </section>
 
   <section class="section about-section" aria-labelledby="about-approach-heading">
     <div class="site-shell split-content">
       <div>
-        <p class="section-number">The approach</p>
-        <h2 id="about-approach-heading">Personal without making up a backstory.</h2>
+        <p class="section-number">The mission</p>
+        <h2 id="about-approach-heading">Creating moments that feel priceless.</h2>
       </div>
       <div>
-        <p>This first version intentionally leaves biography, portrait, equipment, credentials, testimonials, and venue history for owner-approved updates. What is here reflects the service direction Phelix has supplied.</p>
+        <p>In life, some of the things we value most cannot be measured by a price. Happiness, laughter, connection, and the memories we carry with us are among the things that make an experience truly meaningful.</p>
+        <p>That belief is at the center of how I approach every event as DJ Phelix. My role is not simply to play music. It is to understand the occasion, read the room, guide the energy, and help create an environment where people feel comfortable celebrating together.</p>
+        <p>Every event has its own personality. Some moments call for excitement and a packed dance floor. Others call for warmth, restraint, and the right song at exactly the right time. I prepare carefully, listen closely, and remain responsive throughout the event so the experience feels natural rather than forced.</p>
       </div>
     </div>
     <div class="site-shell principle-grid about-principles">
@@ -44,8 +46,11 @@ const approach = [
 
   <section class="section contrast-section" aria-labelledby="about-contact-heading">
     <div class="site-shell split-content">
-      <div><h2 id="about-contact-heading">The useful details start with your event.</h2></div>
-      <div><p>Tell Phelix the date, type of room, location, and the atmosphere you want to create. The inquiry route is prepared for an owner-supplied inbox or static-form integration.</p><a class="text-link" href="/contact/">Start a booking inquiry<ArrowIcon /></a></div>
+      <div><h2 id="about-contact-heading">Wherever your celebration takes you.</h2></div>
+      <div>
+        <p>My goal is simple: to bring happiness, laughter, positive energy, and lasting memories to every celebration I am trusted to be part of. I would be honored to learn about your event and help bring your vision to life.</p>
+        <a class="text-link" href="/contact/">Start a booking inquiry<ArrowIcon /></a>
+      </div>
     </div>
   </section>
 </BaseLayout>
