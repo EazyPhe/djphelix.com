@@ -1,0 +1,197 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { eventFilterGroups, upcomingEvents } from '../data/events';
+
+const sortedEvents = [...upcomingEvents].sort((a, b) =>
+  new Date(`${a.date}T${a.startTime}`).getTime() - new Date(`${b.date}T${b.startTime}`).getTime()
+);
+
+const formatDate = (date: string) =>
+  new Intl.DateTimeFormat('en-US', { weekday: 'short', month: 'short', day: 'numeric' }).format(
+    new Date(`${date}T12:00:00`)
+  );
+
+const formatTime = (time: string) => {
+  const [hour, minute] = time.split(':').map(Number);
+  return new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: '2-digit' }).format(
+    new Date(2000, 0, 1, hour, minute)
+  );
+};
+---
+
+<BaseLayout
+  title="Upcoming Events | DJ Phelix"
+  description="Browse upcoming public DJ Phelix events and filter by nightlife, family-friendly, brunch, time of day, audience, setting, and more."
+>
+  <section class="events-hero" aria-labelledby="upcoming-events-heading">
+    <div class="site-shell events-hero-inner">
+      <p class="section-number">Upcoming events</p>
+      <h1 id="upcoming-events-heading">Find your kind of night. Or morning.</h1>
+      <p class="events-intro">Browse public appearances by atmosphere, time of day, audience, setting, and access. Select more than one filter to narrow the list.</p>
+    </div>
+  </section>
+
+  <section class="events-browser" aria-labelledby="event-filter-heading">
+    <div class="site-shell">
+      <div class="filter-panel">
+        <div class="filter-heading-row">
+          <div>
+            <p class="section-number">Find an event</p>
+            <h2 id="event-filter-heading">What works for you?</h2>
+          </div>
+          <button class="filter-reset" type="button" data-filter-reset>All events</button>
+        </div>
+
+        <div class="filter-groups">
+          {eventFilterGroups.map((group) => (
+            <fieldset class="filter-group">
+              <legend>{group.label}</legend>
+              <div class="filter-chips">
+                {group.tags.map((tag) => (
+                  <button class="filter-chip" type="button" data-filter-tag={tag} aria-pressed="false">{tag}</button>
+                ))}
+              </div>
+            </fieldset>
+          ))}
+        </div>
+
+        <p class="filter-status" data-filter-status aria-live="polite">
+          {sortedEvents.length === 1 ? '1 upcoming event' : `${sortedEvents.length} upcoming events`}
+        </p>
+      </div>
+
+      <div class="event-grid" data-event-grid>
+        {sortedEvents.map((event) => (
+          <article class="event-card" data-event-card data-tags={event.tags.join('|')}>
+            <div class="event-date-block">
+              <time datetime={event.date}>{formatDate(event.date)}</time>
+            </div>
+            <div class="event-card-body">
+              <div class="event-card-topline">
+                <p>{formatTime(event.startTime)}{event.endTime ? ` – ${formatTime(event.endTime)}` : ''}</p>
+                <div class="event-tags" aria-label="Event categories">
+                  {event.tags.map((tag) => <span>{tag}</span>)}
+                </div>
+              </div>
+              <h2>{event.title}</h2>
+              <p class="event-location">{event.venue ? `${event.venue} · ` : ''}{event.location}</p>
+              {event.description && <p>{event.description}</p>}
+              {event.infoUrl && <a class="event-link" href={event.infoUrl}>Event details <span aria-hidden="true">→</span></a>}
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div class:list={['events-empty', { 'is-hidden': sortedEvents.length > 0 }]} data-no-public-events>
+        <p class="section-number">Calendar update</p>
+        <h2>No upcoming public dates are posted yet.</h2>
+        <p>New public appearances will show up here as they are confirmed. Private bookings are not displayed.</p>
+      </div>
+
+      <div class="events-empty is-hidden" data-no-filter-results>
+        <p class="section-number">No matches</p>
+        <h2>Nothing matches those filters yet.</h2>
+        <p>Try removing one or more filters, or choose “All events” to reset the list.</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const filterButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-filter-tag]'));
+  const resetButton = document.querySelector<HTMLButtonElement>('[data-filter-reset]');
+  const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-event-card]'));
+  const status = document.querySelector<HTMLElement>('[data-filter-status]');
+  const noFilterResults = document.querySelector<HTMLElement>('[data-no-filter-results]');
+  const noPublicEvents = document.querySelector<HTMLElement>('[data-no-public-events]');
+  const activeTags = new Set<string>();
+
+  const applyFilters = () => {
+    let visibleCount = 0;
+    cards.forEach((card) => {
+      const cardTags = new Set((card.dataset.tags || '').split('|').filter(Boolean));
+      const matches = [...activeTags].every((tag) => cardTags.has(tag));
+      card.hidden = !matches;
+      if (matches) visibleCount += 1;
+    });
+
+    const total = cards.length;
+    if (status) {
+      status.textContent = activeTags.size
+        ? `${visibleCount} of ${total} upcoming ${total === 1 ? 'event' : 'events'} shown`
+        : `${total} upcoming ${total === 1 ? 'event' : 'events'}`;
+    }
+
+    noFilterResults?.classList.toggle('is-hidden', total === 0 || visibleCount > 0 || activeTags.size === 0);
+    noPublicEvents?.classList.toggle('is-hidden', total > 0);
+    resetButton?.classList.toggle('is-active', activeTags.size === 0);
+  };
+
+  filterButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const tag = button.dataset.filterTag;
+      if (!tag) return;
+      if (activeTags.has(tag)) activeTags.delete(tag);
+      else activeTags.add(tag);
+      button.setAttribute('aria-pressed', String(activeTags.has(tag)));
+      applyFilters();
+    });
+  });
+
+  resetButton?.addEventListener('click', () => {
+    activeTags.clear();
+    filterButtons.forEach((button) => button.setAttribute('aria-pressed', 'false'));
+    applyFilters();
+  });
+
+  applyFilters();
+</script>
+
+<style>
+  .events-hero { padding: clamp(5rem, 10vw, 9rem) 0 3.5rem; }
+  .events-hero-inner { max-width: 980px; }
+  .events-hero h1 { max-width: 850px; margin-bottom: 1.25rem; }
+  .events-intro { max-width: 760px; font-size: clamp(1.05rem, 2vw, 1.3rem); }
+  .events-browser { padding: 0 0 clamp(5rem, 9vw, 8rem); }
+  .filter-panel { border-top: 1px solid currentColor; border-bottom: 1px solid rgba(255,255,255,.22); padding: 2rem 0 2.25rem; }
+  .filter-heading-row { display: flex; align-items: end; justify-content: space-between; gap: 1.5rem; margin-bottom: 2rem; }
+  .filter-heading-row h2 { margin-bottom: 0; }
+  .filter-reset, .filter-chip { font: inherit; color: inherit; background: transparent; border: 1px solid rgba(255,255,255,.32); cursor: pointer; }
+  .filter-reset { padding: .8rem 1.1rem; }
+  .filter-reset.is-active, .filter-chip[aria-pressed='true'] { background: #fff; color: #111; border-color: #fff; }
+  .filter-groups { display: grid; gap: 1.35rem; }
+  .filter-group { border: 0; padding: 0; margin: 0; min-width: 0; }
+  .filter-group legend { font-size: .78rem; text-transform: uppercase; letter-spacing: .13em; opacity: .65; margin-bottom: .65rem; }
+  .filter-chips { display: flex; flex-wrap: wrap; gap: .55rem; }
+  .filter-chip { border-radius: 999px; padding: .55rem .9rem; font-size: .92rem; }
+  .filter-chip:hover, .filter-reset:hover { border-color: currentColor; }
+  .filter-chip:focus-visible, .filter-reset:focus-visible, .event-link:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+  .filter-status { margin: 1.5rem 0 0; opacity: .7; }
+  .event-grid { display: grid; gap: 1rem; margin-top: 2rem; }
+  .event-card { display: grid; grid-template-columns: minmax(120px, .28fr) 1fr; border: 1px solid rgba(255,255,255,.2); }
+  .event-card[hidden] { display: none; }
+  .event-date-block { padding: 1.5rem; border-right: 1px solid rgba(255,255,255,.2); font-size: 1.05rem; font-weight: 600; }
+  .event-card-body { padding: 1.5rem; }
+  .event-card-topline { display: flex; justify-content: space-between; gap: 1rem; align-items: start; margin-bottom: 1rem; }
+  .event-card-topline p { margin: 0; opacity: .75; }
+  .event-tags { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .35rem; }
+  .event-tags span { border: 1px solid rgba(255,255,255,.28); border-radius: 999px; padding: .28rem .55rem; font-size: .72rem; }
+  .event-card h2 { margin-bottom: .55rem; }
+  .event-location { opacity: .75; }
+  .event-link { display: inline-block; margin-top: .75rem; }
+  .events-empty { margin-top: 2rem; padding: clamp(2rem, 5vw, 4rem); border: 1px solid rgba(255,255,255,.2); text-align: center; }
+  .events-empty h2 { margin: .35rem auto .75rem; max-width: 700px; }
+  .events-empty p:last-child { max-width: 620px; margin-left: auto; margin-right: auto; }
+  .is-hidden { display: none; }
+  @media (max-width: 720px) {
+    .filter-heading-row { align-items: start; flex-direction: column; }
+    .filter-reset { width: 100%; }
+    .event-card { grid-template-columns: 1fr; }
+    .event-date-block { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.2); }
+    .event-card-topline { flex-direction: column; }
+    .event-tags { justify-content: flex-start; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .filter-chip, .filter-reset { scroll-behavior: auto; }
+  }
+</style>
