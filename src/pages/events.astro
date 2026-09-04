@@ -98,18 +98,18 @@ const formatTime = (time: string) => {
 </BaseLayout>
 
 <script>
-  const filterButtons = Array.from(document.querySelectorAll('[data-filter-tag]'));
-  const resetButton = document.querySelector('[data-filter-reset]');
-  const cards = Array.from(document.querySelectorAll('[data-event-card]'));
-  const status = document.querySelector('[data-filter-status]');
-  const noFilterResults = document.querySelector('[data-no-filter-results]');
-  const noPublicEvents = document.querySelector('[data-no-public-events]');
-  const activeTags = new Set();
+  const filterButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-filter-tag]'));
+  const resetButton = document.querySelector<HTMLButtonElement>('[data-filter-reset]');
+  const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-event-card]'));
+  const status = document.querySelector<HTMLElement>('[data-filter-status]');
+  const noFilterResults = document.querySelector<HTMLElement>('[data-no-filter-results]');
+  const noPublicEvents = document.querySelector<HTMLElement>('[data-no-public-events]');
+  const activeTags = new Set<string>();
 
   const applyFilters = () => {
     let visibleCount = 0;
     cards.forEach((card) => {
-      const cardTags = new Set((card.getAttribute('data-tags') || '').split('|').filter(Boolean));
+      const cardTags = new Set((card.dataset.tags || '').split('|').filter(Boolean));
       const matches = [...activeTags].every((tag) => cardTags.has(tag));
       card.hidden = !matches;
       if (matches) visibleCount += 1;
@@ -129,7 +129,7 @@ const formatTime = (time: string) => {
 
   filterButtons.forEach((button) => {
     button.addEventListener('click', () => {
-      const tag = button.getAttribute('data-filter-tag');
+      const tag = button.dataset.filterTag;
       if (!tag) return;
       if (activeTags.has(tag)) activeTags.delete(tag);
       else activeTags.add(tag);
