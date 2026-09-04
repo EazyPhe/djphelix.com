@@ -45,6 +45,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Test agent coordination guardrails
+        run: npm run coordination:test
+
       - name: Run Astro and TypeScript checks
         run: npm run check
 
