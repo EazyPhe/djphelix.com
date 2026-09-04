@@ -2,9 +2,9 @@
 
 - Lane: integrator
 - Branch: integrator/mission-led-home-about-copy
-- State: in-progress
+- State: ready-for-qa
 - Base reviewed: 4acfdc6afd5c8716bfa823f6d637e85cf214daf4
-- Pull request: pending
+- Pull request: #18
 - Last update: 2026-09-04
 
 ## Allowed paths
@@ -24,13 +24,18 @@
 
 - Confirmed no open pull request overlaps the homepage or About page.
 - Confirmed the active media task is isolated to the Events & Nightlife media lane.
-- Recorded the approved copy direction in issue #17.
+- Added the approved homepage headline, supporting mission copy, and “Music with instinct. Moments with meaning.” theme.
+- Refined the homepage principles around preparation, crowd reading, and protecting the moment.
+- Replaced the public About placeholders with a first-person mission covering happiness, laughter, connection, responsive pacing, positive energy, and lasting memories.
+- Preserved the existing service facts, lion artwork, contact routes, calls to action, dependencies, workflows, global styles, Pages settings, and DNS.
+- Opened pull request #18.
+- Confirmed the branch was three commits ahead and zero commits behind `main` before opening the pull request.
 
 ## Next
 
-- Update the homepage and About page copy.
-- Run coordination, Astro, build, responsive, and live-link validation.
-- Open a pull request for review and integration.
+- Confirm GitHub scope and build checks pass on the final head.
+- Review the rendered homepage and About page at desktop, tablet, and mobile widths.
+- Mark the pull request ready, merge after validation, deploy deliberately, and verify the custom domain.
 
 ## Blockers and requests
 
