@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "documents": "python scripts/generate_client_documents.py && python scripts/generate_resource_documents.py",
+    "documents": "python scripts/generate_client_documents.py && python scripts/generate_resource_documents.py && python scripts/mark_sample_agreement.py",
     "predev": "npm run documents",
     "dev": "astro dev",
     "start": "astro dev",
