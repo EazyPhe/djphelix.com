@@ -3,7 +3,7 @@
 - Lane: contact
 - Branch: agent/contact/issue-21-responsive-contact
 - State: ready-for-qa
-- Base reviewed: fa4befc4e4c3164896b3e1fe19f41e0977f99338
+- Base reviewed: bd35949c1f51ff15870c53a1f79f6cf29516abe8
 - Pull request: #23
 - Last update: 2026-09-04
 
@@ -36,11 +36,13 @@
 - Confirmed the generated CSS contains the desktop-only hide rule.
 - Rendered the contact page successfully in Google Chrome at desktop width.
 - Opened pull request #23 with no files outside the contact lane.
+- Integrated current `main` after the Events page and automatic deployment updates landed; neither update touched contact-owned files.
+- Passed the Agent scope workflow on the combined branch head.
 
 ## Next
 
 - Confirm required CI passes on the final branch head.
-- Mark ready for integration and merge by squash.
+- Merge pull request #23 by squash and verify the automatic Pages deployment.
 
 ## Blockers and requests
 
