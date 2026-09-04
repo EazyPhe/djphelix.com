@@ -2,9 +2,9 @@
 
 - Lane: playlists
 - Branch: agent/playlists/shareable-playlist-links
-- State: ready-for-qa
-- Base reviewed: 7aec00105fb48911594cba4d4805f08c2087e457
-- Pull request: pending
+- State: ready-for-integration
+- Base reviewed: 2f48de6608ab5b3440f1331ba392740dc3bc226e
+- Pull request: 13
 - Last update: 2026-09-03
 
 ## Allowed paths
@@ -19,13 +19,17 @@
 - Added one Share playlist action per playlist card.
 - Added native Web Share support with clipboard fallback.
 - Added accessible success and failure announcements.
-- Preserved the existing `?playlist=<slug>` activation behavior.
+- Preserved URL-selected playlists and existing filtering/player behavior.
+- Rebased cleanly after integrator PR #10 advanced `main`.
 
 ## Verification
 
-- Agent guardrail self-test: passed locally, 10 cases.
-- Astro check: 0 errors and 0 warnings; existing hints remain.
-- Production build: pending GitHub CI after Python dependency setup issue in the isolated workstation worktree.
+- Coordination self-test: passed, 10 cases.
+- Lane scope check: passed against current `main`.
+- Astro check: 0 errors and 0 warnings; 2 existing hints remain.
+- Production build: passed; 11 static pages and client resources generated.
+- Chrome browser QA: 24 assertions passed at desktop and 390 px mobile widths.
+- GitHub required checks: enforced on the final pull-request head before merge.
 
 ## Blockers and requests
 
