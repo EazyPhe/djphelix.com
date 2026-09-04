@@ -2,9 +2,9 @@
 
 - Lane: integrator
 - Branch: integrator/live-inquiry-delivery
-- State: in-progress
+- State: validating
 - Base reviewed: d9ea38719fcfd0b237eb6a79e5e599c3a97d5242
-- Pull request: pending
+- Pull request: #15
 - Last update: 2026-09-04
 
 ## Allowed paths
@@ -21,14 +21,18 @@
 
 - Registered issue #14 as the task contract.
 - Created an isolated integrator branch and worktree from current `main`.
-- Confirmed the approved temporary destination is `estinvilp3@gmail.com`.
+- Confirmed the owner-approved temporary personal inbox.
 - Selected FormSubmit as the temporary static-site form transport.
+- Connected the booking form with POST delivery, spam controls, a direct-email fallback, and a branded confirmation route.
+- Replaced the privacy placeholder with an interim operational privacy notice.
+- Passed local coordination, Astro, production build, and 39 Playwright browser assertions.
+- Added desktop and mobile evidence under `docs/review/integrator/live-inquiry-delivery/`.
 
 ## Next
 
-- Connect the booking form and add accurate success, privacy, and fallback behavior.
-- Run repository checks and rendered browser QA.
-- Deploy, activate the FormSubmit route, and verify an end-to-end delivery in Gmail.
+- Complete pull-request CI and ownership checks.
+- Merge and deliberately deploy after the checks pass.
+- Activate the production FormSubmit route and verify an end-to-end delivery in Gmail.
 
 ## Blockers and requests
 

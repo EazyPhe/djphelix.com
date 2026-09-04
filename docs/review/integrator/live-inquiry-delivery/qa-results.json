@@ -1,0 +1,205 @@
+{
+  "checks": [
+    {
+      "name": "desktop_contact_title",
+      "pass": true,
+      "detail": "Contact & Booking Inquiry | DJ Phelix"
+    },
+    {
+      "name": "desktop_contact_not_blank",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop_contact_no_overflow",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop_form_action",
+      "pass": true,
+      "detail": "https://formsubmit.co/estinvilp3@gmail.com"
+    },
+    {
+      "name": "desktop_form_method",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop_submit_label",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop_privacy_link",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop_honeypot",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop_next",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop_submit_post",
+      "pass": true,
+      "detail": "{\"method\":\"POST\",\"body\":\"_subject=New+DJ+Phelix+website+booking+inquiry&_next=https%3A%2F%2Fdjphelix.com%2Finquiry-received%2F&_url=https%3A%2F%2Fdjphelix.com%2Fcontact%2F&_template=table&_autoresponse=Thank+you+for+contacting+DJ+Phelix.+Your+inquiry+was+received+for+review.+This+automated+message+does+not+reserve+a+date%2C+confirm+availability%2C+pricing%2C+or+services.+DJ+Phelix+will+reply+using+the+contact+details+you+provided.&_honey=&name=Website+Delivery+Test&email=qa%40example.com&phone=555-0100&eventType=Private+event&eventDate=2026-10-01&location=Cape+Cod%2C+Massachusetts&guestCount=100&message=Automated+local+payload+verification.\"}"
+    },
+    {
+      "name": "desktop_submit_payload",
+      "pass": true,
+      "detail": "_subject=New+DJ+Phelix+website+booking+inquiry&_next=https%3A%2F%2Fdjphelix.com%2Finquiry-received%2F&_url=https%3A%2F%2Fdjphelix.com%2Fcontact%2F&_template=table&_autoresponse=Thank+you+for+contacting+DJ+Phelix.+Your+inquiry+was+received+for+review.+This+automated+message+does+not+reserve+a+date%2C+confirm+availability%2C+pricing%2C+or+services.+DJ+Phelix+will+reply+using+the+contact+details+you+provided.&_honey=&name=Website+Delivery+Test&email=qa%40example.com&phone=555-0100&eventType=Private+event&eventDate=2026-10-01&location=Cape+Cod%2C+Massachusetts&guestCount=100&message=Automated+local+payload+verification."
+    },
+    {
+      "name": "desktop_privacy_title",
+      "pass": true,
+      "detail": "Privacy Notice | DJ Phelix"
+    },
+    {
+      "name": "desktop_privacy_not_blank",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop_privacy_no_overflow",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop_privacy_provider",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop_privacy_retention",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop_success_title",
+      "pass": true,
+      "detail": "Inquiry Received | DJ Phelix"
+    },
+    {
+      "name": "desktop_success_not_blank",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop_success_no_overflow",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop_success_disclaimer",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile_contact_title",
+      "pass": true,
+      "detail": "Contact & Booking Inquiry | DJ Phelix"
+    },
+    {
+      "name": "mobile_contact_not_blank",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile_contact_no_overflow",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile_form_action",
+      "pass": true,
+      "detail": "https://formsubmit.co/estinvilp3@gmail.com"
+    },
+    {
+      "name": "mobile_form_method",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile_submit_label",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile_privacy_link",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile_honeypot",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile_next",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile_privacy_title",
+      "pass": true,
+      "detail": "Privacy Notice | DJ Phelix"
+    },
+    {
+      "name": "mobile_privacy_not_blank",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile_privacy_no_overflow",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile_privacy_provider",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile_privacy_retention",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile_success_title",
+      "pass": true,
+      "detail": "Inquiry Received | DJ Phelix"
+    },
+    {
+      "name": "mobile_success_not_blank",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile_success_no_overflow",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile_success_disclaimer",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "console_health",
+      "pass": true,
+      "detail": "[]"
+    }
+  ],
+  "console": [],
+  "screenshots": [
+    "C:\\Users\\playa\\AppData\\Local\\Temp\\djphelix-inquiry-local-qa\\desktop-contact.png",
+    "C:\\Users\\playa\\AppData\\Local\\Temp\\djphelix-inquiry-local-qa\\mobile-contact.png"
+  ],
+  "passed": true
+}
