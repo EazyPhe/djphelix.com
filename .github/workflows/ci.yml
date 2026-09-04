@@ -53,3 +53,9 @@ jobs:
 
       - name: Build the static site and client PDFs
         run: npm run build
+
+      - name: Upload pull request preview artifact
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
