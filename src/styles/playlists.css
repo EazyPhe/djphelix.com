@@ -1,4 +1,15 @@
 /* Playlists */
+.playlist-share-announcement {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .playlist-featured {
   border-bottom: 1px solid var(--line);
   background: var(--canvas);
@@ -264,6 +275,26 @@
 
 .playlist-select-button:hover svg {
   transform: translateX(3px);
+}
+
+.playlist-share-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 0 0.35rem;
+  border: 0;
+  border-bottom: 1px solid var(--line-strong);
+  color: var(--paper-dim);
+  background: transparent;
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.4;
+  transition: color 160ms ease, border-color 160ms ease;
+}
+
+.playlist-share-button:hover,
+.playlist-share-button[data-share-state='copied'] {
+  border-color: var(--ice);
+  color: var(--ice);
 }
 
 .playlist-positioning {

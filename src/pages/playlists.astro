@@ -92,6 +92,13 @@ const filters = categoryOrder
         <p data-filter-status aria-live="polite">Showing all {playlists.length} playlists.</p>
       </div>
 
+      <p
+        class="playlist-share-announcement"
+        data-share-status
+        aria-live="polite"
+        aria-atomic="true"
+      ></p>
+
       <div class="playlist-filter-bar" aria-label="Filter playlists">
         <button class="playlist-filter" type="button" data-filter="all" aria-pressed="true">
           <span>All</span><small>{playlists.length}</small>
@@ -145,6 +152,17 @@ const filters = categoryOrder
               <a class="text-link" href={playlist.spotifyUrl} target="_blank" rel="noopener noreferrer">
                 Open Spotify<ArrowIcon />
               </a>
+              <button
+                class="playlist-share-button"
+                type="button"
+                aria-label={`Share ${playlist.title}`}
+                data-playlist-share
+                data-slug={playlist.slug}
+                data-title={playlist.title}
+                data-description={playlist.description}
+              >
+                <span data-share-label>Share playlist</span>
+              </button>
             </div>
           </article>
         ))}
@@ -179,6 +197,7 @@ const filters = categoryOrder
     const featuredLink = document.querySelector<HTMLAnchorElement>('[data-featured-link]');
     const playerStatus = document.querySelector<HTMLElement>('[data-player-status]');
     const filterStatus = document.querySelector<HTMLElement>('[data-filter-status]');
+    const shareStatus = document.querySelector<HTMLElement>('[data-share-status]');
     const playlistButtons = Array.from(
       document.querySelectorAll<HTMLButtonElement>('[data-playlist-select]')
     );
@@ -188,6 +207,52 @@ const filters = categoryOrder
     const filterButtons = Array.from(
       document.querySelectorAll<HTMLButtonElement>('[data-filter]')
     );
+    const shareButtons = Array.from(
+      document.querySelectorAll<HTMLButtonElement>('[data-playlist-share]')
+    );
+
+    const announceShare = (message: string) => {
+      if (!shareStatus) return;
+
+      shareStatus.textContent = '';
+      window.requestAnimationFrame(() => {
+        shareStatus.textContent = message;
+      });
+    };
+
+    const copyPlaylistUrl = async (url: string) => {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(url);
+        return;
+      }
+
+      const textarea = document.createElement('textarea');
+      textarea.value = url;
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.append(textarea);
+      textarea.select();
+
+      const legacyClipboard = document as unknown as {
+        execCommand(commandId: string): boolean;
+      };
+      const copied = legacyClipboard.execCommand('copy');
+      textarea.remove();
+
+      if (!copied) throw new Error('Clipboard copy failed.');
+    };
+
+    const setShareFeedback = (button: HTMLButtonElement) => {
+      const label = button.querySelector<HTMLElement>('[data-share-label]');
+      button.dataset.shareState = 'copied';
+      if (label) label.textContent = 'Link copied';
+
+      window.setTimeout(() => {
+        delete button.dataset.shareState;
+        if (label) label.textContent = 'Share playlist';
+      }, 2200);
+    };
 
     const activatePlaylist = (
       button: HTMLButtonElement,
@@ -250,6 +315,41 @@ const filters = categoryOrder
 
     playlistButtons.forEach((button) => {
       button.addEventListener('click', () => activatePlaylist(button, { scroll: true }));
+    });
+
+    shareButtons.forEach((button) => {
+      button.addEventListener('click', async () => {
+        const { slug, title = 'DJ Phelix playlist', description = '' } = button.dataset;
+        if (!slug) return;
+
+        const url = new URL('/playlists/', window.location.origin);
+        url.searchParams.set('playlist', slug);
+        const shareUrl = url.toString();
+
+        if (typeof navigator.share === 'function') {
+          try {
+            await navigator.share({
+              title: `${title} | DJ Phelix`,
+              text: description,
+              url: shareUrl
+            });
+            announceShare(`${title} shared.`);
+            return;
+          } catch (error) {
+            if (error instanceof DOMException && error.name === 'AbortError') return;
+          }
+        }
+
+        try {
+          await copyPlaylistUrl(shareUrl);
+          setShareFeedback(button);
+          announceShare(`Link to ${title} copied to the clipboard.`);
+        } catch {
+          announceShare(
+            `Could not copy the link to ${title}. Open the playlist and copy the address from your browser.`
+          );
+        }
+      });
     });
 
     filterButtons.forEach((button) => {
