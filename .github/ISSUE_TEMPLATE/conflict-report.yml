@@ -1,0 +1,66 @@
+name: Agent conflict or shared-file request
+description: Report overlapping work, a required shared-file change, or a cross-lane interface decision.
+title: "[Coordination] "
+body:
+  - type: dropdown
+    id: message_type
+    attributes:
+      label: Message type
+      options:
+        - SHARED_FILE_REQUEST
+        - CONFLICT_DETECTED
+        - INTERFACE_CHANGE
+        - BLOCKED
+        - DECISION_REQUIRED
+    validations:
+      required: true
+
+  - type: input
+    id: source
+    attributes:
+      label: From lane and issue
+      placeholder: playlists / #12
+    validations:
+      required: true
+
+  - type: input
+    id: target
+    attributes:
+      label: Intended recipient
+      placeholder: integrator
+    validations:
+      required: true
+
+  - type: textarea
+    id: paths
+    attributes:
+      label: Affected paths
+      placeholder: |
+        - src/components/Header.astro
+        - src/data/site.ts
+    validations:
+      required: true
+
+  - type: textarea
+    id: request
+    attributes:
+      label: Conflict or requested behavior
+      description: Describe the needed behavior and impact. Do not paste an unsolicited rewrite of shared code.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: blocking
+    attributes:
+      label: Is this blocking the task?
+      options:
+        - "No"
+        - "Yes"
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence and related links
+      description: Include branch, pull request, error, or conflicting issue details.
