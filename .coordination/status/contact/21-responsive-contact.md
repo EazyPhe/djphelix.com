@@ -2,9 +2,9 @@
 
 - Lane: contact
 - Branch: agent/contact/issue-21-responsive-contact
-- State: in-progress
+- State: ready-for-qa
 - Base reviewed: fa4befc4e4c3164896b3e1fe19f41e0977f99338
-- Pull request: draft
+- Pull request: #23
 - Last update: 2026-09-04
 
 ## Allowed paths
@@ -29,11 +29,18 @@
 - Kept the QR code and basic contact details visible on desktop.
 - Preserved the mobile vCard download and SMS links.
 - Preserved the live booking-form copy and delivery behavior added on current `main`.
+- Applied the product changes to a clean worktree based on current `main`.
+- Passed `npm run check` with zero errors and two pre-existing deprecation hints.
+- Passed `npm run build`; all 12 routes were generated.
+- Confirmed the generated HTML places the booking section before `#save-contact`.
+- Confirmed the generated CSS contains the desktop-only hide rule.
+- Rendered the contact page successfully in Google Chrome at desktop width.
+- Opened pull request #23 with no files outside the contact lane.
 
 ## Next
 
-- Complete CI and responsive review on the pull request.
-- Mark ready for integration after required checks pass.
+- Confirm required CI passes on the final branch head.
+- Mark ready for integration and merge by squash.
 
 ## Blockers and requests
 
