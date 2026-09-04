@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "defaultBaseBranch": "main",
+  "controlRoomIssue": 6,
+  "branchPolicy": {
+    "agentPattern": "^agent/(?<lane>[a-z0-9-]+)/(?<task>[a-z0-9][a-z0-9._/-]*)$",
+    "privilegedPatterns": [
+      "^coordination/[a-z0-9][a-z0-9._/-]*$",
+      "^integrator/[a-z0-9][a-z0-9._/-]*$",
+      "^hotfix/[a-z0-9][a-z0-9._/-]*$",
+      "^human/[a-z0-9][a-z0-9._/-]*$",
+      "^dependabot/.+$"
+    ]
+  },
+  "integratorOnly": [
+    "AGENTS.md",
+    "README.md",
+    ".coordination/README.md",
+    ".coordination/ownership.json",
+    ".coordination/interfaces/**",
+    ".coordination/handoffs/TEMPLATE.md",
+    ".coordination/status/README.md",
+    ".github/**",
+    "package.json",
+    "package-lock.json",
+    "astro.config.mjs",
+    "tsconfig.json",
+    "requirements-client-documents.txt",
+    "scripts/check-agent-scope.mjs",
+    "scripts/generate_client_documents.py",
+    "src/data/site.ts",
+    "src/layouts/**",
+    "src/components/Header.astro",
+    "src/components/Footer.astro",
+    "src/components/ArrowIcon.astro",
+    "src/styles/global.css",
+    "public/favicon.svg",
+    "docs/CONTENT_NEEDED.md",
+    "docs/DESIGN_SYSTEM.md",
+    "docs/PROJECT_BRIEF.md",
+    "docs/TASK_LOG.md",
+    "docs/decisions/**"
+  ],
+  "lanes": {
+    "contact": {
+      "description": "Contact, booking/contact components, QR/VCF assets, and client-document request experience.",
+      "allowedPaths": [
+        ".coordination/status/contact/**",
+        ".coordination/handoffs/contact/**",
+        "src/pages/contact.astro",
+        "src/pages/contact/**",
+        "src/pages/client-documents.astro",
+        "src/components/BookingForm.astro",
+        "src/components/ContactCard.astro",
+        "src/components/contact/**",
+        "src/data/contact.ts",
+        "src/styles/contact-card.css",
+        "public/contact/**",
+        "public/documents/contact/**",
+        "public/images/contact/**",
+        "docs/review/contact/**"
+      ]
+    },
+    "playlists": {
+      "description": "Playlist page, Spotify presentation, playlist data, and playlist-specific styles and assets.",
+      "allowedPaths": [
+        ".coordination/status/playlists/**",
+        ".coordination/handoffs/playlists/**",
+        "src/pages/playlists.astro",
+        "src/components/playlists/**",
+        "src/data/playlists.ts",
+        "src/styles/playlists.css",
+        "public/playlists/**",
+        "public/images/playlists/**",
+        "docs/review/playlists/**"
+      ]
+    },
+    "media": {
+      "description": "Nightlife, media, mixes, gallery content, and media-specific components, data, styles, and assets.",
+      "allowedPaths": [
+        ".coordination/status/media/**",
+        ".coordination/handoffs/media/**",
+        "src/pages/events-nightlife.astro",
+        "src/pages/mixes.astro",
+        "src/pages/images/**",
+        "src/components/media/**",
+        "src/data/media.ts",
+        "src/styles/media.css",
+        "public/media/**",
+        "public/images/media/**",
+        "docs/review/media/**"
+      ]
+    },
+    "qa": {
+      "description": "Read-mostly quality assurance, automated tests, QA scripts, review evidence, and handoff records.",
+      "allowedPaths": [
+        ".coordination/status/qa/**",
+        ".coordination/handoffs/qa/**",
+        "tests/**",
+        "scripts/qa/**",
+        "docs/review/qa/**"
+      ]
+    }
+  }
+}
