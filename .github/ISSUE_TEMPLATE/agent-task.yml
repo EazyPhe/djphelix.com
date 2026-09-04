@@ -1,0 +1,93 @@
+name: Agent task
+description: Create one bounded implementation or QA task for a registered agent lane.
+title: "[Agent Task] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        One issue equals one branch, one worktree, one lane, and one pull request. Do not include secrets, customer data, EIN information, or completed tax forms.
+
+  - type: dropdown
+    id: lane
+    attributes:
+      label: Agent lane
+      description: Select the lane that owns every intended product-code path.
+      options:
+        - contact
+        - playlists
+        - media
+        - qa
+        - integrator
+    validations:
+      required: true
+
+  - type: input
+    id: branch
+    attributes:
+      label: Assigned branch
+      description: Use agent/<lane>/<task-slug> or coordination/<task-slug> for integrator work.
+      placeholder: agent/contact/issue-7-vcf
+    validations:
+      required: true
+
+  - type: textarea
+    id: objective
+    attributes:
+      label: Objective
+      description: State the user-visible or verification outcome, not a broad theme.
+    validations:
+      required: true
+
+  - type: textarea
+    id: allowed_paths
+    attributes:
+      label: Allowed paths
+      description: Copy exact files or approved patterns from .coordination/ownership.json.
+      placeholder: |
+        - src/pages/contact.astro
+        - public/contact/**
+    validations:
+      required: true
+
+  - type: textarea
+    id: prohibited_paths
+    attributes:
+      label: Explicitly prohibited paths
+      description: List likely shared files that the agent must request from the integrator.
+      placeholder: |
+        - src/components/Header.astro
+        - src/data/site.ts
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Use observable, testable criteria.
+      placeholder: |
+        - [ ] Behavior works at desktop, tablet, and mobile widths.
+        - [ ] Keyboard and visible-focus behavior are preserved.
+        - [ ] npm run check passes.
+        - [ ] npm run build passes.
+    validations:
+      required: true
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies and interfaces
+      description: Identify prerequisite issues, data contracts, shared-file requests, and expected merge order.
+      placeholder: None.
+
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Assignment controls
+      options:
+        - label: This task has exactly one lane owner.
+          required: true
+        - label: Shared-file changes will be requested in control-room issue #6 rather than made by the feature agent.
+          required: true
+        - label: The branch will not deploy or push directly to main.
+          required: true
