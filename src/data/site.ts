@@ -132,9 +132,19 @@ const primaryNavigation = [
   {
     label: 'Media',
     key: 'media',
-    activePaths: ['/playlists/', '/mixes/'],
+    activePaths: ['/highlights/', '/playlists/', '/mixes/'],
     compact: true,
     groups: [
+      {
+        label: 'Watch',
+        items: [
+          {
+            label: 'Highlights',
+            href: '/highlights/',
+            description: 'Dancing, smiles, and shared moments with DJ Phelix.'
+          }
+        ]
+      },
       {
         label: 'Listen',
         items: [
@@ -231,6 +241,34 @@ export const site = {
   media: {
     approvedPhotoLinks: [] as string[],
     approvedVideoLinks: [] as string[],
+    highlights: [
+      {
+        id: 'feel-the-room',
+        title: 'Feel the Room',
+        description: 'Dancing, smiles, and shared moments with DJ Phelix.',
+        durationSeconds: 22,
+        formats: [
+          {
+            id: 'widescreen',
+            label: 'Widescreen',
+            aspect: '16:9',
+            width: 1920,
+            height: 1080,
+            src: '/media/highlights/feel-the-room-wide-v01.mp4',
+            poster: '/media/highlights/feel-the-room-wide-v01.jpg'
+          },
+          {
+            id: 'vertical',
+            label: 'Vertical',
+            aspect: '9:16',
+            width: 1080,
+            height: 1920,
+            src: '/media/highlights/feel-the-room-vertical-v02.mp4',
+            poster: '/media/highlights/feel-the-room-vertical-v02.jpg'
+          }
+        ]
+      }
+    ],
     approvedMixLinks: [] as string[],
     spotifyPlaylists: [
       {
@@ -328,6 +366,7 @@ export const site = {
     { label: 'Events & Nightlife', href: '/events-nightlife/' },
     { label: 'Upcoming Events', href: '/events/' },
     { label: 'About', href: '/about/' },
+    { label: 'Highlights', href: '/highlights/' },
     { label: 'Playlists', href: '/playlists/' },
     { label: 'Mixes', href: '/mixes/' },
     { label: 'Resources', href: '/client-documents/' },

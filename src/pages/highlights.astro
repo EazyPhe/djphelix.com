@@ -1,0 +1,115 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+import '../styles/highlights.css';
+---
+
+<BaseLayout
+  title="Highlights | DJ Phelix"
+  description="Watch real dancing, smiles, and shared moments with DJ Phelix. Explore the Feel the Room highlight in widescreen and vertical."
+>
+  <section class="highlights-intro" aria-labelledby="highlights-heading">
+    <div class="site-shell">
+      <p class="section-number">DJ Phelix in motion</p>
+      <h1 id="highlights-heading">Highlights</h1>
+      <p>Music brings the room together. Take a look at the moments that follow.</p>
+    </div>
+  </section>
+
+  {site.media.highlights.map((highlight) => (
+    <section class="highlights-feature" aria-labelledby={`${highlight.id}-heading`}>
+      <div class="site-shell">
+        <div class="highlights-feature-heading">
+          <div>
+            <h2 id={`${highlight.id}-heading`}>{highlight.title}</h2>
+            <p>{highlight.description}</p>
+          </div>
+          <p class="highlights-watch-note">Watch in widescreen or vertical. Press play for sound.</p>
+        </div>
+
+        <div class="highlights-grid">
+          {highlight.formats.map((format) => {
+            const videoId = `${highlight.id}-${format.id}`;
+            return (
+              <article class:list={['highlight-card', `highlight-card-${format.id}`]}>
+                <div class="highlight-card-heading">
+                  <h3 id={`${videoId}-heading`}>{format.label}</h3>
+                  <span>{format.aspect} <span aria-hidden="true">·</span> {highlight.durationSeconds} seconds</span>
+                </div>
+                <video
+                  id={videoId}
+                  data-highlight-video
+                  aria-label={`${highlight.title} — ${format.label.toLowerCase()}`}
+                  width={format.width}
+                  height={format.height}
+                  controls
+                  playsinline
+                  preload="none"
+                  poster={format.poster}
+                >
+                  <source src={format.src} type="video/mp4" />
+                  <a href={format.src}>Open the {format.label.toLowerCase()} video</a>
+                </video>
+                <div class="highlight-actions">
+                  <button
+                    class="button button-primary"
+                    type="button"
+                    data-highlight-toggle={videoId}
+                    data-format-label={format.label.toLowerCase()}
+                    aria-controls={videoId}
+                    hidden
+                  >Play {format.label.toLowerCase()}</button>
+                  <a class="text-link" href={format.src}>Open video<span class="highlight-sr-only">: {highlight.title}, {format.label.toLowerCase()}</span></a>
+                </div>
+                <p class="highlight-status" data-highlight-status={videoId} role="status" aria-live="polite"></p>
+              </article>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  ))}
+</BaseLayout>
+
+<script>
+  const videos = Array.from(document.querySelectorAll<HTMLVideoElement>('[data-highlight-video]'));
+
+  videos.forEach((video) => {
+    const button = document.querySelector<HTMLButtonElement>(`[data-highlight-toggle="${video.id}"]`);
+    const status = document.querySelector<HTMLElement>(`[data-highlight-status="${video.id}"]`);
+    if (!button || !status) return;
+
+    const label = button.dataset.formatLabel ?? 'video';
+    const updateButton = () => {
+      button.textContent = `${video.ended ? 'Replay' : video.paused ? 'Play' : 'Pause'} ${label}`;
+    };
+    button.hidden = false;
+
+    button.addEventListener('click', async () => {
+      status.textContent = '';
+      if (!video.paused) {
+        video.pause();
+        return;
+      }
+      videos.forEach((other) => { if (other !== video) other.pause(); });
+      if (video.ended) video.currentTime = 0;
+      try {
+        await video.play();
+      } catch {
+        status.textContent = 'Playback could not start. Try the Open video link.';
+      }
+    });
+
+    video.addEventListener('play', () => {
+      videos.forEach((other) => { if (other !== video) other.pause(); });
+      status.textContent = '';
+      updateButton();
+    });
+    video.addEventListener('pause', updateButton);
+    video.addEventListener('ended', updateButton);
+    video.addEventListener('error', () => {
+      status.textContent = 'This video could not load. Try the Open video link.';
+      updateButton();
+    });
+  });
+</script>
