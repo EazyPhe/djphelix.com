@@ -63,6 +63,7 @@ import '../styles/highlights.css';
                 <video
                   id={videoId}
                   data-highlight-video
+                  data-src={format.src}
                   aria-label={`${highlight.title} — ${format.label.toLowerCase()}`}
                   width={format.width}
                   height={format.height}
@@ -71,7 +72,6 @@ import '../styles/highlights.css';
                   preload="none"
                   poster={format.poster}
                 >
-                  <source data-src={format.src} type="video/mp4" />
                   <a href={format.src}>Open the {format.label.toLowerCase()} video</a>
                 </video>
                 <div class="highlight-actions">
@@ -122,11 +122,10 @@ import '../styles/highlights.css';
       // Stop playback and release the outgoing source before exposing the next player.
       cards.forEach((card) => {
         const video = card.querySelector('video');
-        const source = video?.querySelector('source');
-        if (card !== selected && video && source) {
+        if (card !== selected && video) {
           video.pause();
-          if (source.hasAttribute('src')) {
-            source.removeAttribute('src');
+          if (video.hasAttribute('src')) {
+            video.removeAttribute('src');
             video.load();
           }
         }
@@ -134,10 +133,9 @@ import '../styles/highlights.css';
       });
 
       const video = selected.querySelector('video');
-      const source = video?.querySelector('source');
-      if (video && source?.dataset.src && !source.hasAttribute('src')) {
-        source.src = source.dataset.src;
-        video.load();
+      if (video?.dataset.src && !video.hasAttribute('src')) {
+        // Assigning src respects preload=none; an explicit load() can trigger a download.
+        video.src = video.dataset.src;
       }
       choices.forEach((choice) => {
         const active = choice.dataset.highlightFormatChoice === selected.dataset.highlightFormat;
