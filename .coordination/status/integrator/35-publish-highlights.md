@@ -2,9 +2,9 @@
 
 - Role: integrator
 - Branch: `integrator/publish-highlights-35`
-- State: in-progress
+- State: validated; awaiting protected merge and deployment verification
 - Base reviewed: `f706f057c3b312eb60ed986eec3ea5b503ef8406`
-- Pull request: draft pending first coherent commit
+- Pull request: https://github.com/EazyPhe/djphelix.com/pull/36
 - Last update: 2026-09-16
 
 ## Authorization and scope
@@ -30,8 +30,18 @@ The owner approved both final videos and requested publication on the live highl
 - Both approved media hashes match the production delivery manifest; total public media payload is 60,502,326 bytes including posters.
 - No DNS, repository settings, workflow edits, dependency upgrades, raw footage, project files, or unrelated site changes are part of this release.
 
+## Completed validation
+
+- Product patch reviewed at `f2b550187ea73b399492dbe5854368fb742c98c1`; this follow-up changes only the task record.
+- Coordination self-tests (10 cases), scope validation, Astro check and production build passed. Astro reported zero errors/warnings and two existing deprecation hints.
+- Independent read-only review found no patch defects. All four public and built media hashes match the approved production assets. The site-wide scan covered 14 HTML pages, 672 internal references and 93 anchors without missing visitor links, assets, anchors, duplicate IDs or unresolved ARIA targets.
+- Real-browser review at 1440x900, 820x1180 and 390x844: posters and aspect ratios render correctly; mobile layout stacks and has no horizontal overflow.
+- Widescreen and portrait playback advance with a 22.016-second container duration. Starting portrait pauses widescreen; pause, completed playback and replay work. Keyboard Enter starts playback and exposes the visible focus ring.
+- Desktop and mobile Media menus expose Highlights. Mobile selection closes the menu and reaches the page.
+- Reduced-motion emulation still waits for user playback. Network observation confirmed no MP4 requests on initial page load; browser console reported no errors/warnings.
+- Existing 404 canonical metadata issue (`/404/` versus `404.html`) is unchanged and outside this release.
+
 ## Remaining
 
-- Implement and review the page, navigation and playback.
-- Run coordination, Astro, production-build and responsive-browser checks; independently review the patch.
-- Pass required checks on the final head, merge through the protected PR path, and verify live deployment.
+- Require successful checks on the final PR head and current main, then protected squash merge.
+- Verify the existing Pages deployment and both public video URLs. Record the merge SHA, deployment run and live checks in issue #35 / PR #36 to avoid a post-release bookkeeping-only deployment.
