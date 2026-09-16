@@ -17,7 +17,7 @@ import '../styles/highlights.css';
   </section>
 
   {site.media.highlights.map((highlight) => (
-    <section class="highlights-feature" aria-labelledby={`${highlight.id}-heading`}>
+    <section class="highlights-feature" data-highlight={highlight.id} aria-labelledby={`${highlight.id}-heading`}>
       <div class="site-shell">
         <div class="highlights-feature-heading">
           <div>
@@ -27,11 +27,35 @@ import '../styles/highlights.css';
           <p class="highlights-watch-note">Watch in widescreen or vertical. Press play for sound.</p>
         </div>
 
-        <div class="highlights-grid">
+        <div class="highlight-formats" role="group" aria-label={`${highlight.title} video format`} hidden>
+          {highlight.formats.map((format) => (
+            <button
+              type="button"
+              data-highlight-format-choice={format.id}
+              aria-pressed="false"
+              aria-controls={`${highlight.id}-${format.id}-card`}
+            >{format.label}</button>
+          ))}
+        </div>
+        <noscript>
+          <p class="highlights-fallback">
+            Open a video to watch:
+            {highlight.formats.map((format) => (
+              <a class="text-link" href={format.src}>{format.label}<span class="highlight-sr-only">: {highlight.title}</span></a>
+            ))}
+          </p>
+        </noscript>
+
+        <div class="highlights-player">
           {highlight.formats.map((format) => {
             const videoId = `${highlight.id}-${format.id}`;
             return (
-              <article class:list={['highlight-card', `highlight-card-${format.id}`]}>
+              <article
+                id={`${videoId}-card`}
+                data-highlight-format={format.id}
+                class:list={['highlight-card', `highlight-card-${format.id}`]}
+                aria-labelledby={`${videoId}-heading`}
+              >
                 <div class="highlight-card-heading">
                   <h3 id={`${videoId}-heading`}>{format.label}</h3>
                   <span>{format.aspect} <span aria-hidden="true">·</span> {highlight.durationSeconds} seconds</span>
@@ -47,7 +71,7 @@ import '../styles/highlights.css';
                   preload="none"
                   poster={format.poster}
                 >
-                  <source src={format.src} type="video/mp4" />
+                  <source data-src={format.src} type="video/mp4" />
                   <a href={format.src}>Open the {format.label.toLowerCase()} video</a>
                 </video>
                 <div class="highlight-actions">
@@ -73,8 +97,73 @@ import '../styles/highlights.css';
 
 <script>
   const videos = Array.from(document.querySelectorAll<HTMLVideoElement>('[data-highlight-video]'));
+  // Match the site's mobile content breakpoint; tablets default to widescreen.
+  const mobileQuery = window.matchMedia('(max-width: 760px)');
+
+  document.querySelectorAll<HTMLElement>('[data-highlight]').forEach((highlight) => {
+    const cards = Array.from(highlight.querySelectorAll<HTMLElement>('[data-highlight-format]'));
+    const choices = Array.from(highlight.querySelectorAll<HTMLButtonElement>('[data-highlight-format-choice]'));
+    const formats = highlight.querySelector<HTMLElement>('.highlight-formats');
+    const storageKey = `djphelix:highlight-format:${highlight.dataset.highlight}`;
+    let manualChoice: string | null = null;
+
+    try {
+      const saved = sessionStorage.getItem(storageKey);
+      if (cards.some((card) => card.dataset.highlightFormat === saved)) manualChoice = saved;
+    } catch {
+      // In-memory choices still work when browser storage is unavailable.
+    }
+
+    const selectFormat = (format: string) => {
+      const selected = cards.find((card) => card.dataset.highlightFormat === format) ?? cards[0];
+      if (!selected) return;
+      const focusMoves = cards.some((card) => card !== selected && card.contains(document.activeElement));
+
+      // Stop playback and release the outgoing source before exposing the next player.
+      cards.forEach((card) => {
+        const video = card.querySelector('video');
+        const source = video?.querySelector('source');
+        if (card !== selected && video && source) {
+          video.pause();
+          if (source.hasAttribute('src')) {
+            source.removeAttribute('src');
+            video.load();
+          }
+        }
+        card.hidden = card !== selected;
+      });
+
+      const video = selected.querySelector('video');
+      const source = video?.querySelector('source');
+      if (video && source?.dataset.src && !source.hasAttribute('src')) {
+        source.src = source.dataset.src;
+        video.load();
+      }
+      choices.forEach((choice) => {
+        const active = choice.dataset.highlightFormatChoice === selected.dataset.highlightFormat;
+        choice.setAttribute('aria-pressed', String(active));
+        if (active && focusMoves) choice.focus({ preventScroll: true });
+      });
+      highlight.dataset.formatReady = '';
+    };
+
+    const applyPreference = () => selectFormat(manualChoice ?? (mobileQuery.matches ? 'vertical' : 'widescreen'));
+    choices.forEach((choice) => {
+      choice.addEventListener('click', () => {
+        manualChoice = choice.dataset.highlightFormatChoice ?? null;
+        if (manualChoice) {
+          try { sessionStorage.setItem(storageKey, manualChoice); } catch { /* Keep the in-memory choice. */ }
+        }
+        applyPreference();
+      });
+    });
+    mobileQuery.addEventListener('change', applyPreference);
+    applyPreference();
+    if (formats) formats.hidden = false;
+  });
 
   videos.forEach((video) => {
+    const card = video.closest<HTMLElement>('[data-highlight-format]');
     const button = document.querySelector<HTMLButtonElement>(`[data-highlight-toggle="${video.id}"]`);
     const status = document.querySelector<HTMLElement>(`[data-highlight-status="${video.id}"]`);
     if (!button || !status) return;
@@ -96,19 +185,27 @@ import '../styles/highlights.css';
       try {
         await video.play();
       } catch {
-        status.textContent = 'Playback could not start. Try the Open video link.';
+        if (!card?.hidden) status.textContent = 'Playback could not start. Try the Open video link.';
       }
     });
 
     video.addEventListener('play', () => {
+      if (card?.hidden) {
+        video.pause();
+        return;
+      }
       videos.forEach((other) => { if (other !== video) other.pause(); });
       status.textContent = '';
       updateButton();
     });
     video.addEventListener('pause', updateButton);
     video.addEventListener('ended', updateButton);
+    video.addEventListener('emptied', () => {
+      status.textContent = '';
+      updateButton();
+    });
     video.addEventListener('error', () => {
-      status.textContent = 'This video could not load. Try the Open video link.';
+      if (!card?.hidden) status.textContent = 'This video could not load. Try the Open video link.';
       updateButton();
     });
   });
