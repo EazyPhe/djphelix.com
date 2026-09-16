@@ -243,6 +243,32 @@ export const site = {
     approvedVideoLinks: [] as string[],
     highlights: [
       {
+        id: 'every-kind-of-crowd',
+        title: 'Every Kind of Crowd',
+        description: 'Small gatherings, big celebrations, and shared dance-floor energy with DJ Phelix.',
+        durationSeconds: 30,
+        formats: [
+          {
+            id: 'widescreen',
+            label: 'Widescreen',
+            aspect: '16:9',
+            width: 1920,
+            height: 1080,
+            src: '/media/highlights/every-kind-of-crowd-wide-v01.mp4',
+            poster: '/media/highlights/every-kind-of-crowd-wide-v01.jpg'
+          },
+          {
+            id: 'vertical',
+            label: 'Vertical',
+            aspect: '9:16',
+            width: 1080,
+            height: 1920,
+            src: '/media/highlights/every-kind-of-crowd-vertical-v01.mp4',
+            poster: '/media/highlights/every-kind-of-crowd-vertical-v01.jpg'
+          }
+        ]
+      },
+      {
         id: 'feel-the-room',
         title: 'Feel the Room',
         description: 'Dancing, smiles, and shared moments with DJ Phelix.',
