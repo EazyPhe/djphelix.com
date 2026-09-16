@@ -2,10 +2,10 @@
 
 - Role: integrator
 - Branch: `integrator/publish-crowd-highlights-37`
-- State: in progress
+- State: ready for integration; deployment verification follows merge
 - Base reviewed: `4bd8d57cff6197ac49515333b35f9a75243dd8da`
 - Issue: https://github.com/EazyPhe/djphelix.com/issues/37
-- Pull request: draft pending first coherent commit
+- Pull request: https://github.com/EazyPhe/djphelix.com/pull/38
 - Last update: 2026-09-16
 
 ## Authorization and scope
@@ -35,9 +35,24 @@ Source directory: `M:/Business/CleverCatCorp/djphelix-video-production/hybrid-00
 
 Total new public payload: 84,936,944 bytes. Both videos are 900 frames at 30 fps, H.264/yuv420p/Rec.709, AAC48k stereo, faststart. Picture duration is exactly 30 seconds; the 30.016-second container includes AAC padding. Technical audio and sampled decoded-picture checks passed in production; subjective listening is not claimed.
 
-## Remaining
+## Completed validation
 
-- Copy exact approved media and add metadata.
-- Run required checks, responsive playback QA, and independent patch/link review.
-- Require green checks and current main before protected merge.
-- Verify deployment, live page, and public asset hashes.
+- Product commit reviewed: `72db0e8d3e3d734435500cffaa865fc27916b395`.
+- Copied the four exact approved assets and added the newest highlight; existing Feel the Room metadata and assets are unchanged.
+- Coordination self-tests: 10/10. Scope check: seven assigned paths. Astro check: zero errors/warnings, two existing deprecation hints. Full production build passed.
+- Browser review passed at 1440x900, 820x1180 and 390x844. Correct aspect ratios, stacked mobile players and no horizontal overflow. Mobile navigation exposes Highlights and closes correctly.
+- All four players decoded and advanced without media errors. Switching players pauses the previous player; pause/resume and replay work. New vertical playback also passed at mobile width.
+- Keyboard activation and visible yellow focus ring passed. With reduced motion enabled, initial reload made zero MP4 requests; videos retain preload=none and no autoplay. No browser console warnings/errors observed. Temporary browser emulation was cleared after review.
+- Independent read-only QA by `crowd_scale_scout` passed: source/public/dist/committed hashes agree for all new assets, and all four existing media assets match the base.
+- Full static audit covered 14 HTML pages, five CSS files, 694 internal references, 93 fragments and 193 ARIA references, with no broken navigation/assets/anchors/ARIA or duplicate IDs. Existing 404 canonical/og:url metadata exceptions are unchanged and outside this patch.
+- Both GitHub checks passed at the product commit. Final documentation-only commit must also receive green checks before merge.
+
+## Release steps
+
+- Require green final-head checks and current main before the integrator's protected merge.
+- Verify the existing Pages deployment, live page playback and public asset hashes.
+- Record merge/deployment evidence in issue #37 and PR #38 after release; no bookkeeping-only deployment is needed.
+
+## Rollback
+
+Revert PR #38 through the normal protected PR flow to remove only this highlight, its four assets and this task record. No hosting or DNS change is involved.
