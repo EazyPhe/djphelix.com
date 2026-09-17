@@ -243,6 +243,32 @@ export const site = {
     approvedVideoLinks: [] as string[],
     highlights: [
       {
+        id: 'bring-the-energy',
+        title: 'Bring the Energy',
+        description: 'Hands up, big singalongs, and dance-floor energy with DJ Phelix.',
+        durationSeconds: 30,
+        formats: [
+          {
+            id: 'widescreen',
+            label: 'Widescreen',
+            aspect: '16:9',
+            width: 1920,
+            height: 1080,
+            src: '/media/highlights/bring-the-energy-wide-v03.mp4',
+            poster: '/media/highlights/bring-the-energy-wide-v03.jpg'
+          },
+          {
+            id: 'vertical',
+            label: 'Vertical',
+            aspect: '9:16',
+            width: 1080,
+            height: 1920,
+            src: '/media/highlights/bring-the-energy-vertical-v03.mp4',
+            poster: '/media/highlights/bring-the-energy-vertical-v03.jpg'
+          }
+        ]
+      },
+      {
         id: 'every-kind-of-crowd',
         title: 'Every Kind of Crowd',
         description: 'Small gatherings, big celebrations, and shared dance-floor energy with DJ Phelix.',
