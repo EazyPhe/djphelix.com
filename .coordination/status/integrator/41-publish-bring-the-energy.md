@@ -2,9 +2,9 @@
 
 - Lane: integrator
 - Branch: integrator/publish-bring-the-energy-41
-- State: in-progress
+- State: ready-for-integration; live publication authorized
 - Base reviewed: f660162a50dba7d3d1efec072bdf51a569343949
-- Pull request: pending first coherent commit
+- Pull request: https://github.com/EazyPhe/djphelix.com/pull/42
 - Last update: 2026-09-17
 
 ## Allowed paths
@@ -32,6 +32,10 @@
 - npm run check: PASS (0 errors, 0 warnings; 2 existing deprecation hints in unrelated files).
 - npm run build: PASS (14 pages).
 - Local production preview: http://127.0.0.1:4401/highlights/.
-- Independent desktop/tablet/mobile browser QA and full-site smoke in progress.
+- npm run coordination:check -- --base origin/main --head HEAD: PASS (7 scoped files). Open PR overlap separately checked; none.
+- Independent Chrome 152 browser QA: PASS (216 assertions). All three films / six videos decode and advance. The new formats have correct dimensions and 30-second duration; both play at a mobile touch viewport. Responsive defaults, keyboard controls, format persistence, lazy loading, single-player behavior, reduced motion, blocked storage and no-JS links pass.
+- Full-site smoke: PASS (all 14 built routes at desktop and mobile; 28 checks). HTTP 200, meaningful content, no page errors or overflow.
+- Desktop, tablet, mobile and actual playback screenshots reviewed. No release-blocking findings. Physical iOS/Safari and Android devices were not tested.
+- Main refetched after review remains f660162a50dba7d3d1efec072bdf51a569343949.
 - Media and browser evidence are outside the repository at C:\Users\playa\Documents\Codex\2026-09-16\djphelix-new-video\outputs\bring-the-energy-web-release-v03.
 - Publish through a reviewed PR, verify CI and Pages deployment, then verify both live formats.
