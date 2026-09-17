@@ -243,6 +243,32 @@ export const site = {
     approvedVideoLinks: [] as string[],
     highlights: [
       {
+        id: 'behind-the-booth',
+        title: 'Behind the Booth',
+        description: 'A closer look at DJ Phelix, guest connections, and the view from behind the booth.',
+        durationSeconds: 26.8,
+        formats: [
+          {
+            id: 'widescreen',
+            label: 'Widescreen',
+            aspect: '16:9',
+            width: 1920,
+            height: 1080,
+            src: '/media/highlights/behind-the-booth-wide-v01.mp4',
+            poster: '/media/highlights/behind-the-booth-wide-v01.jpg'
+          },
+          {
+            id: 'vertical',
+            label: 'Vertical',
+            aspect: '9:16',
+            width: 1080,
+            height: 1920,
+            src: '/media/highlights/behind-the-booth-vertical-v01.mp4',
+            poster: '/media/highlights/behind-the-booth-vertical-v01.jpg'
+          }
+        ]
+      },
+      {
         id: 'bring-the-energy',
         title: 'Bring the Energy',
         description: 'Hands up, big singalongs, and dance-floor energy with DJ Phelix.',
