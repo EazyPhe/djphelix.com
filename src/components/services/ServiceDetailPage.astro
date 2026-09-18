@@ -1,0 +1,808 @@
+---
+import ArrowIcon from '../ArrowIcon.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+interface DetailItem {
+  title: string;
+  description: string;
+}
+
+interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+interface RelatedService {
+  category: string;
+  label: string;
+  href: string;
+}
+
+interface SupportLink {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  slug: string;
+  metaTitle: string;
+  metaDescription: string;
+  category: string;
+  serviceName: string;
+  heroTitle: string;
+  heroIntro: string;
+  eventType: string;
+  primaryCtaLabel: string;
+  tone: 'celebration' | 'business' | 'entertainment';
+  signalWords: readonly string[];
+  fitEyebrow: string;
+  fitHeading: string;
+  fitIntro: string;
+  fitItems: readonly DetailItem[];
+  prioritiesEyebrow: string;
+  prioritiesHeading: string;
+  prioritiesIntro: string;
+  priorities: readonly DetailItem[];
+  planningEyebrow: string;
+  planningHeading: string;
+  planningIntro: string;
+  steps: readonly DetailItem[];
+  faqs: readonly FaqItem[];
+  relatedServices: readonly RelatedService[];
+  supportLink?: SupportLink;
+}
+
+const {
+  slug,
+  metaTitle,
+  metaDescription,
+  category,
+  serviceName,
+  heroTitle,
+  heroIntro,
+  eventType,
+  primaryCtaLabel,
+  tone,
+  signalWords,
+  fitEyebrow,
+  fitHeading,
+  fitIntro,
+  fitItems,
+  prioritiesEyebrow,
+  prioritiesHeading,
+  prioritiesIntro,
+  priorities,
+  planningEyebrow,
+  planningHeading,
+  planningIntro,
+  steps,
+  faqs,
+  relatedServices,
+  supportLink
+} = Astro.props;
+
+const inquiryHref = `/contact/?eventType=${encodeURIComponent(eventType)}#booking-form-heading`;
+const headingId = `${slug}-heading`;
+const fitHeadingId = `${slug}-fit-heading`;
+const priorityHeadingId = `${slug}-priority-heading`;
+const processHeadingId = `${slug}-process-heading`;
+const faqHeadingId = `${slug}-faq-heading`;
+const relatedHeadingId = `${slug}-related-heading`;
+---
+
+<BaseLayout title={metaTitle} description={metaDescription}>
+  <section
+    class:list={['service-detail-hero', `service-tone-${tone}`]}
+    aria-labelledby={headingId}
+  >
+    <div class="site-shell service-detail-hero-grid">
+      <div class="service-detail-hero-copy">
+        <p class="section-number">{category}</p>
+        <h1 id={headingId}>{heroTitle}</h1>
+        <p class="service-detail-lead">{heroIntro}</p>
+        <div class="service-detail-actions">
+          <a class="button button-primary" href={inquiryHref}>
+            {primaryCtaLabel}<ArrowIcon />
+          </a>
+          <a class="button button-secondary" href="/services/">
+            View all services
+          </a>
+        </div>
+        <p class="service-detail-note">
+          An inquiry starts the conversation. It does not reserve a date or confirm
+          availability, pricing, equipment, or final service details.
+        </p>
+      </div>
+
+      <div class="service-hero-signal" aria-hidden="true">
+        <p>DJ Phelix / {serviceName}</p>
+        <div class="service-signal-words">
+          {signalWords.map((word, index) => (
+            <span>
+              <b>{String(index + 1).padStart(2, '0')}</b>
+              {word}
+            </span>
+          ))}
+        </div>
+        <span class="service-signal-line"></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section service-fit-section" aria-labelledby={fitHeadingId}>
+    <div class="site-shell">
+      <div class="section-intro compact-intro">
+        <div>
+          <p class="section-number">{fitEyebrow}</p>
+          <h2 id={fitHeadingId}>{fitHeading}</h2>
+        </div>
+        <p>{fitIntro}</p>
+      </div>
+
+      <div class="service-detail-card-grid">
+        {fitItems.map((item, index) => (
+          <article class="service-detail-card">
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <h3>{item.title}</h3>
+            <p>{item.description}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section service-priority-section" aria-labelledby={priorityHeadingId}>
+    <div class="site-shell service-priority-layout">
+      <div class="service-priority-intro">
+        <p class="section-number">{prioritiesEyebrow}</p>
+        <h2 id={priorityHeadingId}>{prioritiesHeading}</h2>
+        <p>{prioritiesIntro}</p>
+      </div>
+
+      <div class="service-priority-list">
+        {priorities.map((item, index) => (
+          <article>
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <div>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section process-section service-process-section" aria-labelledby={processHeadingId}>
+    <div class="site-shell">
+      <div class="section-intro compact-intro">
+        <div>
+          <p class="section-number">{planningEyebrow}</p>
+          <h2 id={processHeadingId}>{planningHeading}</h2>
+        </div>
+        <p>{planningIntro}</p>
+      </div>
+
+      <ol class="process-list">
+        {steps.map((step, index) => (
+          <li>
+            <span>{index + 1}.</span>
+            <h3>{step.title}</h3>
+            <p>{step.description}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section service-faq-section" aria-labelledby={faqHeadingId}>
+    <div class="site-shell service-faq-layout">
+      <div class="service-faq-intro">
+        <p class="section-number">Questions</p>
+        <h2 id={faqHeadingId}>Useful answers before the inquiry.</h2>
+        <p>
+          These answers describe the planning approach without turning unknown details
+          into promises. Event-specific terms are confirmed directly.
+        </p>
+      </div>
+
+      <div class="service-faq-list">
+        {faqs.map((faq, index) => (
+          <details>
+            <summary>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <strong>{faq.question}</strong>
+              <i aria-hidden="true"></i>
+            </summary>
+            <p>{faq.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="service-related-section" aria-labelledby={relatedHeadingId}>
+    <div class="site-shell">
+      <div class="service-related-heading">
+        <p class="section-number">Related services</p>
+        <h2 id={relatedHeadingId}>Keep exploring.</h2>
+      </div>
+      <div class="service-related-grid">
+        {relatedServices.map((service) => (
+          <a href={service.href}>
+            <span>{service.category}</span>
+            <strong>{service.label}</strong>
+            <ArrowIcon />
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section service-final-cta" aria-labelledby={`${slug}-cta-heading`}>
+    <div class="site-shell service-final-cta-grid">
+      <div>
+        <p class="section-number">Next step</p>
+        <h2 id={`${slug}-cta-heading`}>Bring the date, place, people, and energy.</h2>
+      </div>
+      <div>
+        <p>
+          Share the event basics and what you want the room to feel like. DJ Phelix can
+          then respond with the questions and confirmed details that apply to your event.
+        </p>
+        <div class="service-final-actions">
+          <a class="button button-primary" href={inquiryHref}>
+            {primaryCtaLabel}<ArrowIcon />
+          </a>
+          {supportLink && (
+            <a class="text-link" href={supportLink.href}>
+              {supportLink.label}<ArrowIcon />
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .service-detail-hero {
+    --service-accent: var(--brand-pink);
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    border-bottom: 1px solid var(--line);
+    background: var(--canvas-raised);
+  }
+
+  .service-tone-celebration {
+    --service-accent: var(--ice);
+  }
+
+  .service-tone-business {
+    --service-accent: var(--brand-yellow);
+  }
+
+  .service-tone-entertainment {
+    --service-accent: var(--brand-pink-bright);
+  }
+
+  .service-detail-hero::before {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background:
+      radial-gradient(circle at 79% 25%, color-mix(in srgb, var(--service-accent) 18%, transparent), transparent 31%),
+      linear-gradient(112deg, rgba(8, 5, 11, 0.96) 0%, rgba(16, 11, 20, 0.9) 58%, rgba(8, 5, 11, 0.72) 100%);
+    content: '';
+  }
+
+  .service-detail-hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(22rem, 0.75fr);
+    gap: var(--space-4);
+    align-items: center;
+    min-height: min(48rem, calc(100svh - 5.5rem));
+    padding-block: clamp(5rem, 10vw, 8.5rem);
+  }
+
+  .service-detail-hero-copy h1 {
+    max-width: 11ch;
+    margin-bottom: var(--space-3);
+    font-size: clamp(3.5rem, 6.3vw, 6.7rem);
+  }
+
+  .service-detail-lead {
+    max-width: 42rem;
+    margin-bottom: var(--space-3);
+    font-size: clamp(1rem, 1.45vw, 1.2rem);
+  }
+
+  .service-detail-actions,
+  .service-final-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    align-items: center;
+  }
+
+  .service-detail-note {
+    max-width: 41rem;
+    margin: var(--space-2) 0 0;
+    color: var(--muted);
+    font-size: 0.78rem;
+  }
+
+  .service-hero-signal {
+    position: relative;
+    min-height: 29rem;
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+    border: 1px solid color-mix(in srgb, var(--service-accent) 54%, transparent);
+    background: rgba(8, 5, 11, 0.64);
+  }
+
+  .service-hero-signal > p {
+    margin: 0;
+    color: var(--service-accent);
+    font-size: 0.68rem;
+    font-weight: 760;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .service-signal-words {
+    display: grid;
+    margin-top: clamp(3rem, 7vw, 5.5rem);
+  }
+
+  .service-signal-words span {
+    display: grid;
+    grid-template-columns: 2.25rem 1fr;
+    gap: 1rem;
+    align-items: baseline;
+    padding-block: 1.15rem;
+    border-top: 1px solid var(--line);
+    color: var(--paper);
+    font-family: var(--serif);
+    font-size: clamp(2.1rem, 4.2vw, 4rem);
+    letter-spacing: -0.045em;
+    line-height: 0.95;
+  }
+
+  .service-signal-words b {
+    color: var(--service-accent);
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+  }
+
+  .service-signal-line {
+    position: absolute;
+    right: 1.4rem;
+    bottom: 1.4rem;
+    width: 34%;
+    height: 1px;
+    background: var(--service-accent);
+  }
+
+  .service-signal-line::before {
+    position: absolute;
+    top: -0.24rem;
+    left: 0;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--service-accent);
+    content: '';
+  }
+
+  .service-fit-section {
+    background: var(--canvas);
+  }
+
+  .service-detail-card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .service-detail-card {
+    min-height: 20rem;
+    padding: var(--space-3);
+    border-right: 1px solid var(--line);
+  }
+
+  .service-detail-card:last-child {
+    border-right: 0;
+  }
+
+  .service-detail-card > span,
+  .service-priority-list article > span {
+    display: block;
+    margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+    color: var(--service-accent);
+    font-size: 0.7rem;
+    font-weight: 760;
+    letter-spacing: 0.14em;
+  }
+
+  .service-detail-card h3 {
+    max-width: 12ch;
+    margin-bottom: 1rem;
+  }
+
+  .service-detail-card p {
+    max-width: 27rem;
+    margin-bottom: 0;
+    font-size: 0.94rem;
+  }
+
+  .service-priority-section {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: var(--canvas-soft);
+  }
+
+  .service-priority-layout {
+    display: grid;
+    grid-template-columns: minmax(17rem, 0.72fr) minmax(0, 1.28fr);
+    gap: var(--space-4);
+    align-items: start;
+  }
+
+  .service-priority-intro {
+    position: sticky;
+    top: 8rem;
+  }
+
+  .service-priority-intro h2 {
+    max-width: 11ch;
+  }
+
+  .service-priority-intro > p:not(.section-number) {
+    max-width: 31rem;
+    margin: var(--space-3) 0 0;
+  }
+
+  .service-priority-list {
+    border-top: 1px solid var(--line);
+  }
+
+  .service-priority-list article {
+    display: grid;
+    grid-template-columns: 3rem minmax(0, 1fr);
+    gap: var(--space-2);
+    padding-block: var(--space-3);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .service-priority-list article > span {
+    margin: 0;
+  }
+
+  .service-priority-list h3 {
+    margin-bottom: 0.75rem;
+  }
+
+  .service-priority-list p {
+    max-width: 40rem;
+    margin-bottom: 0;
+  }
+
+  .service-process-section {
+    background: var(--canvas);
+  }
+
+  .service-faq-section {
+    border-top: 1px solid var(--line);
+    background: var(--canvas-raised);
+  }
+
+  .service-faq-layout {
+    display: grid;
+    grid-template-columns: minmax(16rem, 0.68fr) minmax(0, 1.32fr);
+    gap: var(--space-4);
+    align-items: start;
+  }
+
+  .service-faq-intro h2 {
+    max-width: 10ch;
+  }
+
+  .service-faq-intro > p:not(.section-number) {
+    max-width: 30rem;
+    margin: var(--space-3) 0 0;
+  }
+
+  .service-faq-list {
+    border-top: 1px solid var(--line);
+  }
+
+  .service-faq-list details {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .service-faq-list summary {
+    display: grid;
+    grid-template-columns: 2.5rem minmax(0, 1fr) 1.25rem;
+    gap: 1rem;
+    align-items: center;
+    padding-block: 1.45rem;
+    color: var(--paper);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .service-faq-list summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .service-faq-list summary > span {
+    color: var(--service-accent);
+    font-size: 0.68rem;
+    font-weight: 760;
+    letter-spacing: 0.12em;
+  }
+
+  .service-faq-list summary strong {
+    font-family: var(--serif);
+    font-size: clamp(1.35rem, 2vw, 1.85rem);
+    font-weight: 400;
+    letter-spacing: -0.03em;
+  }
+
+  .service-faq-list summary i {
+    position: relative;
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .service-faq-list summary i::before,
+  .service-faq-list summary i::after {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--service-accent);
+    content: '';
+    transition: transform 160ms ease;
+  }
+
+  .service-faq-list summary i::after {
+    transform: rotate(90deg);
+  }
+
+  .service-faq-list details[open] summary i::after {
+    transform: rotate(0deg);
+  }
+
+  .service-faq-list details > p {
+    max-width: 48rem;
+    margin: 0;
+    padding: 0 2rem 1.5rem 3.5rem;
+  }
+
+  .service-related-section {
+    padding-block: var(--space-4);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: var(--canvas);
+  }
+
+  .service-related-heading {
+    display: flex;
+    gap: var(--space-3);
+    align-items: end;
+    justify-content: space-between;
+    margin-bottom: var(--space-3);
+  }
+
+  .service-related-heading .section-number {
+    margin-bottom: 0;
+  }
+
+  .service-related-heading h2 {
+    font-size: clamp(2rem, 3.5vw, 3.3rem);
+  }
+
+  .service-related-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .service-related-grid a {
+    position: relative;
+    display: grid;
+    min-height: 11rem;
+    padding: var(--space-2);
+    border-right: 1px solid var(--line);
+    transition: background-color 160ms ease, transform 160ms ease;
+  }
+
+  .service-related-grid a:last-child {
+    border-right: 0;
+  }
+
+  .service-related-grid a:hover {
+    background: var(--canvas-raised);
+    transform: translateY(-2px);
+  }
+
+  .service-related-grid a > span {
+    color: var(--service-accent);
+    font-size: 0.66rem;
+    font-weight: 760;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .service-related-grid a > strong {
+    align-self: end;
+    max-width: 13ch;
+    font-family: var(--serif);
+    font-size: clamp(1.45rem, 2.4vw, 2.25rem);
+    font-weight: 400;
+    letter-spacing: -0.035em;
+    line-height: 1.05;
+  }
+
+  .service-related-grid a > svg {
+    position: absolute;
+    right: 1.25rem;
+    bottom: 1.35rem;
+    color: var(--service-accent);
+  }
+
+  .service-final-cta {
+    background: var(--canvas-soft);
+  }
+
+  .service-final-cta-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.75fr);
+    gap: var(--space-4);
+    align-items: start;
+  }
+
+  .service-final-cta-grid h2 {
+    max-width: 12ch;
+  }
+
+  .service-final-cta-grid > div:last-child > p {
+    max-width: 37rem;
+    margin-bottom: var(--space-3);
+    font-size: 1.02rem;
+  }
+
+  .service-final-actions .text-link {
+    margin-left: 0.5rem;
+  }
+
+  @media (max-width: 980px) {
+    .service-detail-hero-grid,
+    .service-priority-layout,
+    .service-faq-layout,
+    .service-final-cta-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .service-detail-hero-grid {
+      min-height: 0;
+    }
+
+    .service-hero-signal {
+      min-height: 22rem;
+    }
+
+    .service-priority-intro {
+      position: static;
+    }
+
+    .service-priority-intro h2,
+    .service-faq-intro h2 {
+      max-width: 14ch;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .service-detail-hero-grid {
+      gap: var(--space-3);
+      padding-block: var(--space-4);
+    }
+
+    .service-detail-hero-copy h1 {
+      max-width: 10ch;
+      font-size: clamp(3rem, 13vw, 4.6rem);
+    }
+
+    .service-detail-actions,
+    .service-final-actions {
+      display: grid;
+      align-items: stretch;
+    }
+
+    .service-detail-actions .button,
+    .service-final-actions .button {
+      width: 100%;
+    }
+
+    .service-hero-signal {
+      min-height: 19rem;
+      padding: 1.25rem;
+    }
+
+    .service-signal-words {
+      margin-top: 2.25rem;
+    }
+
+    .service-signal-words span {
+      font-size: clamp(2rem, 11vw, 3rem);
+    }
+
+    .service-detail-card-grid,
+    .service-related-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .service-detail-card {
+      min-height: 0;
+      border-right: 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .service-detail-card:last-child {
+      border-bottom: 0;
+    }
+
+    .service-detail-card > span {
+      margin-bottom: 1.75rem;
+    }
+
+    .service-priority-list article {
+      grid-template-columns: 2rem minmax(0, 1fr);
+      gap: 0.75rem;
+    }
+
+    .service-faq-list summary {
+      grid-template-columns: 2rem minmax(0, 1fr) 1rem;
+      gap: 0.65rem;
+    }
+
+    .service-faq-list details > p {
+      padding-right: 0;
+      padding-left: 2.65rem;
+    }
+
+    .service-related-heading {
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .service-related-grid a {
+      min-height: 9rem;
+      border-right: 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .service-related-grid a:last-child {
+      border-bottom: 0;
+    }
+
+    .service-final-actions .text-link {
+      justify-self: start;
+      margin-left: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .service-related-grid a,
+    .service-faq-list summary i::before,
+    .service-faq-list summary i::after {
+      transition: none;
+    }
+  }
+</style>
