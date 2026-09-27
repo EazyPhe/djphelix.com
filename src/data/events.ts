@@ -66,4 +66,18 @@ const sailingCowEvents: UpcomingEvent[] = sailingCowDates.map((date) => ({
 }));
 
 // Add verified public appearances here. Keep private bookings and unapproved venue details out of this file.
-export const upcomingEvents: UpcomingEvent[] = [...sailingCowEvents];
+export const upcomingEvents: UpcomingEvent[] = [
+  ...sailingCowEvents,
+  {
+    slug: 'yarmouth-seaside-festival-bonfire-2026-10-10',
+    title: 'Yarmouth Seaside Festival Bonfire with DJ Phelix',
+    date: '2026-10-10',
+    startTime: '18:00',
+    endTime: '21:00',
+    venue: "Bass River Beach (Smuggler's Beach)",
+    location: 'South Yarmouth, Massachusetts',
+    description: 'Join DJ Phelix for music, dancing, and a beach bonfire at the Yarmouth Seaside Festival. Bring your blankets and beach chairs for a free, family-friendly evening by the water.',
+    infoUrl: 'https://yarmouthseasidefestival.com/bonfire-2/',
+    tags: ['Family Friendly', 'Community', 'Evening', 'All Ages', 'Outdoor', 'Free']
+  }
+];
